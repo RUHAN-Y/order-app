@@ -74,14 +74,38 @@ textarea {
 .photo-info {
     font-size: 13px;
     color: #777;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
+
+
+/* 写真ボタン */
+
+.photo-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.photo-button {
+    flex: 1;
+    padding: 14px 8px;
+    margin-top: 0;
+    background: #eee;
+    color: #222;
+    border: 1px solid #ccc;
+}
+
+.photo-button:active {
+    background: #ddd;
+}
+
+
+/* 写真プレビュー */
 
 .photo-preview {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .photo-item {
@@ -97,17 +121,25 @@ textarea {
     border: 1px solid #ccc;
 }
 
+
+/* 写真削除ボタン */
+
 .photo-remove {
     position: absolute;
     top: 5px;
     right: 5px;
+
     width: 30px;
     height: 30px;
+
     padding: 0;
     margin: 0;
+
     border-radius: 50%;
+
     background: #e53935;
     color: white;
+
     font-size: 18px;
     line-height: 30px;
 }
@@ -120,10 +152,14 @@ textarea {
 #signature {
     width: 100%;
     height: 200px;
+
     border: 2px solid #333;
     border-radius: 8px;
+
     background: white;
+
     touch-action: none;
+
     display: block;
 }
 
@@ -136,10 +172,14 @@ button {
     width: 100%;
     border: none;
     border-radius: 8px;
+
     padding: 14px;
+
     font-size: 16px;
     font-weight: bold;
+
     margin-top: 12px;
+
     cursor: pointer;
 }
 
@@ -166,15 +206,19 @@ button {
 .order {
     border: 1px solid #ddd;
     border-radius: 10px;
+
     padding: 15px;
     margin-top: 15px;
+
     background: #fafafa;
+
     line-height: 1.8;
 }
 
 .order-number {
     font-weight: bold;
     font-size: 18px;
+
     margin-bottom: 10px;
 }
 
@@ -186,15 +230,21 @@ button {
 .saved-photos {
     display: flex;
     flex-wrap: wrap;
+
     gap: 8px;
+
     margin-top: 8px;
 }
 
 .saved-photos img {
     width: calc(33.333% - 6px);
+
     aspect-ratio: 1 / 1;
+
     object-fit: cover;
+
     border-radius: 8px;
+
     border: 1px solid #ccc;
 }
 
@@ -205,10 +255,15 @@ button {
 
 .signature-image {
     width: 100%;
+
     max-height: 150px;
+
     object-fit: contain;
+
     border: 1px solid #ddd;
+
     background: white;
+
     margin-top: 10px;
 }
 
@@ -338,14 +393,54 @@ button {
     最大3枚まで添付できます
 </div>
 
+
+<div class="photo-buttons">
+
+    <!-- カメラ -->
+    <button
+        type="button"
+        class="photo-button"
+        onclick="openCamera()"
+    >
+        📷 カメラで撮影
+    </button>
+
+
+    <!-- 写真 -->
+    <button
+        type="button"
+        class="photo-button"
+        onclick="openPhotoLibrary()"
+    >
+        🖼 写真から選ぶ
+    </button>
+
+</div>
+
+
+<!-- カメラ用 -->
+<input
+    type="file"
+    id="cameraInput"
+    accept="image/*"
+    capture="environment"
+    style="display:none"
+    onchange="handlePhotos(event)"
+>
+
+
+<!-- 写真ライブラリ用 -->
 <input
     type="file"
     id="photoInput"
     accept="image/*"
-    capture="environment"
     multiple
+    style="display:none"
     onchange="handlePhotos(event)"
 >
+
+
+<!-- 写真プレビュー -->
 
 <div
     id="photoPreview"
@@ -466,18 +561,70 @@ function checkOtherProduct() {
 let selectedPhotos = [];
 
 
+/* =====================================================
+   カメラを開く
+===================================================== */
+
+function openCamera() {
+
+    if (selectedPhotos.length >= 3) {
+
+        alert(
+            "資料写真は3枚まで添付できます。"
+        );
+
+        return;
+    }
+
+
+    document
+        .getElementById("cameraInput")
+        .click();
+
+}
+
+
+/* =====================================================
+   写真ライブラリを開く
+===================================================== */
+
+function openPhotoLibrary() {
+
+    if (selectedPhotos.length >= 3) {
+
+        alert(
+            "資料写真は3枚まで添付できます。"
+        );
+
+        return;
+    }
+
+
+    document
+        .getElementById("photoInput")
+        .click();
+
+}
+
+
+/* =====================================================
+   写真を読み込む
+===================================================== */
+
 function handlePhotos(event) {
 
     const files =
         Array.from(event.target.files);
 
 
-    if (
-        selectedPhotos.length + files.length > 3
-    ) {
+    const remaining =
+        3 - selectedPhotos.length;
+
+
+    if (files.length > remaining) {
 
         alert(
-            "資料写真は3枚まで添付できます。"
+            "資料写真は合計3枚までです。"
         );
 
         event.target.value = "";
@@ -486,33 +633,44 @@ function handlePhotos(event) {
     }
 
 
-    files.forEach(function(file) {
+    files.forEach(
+        function(file) {
 
-        if (!file.type.startsWith("image/")) {
-            return;
+
+            if (
+                !file.type.startsWith("image/")
+            ) {
+
+                return;
+
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(e) {
+
+
+                    selectedPhotos.push(
+                        e.target.result
+                    );
+
+
+                    displayPhotoPreview();
+
+                };
+
+
+            reader.readAsDataURL(file);
+
         }
+    );
 
 
-        const reader =
-            new FileReader();
-
-
-        reader.onload = function(e) {
-
-            selectedPhotos.push(
-                e.target.result
-            );
-
-
-            displayPhotoPreview();
-
-        };
-
-
-        reader.readAsDataURL(file);
-
-    });
-
+    /* 同じ写真をもう一度選べるようにする */
 
     event.target.value = "";
 
@@ -538,7 +696,8 @@ function displayPhotoPreview() {
 
 
             const div =
-                document.createElement("div");
+                document
+                .createElement("div");
 
 
             div.className =
@@ -551,6 +710,7 @@ function displayPhotoPreview() {
                     src="${photo}"
                     alt="資料写真"
                 >
+
 
                 <button
                     type="button"
@@ -572,12 +732,16 @@ function displayPhotoPreview() {
 
 
 /* =====================================================
-   写真削除
+   写真を削除
 ===================================================== */
 
 function removePhoto(index) {
 
-    selectedPhotos.splice(index, 1);
+    selectedPhotos.splice(
+        index,
+        1
+    );
+
 
     displayPhotoPreview();
 
@@ -899,9 +1063,7 @@ function saveOrder() {
     try {
 
 
-        /* -------------------------
-           お客様名
-        ------------------------- */
+        /* お客様名 */
 
         const name =
             document
@@ -910,9 +1072,7 @@ function saveOrder() {
             .trim();
 
 
-        /* -------------------------
-           商品
-        ------------------------- */
+        /* 商品 */
 
         const selectedProduct =
             document
@@ -953,9 +1113,7 @@ function saveOrder() {
         }
 
 
-        /* -------------------------
-           金額
-        ------------------------- */
+        /* 金額 */
 
         const price =
             document
@@ -964,9 +1122,7 @@ function saveOrder() {
             .trim();
 
 
-        /* -------------------------
-           署名日
-        ------------------------- */
+        /* 署名日 */
 
         const delivery =
             document
@@ -974,9 +1130,7 @@ function saveOrder() {
             .value;
 
 
-        /* -------------------------
-           備考
-        ------------------------- */
+        /* 備考 */
 
         const note =
             document
@@ -985,9 +1139,7 @@ function saveOrder() {
             .trim();
 
 
-        /* -------------------------
-           お客様名チェック
-        ------------------------- */
+        /* お客様名チェック */
 
         if (!name) {
 
@@ -1000,9 +1152,7 @@ function saveOrder() {
         }
 
 
-        /* -------------------------
-           商品チェック
-        ------------------------- */
+        /* 商品チェック */
 
         if (!selectedProduct) {
 
@@ -1015,9 +1165,7 @@ function saveOrder() {
         }
 
 
-        /* -------------------------
-           署名チェック
-        ------------------------- */
+        /* 署名チェック */
 
         if (!hasSignature) {
 
@@ -1030,17 +1178,13 @@ function saveOrder() {
         }
 
 
-        /* -------------------------
-           注文番号
-        ------------------------- */
+        /* 注文番号 */
 
         const orderNumber =
             createOrderNumber();
 
 
-        /* -------------------------
-           署名画像
-        ------------------------- */
+        /* 署名画像 */
 
         const signature =
             canvas.toDataURL(
@@ -1048,9 +1192,7 @@ function saveOrder() {
             );
 
 
-        /* -------------------------
-           注文データ
-        ------------------------- */
+        /* 注文データ */
 
         const order = {
 
@@ -1088,9 +1230,7 @@ function saveOrder() {
         };
 
 
-        /* -------------------------
-           保存済み注文を取得
-        ------------------------- */
+        /* 保存済み注文 */
 
         let orders =
             JSON.parse(
@@ -1098,16 +1238,12 @@ function saveOrder() {
             ) || [];
 
 
-        /* -------------------------
-           新しい注文を追加
-        ------------------------- */
+        /* 新しい注文を追加 */
 
         orders.push(order);
 
 
-        /* -------------------------
-           保存
-        ------------------------- */
+        /* 保存 */
 
         localStorage.setItem(
             "orders",
@@ -1115,9 +1251,7 @@ function saveOrder() {
         );
 
 
-        /* -------------------------
-           保存完了
-        ------------------------- */
+        /* 完了 */
 
         alert(
             "注文を保存しました。\n\n" +
@@ -1126,16 +1260,12 @@ function saveOrder() {
         );
 
 
-        /* -------------------------
-           フォームクリア
-        ------------------------- */
+        /* フォームクリア */
 
         clearForm();
 
 
-        /* -------------------------
-           一覧更新
-        ------------------------- */
+        /* 一覧更新 */
 
         displayOrders();
 
@@ -1157,7 +1287,7 @@ function saveOrder() {
 
 
 /* =====================================================
-   フォームをクリア
+   フォームクリア
 ===================================================== */
 
 function clearForm() {
@@ -1198,7 +1328,7 @@ function clearForm() {
     .value = "";
 
 
-    /* 写真をクリア */
+    /* 写真 */
 
     selectedPhotos = [];
 
@@ -1206,14 +1336,17 @@ function clearForm() {
     displayPhotoPreview();
 
 
-    /* ファイル選択をクリア */
+    document
+    .getElementById("cameraInput")
+    .value = "";
+
 
     document
     .getElementById("photoInput")
     .value = "";
 
 
-    /* 署名をクリア */
+    /* 署名 */
 
     clearSignature();
 
@@ -1225,7 +1358,6 @@ function clearForm() {
 ===================================================== */
 
 function escapeHTML(text) {
-
 
     if (!text) return "";
 
@@ -1256,7 +1388,7 @@ function escapeHTML(text) {
 
 
 /* =====================================================
-   保存済み注文を表示
+   保存済み注文表示
 ===================================================== */
 
 function displayOrders() {
@@ -1273,10 +1405,6 @@ function displayOrders() {
         ) || [];
 
 
-    /* -------------------------
-       注文がない場合
-    ------------------------- */
-
     if (
         orders.length === 0
     ) {
@@ -1288,10 +1416,6 @@ function displayOrders() {
 
     }
 
-
-    /* -------------------------
-       新しい注文を上に
-    ------------------------- */
 
     const reversedOrders =
         orders
