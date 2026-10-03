@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>オーダー受付</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    background: #f3f3f3;
+    color: #222;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 18px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 13px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+#signature {
+    width: 100%;
+    height: 220px;
+    border: 2px solid #222;
+    border-radius: 8px;
+    background: white;
+    touch-action: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.save {
+    background: #111;
+    color: white;
+}
+
+.clear {
+    background: #ddd;
+    color: #222;
+}
+
+.order {
+    border-top: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.order img {
+    max-width: 100%;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+.delete {
+    background: #eee;
+    color: #900;
+}
+
+.small {
+    color: #777;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+オーダー受付
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>注文情報</h2>
+
+<label>お客様名</label>
+<input type="text" id="name" placeholder="山田 太郎">
+
+<label>商品名</label>
+<input type="text" id="product" placeholder="実印・名刺など">
+
+<label>金額</label>
+<input type="number" id="price" placeholder="15000">
+
+<label>署名日</label>
+<input type="date" id="delivery">
+
+<label>備考</label>
+<textarea id="note" placeholder="その他ご希望など"></textarea>
+
+</div>
+
+
+<div class="card">
+
+<h2>署名</h2>
+
+<p class="small">
+内容をご確認のうえ、下の枠内にご署名ください。
+</p>
+
+<canvas id="signature"></canvas>
+
+<button class="clear" onclick="clearSignature()">
+書き直す
+</button>
+
+</div>
+
+
+<div class="card">
+
+<button class="save" onclick="saveOrder()">
+注文内容と署名を保存
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>保存済み注文</h2>
+
+<div id="orders"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const canvas = document.getElementById("signature");
+const ctx = canvas.getContext("2d");
+
+let drawing = false;
+
+
+// キャンバスサイズ設定
+function resizeCanvas() {
+
+    const ratio = window.devicePixelRatio || 1;
+
+    const rect = canvas.getBoundingClientRect();
+
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+
+    ctx.scale(ratio, ratio);
+
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+}
+
+resizeCanvas();
+
+
+// 座標取得
+function getPosition(e) {
+
+    const rect = canvas.getBoundingClientRect();
+
+    if (e.touches) {
+
+        return {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top
+        };
+
+    }
+
+    return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+    };
+}
+
+
+// 描画開始
+function startDrawing(e) {
+
+    e.preventDefault();
+
+    drawing = true;
+
+    const pos = getPosition(e);
+
+    ctx.beginPath();
+
+    ctx.moveTo(pos.x, pos.y);
+}
+
+
+// 描画
+function draw(e) {
+
+    if (!drawing) return;
+
+    e.preventDefault();
+
+    const pos = getPosition(e);
+
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+}
+
+
+// 描画終了
+function stopDrawing(e) {
+
+    e.preventDefault();
+
+    drawing = false;
+}
+
+
+// マウス
+canvas.addEventListener("mousedown", startDrawing);
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mouseup", stopDrawing);
+canvas.addEventListener("mouseleave", stopDrawing);
+
+
+// iPad・スマホ
+canvas.addEventListener("touchstart", startDrawing, {
+    passive: false
+});
+
+canvas.addEventListener("touchmove", draw, {
+    passive: false
+});
+
+canvas.addEventListener("touchend", stopDrawing, {
+    passive: false
+});
+
+
+// 署名を消す
+function clearSignature() {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+}
+
+
+// 保存
+function saveOrder() {
+
+    const name = document.getElementById("name").value;
+
+    const phone = document.getElementById("phone").value;
+
+    const product = document.getElementById("product").value;
+
+    const price = document.getElementById("price").value;
+
+    const delivery = document.getElementById("delivery").value;
+
+    const note = document.getElementById("note").value;
+
+
+    if (!name) {
+
+        alert("お客様名を入力してください。");
+
+        return;
+
+    }
+
+
+    const signature = canvas.toDataURL("image/png");
+
+
+    const order = {
+
+        id: Date.now(),
+
+        date: new Date().toLocaleString("ja-JP"),
+
+        name: name,
+
+        phone: phone,
+
+        product: product,
+
+        price: price,
+
+        delivery: delivery,
+
+        note: note,
+
+        signature: signature
+
+    };
+
+
+    let orders =
+        JSON.parse(localStorage.getItem("orders")) || [];
+
+
+    orders.push(order);
+
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
+
+
+    alert("注文を保存しました。");
+
+
+    clearForm();
+
+    displayOrders();
+
+}
+
+
+// 入力欄をクリア
+function clearForm() {
+
+    document.getElementById("name").value = "";
+
+    document.getElementById("phone").value = "";
+
+    document.getElementById("product").value = "";
+
+    document.getElementById("price").value = "";
+
+    document.getElementById("delivery").value = "";
+
+    document.getElementById("note").value = "";
+
+    clearSignature();
+
+}
+
+
+// 保存データ表示
+function displayOrders() {
+
+    const container =
+        document.getElementById("orders");
+
+    const orders =
+        JSON.parse(localStorage.getItem("orders")) || [];
+
+
+    container.innerHTML = "";
+
+
+    if (orders.length === 0) {
+
+        container.innerHTML =
+            "<p>保存された注文はありません。</p>";
+
+        return;
+
+    }
+
+
+    orders.reverse().forEach(order => {
+
+        const div = document.createElement("div");
+
+        div.className = "order";
+
+
+        div.innerHTML = `
+
+            <strong>${order.name}</strong>
+
+            <p>
+            商品：${order.product || ""}
+            </p>
+
+            <p>
+            金額：${order.price || ""}円
+            </p>
+        
+            <p>
+            納期：${order.delivery || ""}
+            </p>
+
+            <p>
+            受付日時：${order.date}
+            </p>
+
+            <p>
+            備考：${order.note || ""}
+            </p>
+
+            <p>署名：</p>
+
+            <img src="${order.signature}">
+
+            <button
+            class="delete"
+            onclick="deleteOrder(${order.id})">
+            この注文を削除
+            </button>
+
+        `;
+
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+// 注文削除
+function deleteOrder(id) {
+
+    if (!confirm("この注文を削除しますか？")) {
+        return;
+    }
+
+
+    let orders =
+        JSON.parse(localStorage.getItem("orders")) || [];
+
+
+    orders =
+        orders.filter(order => order.id !== id);
+
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
+
+
+    displayOrders();
+
+}
+
+
+// 初期表示
+displayOrders();
+
+</script>
+
+</body>
+</html>
