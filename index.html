@@ -41,7 +41,8 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
     width: 100%;
     box-sizing: border-box;
     padding: 12px;
@@ -53,6 +54,10 @@ textarea {
 textarea {
     height: 90px;
     resize: vertical;
+}
+
+#otherProduct {
+    margin-top: 10px;
 }
 
 #signature {
@@ -124,37 +129,92 @@ button {
 
     <h1>注文受付</h1>
 
-    <!-- 注文入力 -->
     <div class="card">
 
+        <!-- お客様名 -->
         <label>お客様名</label>
+
         <input
             type="text"
             id="name"
             placeholder="例：山田 太郎"
         >
 
-        <label>商品</label>
-        <input
-            type="text"
-            id="product"
-            placeholder="例：実印・銀行印セット"
-        >
 
+        <!-- 商品 -->
+        <label>商品</label>
+
+        <select id="product" onchange="checkOtherProduct()">
+
+            <option value="">選択してください</option>
+
+            <option value="名刺">
+                ① 名刺
+            </option>
+
+            <option value="印鑑">
+                ② 印鑑
+            </option>
+
+            <option value="スタンプ・ゴム印">
+                ③ スタンプ・ゴム印
+            </option>
+
+            <option value="封筒">
+                ④ 封筒
+            </option>
+
+            <option value="チラシ・パンフレット">
+                ⑤ チラシ・パンフレット
+            </option>
+
+            <option value="ホームページ">
+                ⑥ ホームページ
+            </option>
+
+            <option value="その他">
+                ⑦ その他
+            </option>
+
+        </select>
+
+
+        <!-- その他入力 -->
+        <div id="otherProductArea" style="display:none;">
+
+            <label>その他の商品名</label>
+
+            <input
+                type="text"
+                id="otherProduct"
+                placeholder="商品名を入力してください"
+            >
+
+        </div>
+
+
+        <!-- 金額 -->
         <label>金額</label>
+
         <input
             type="number"
             id="price"
             placeholder="例：15000"
         >
 
+
+        <!-- 署名日 -->
         <label>署名日</label>
+
         <input
             type="date"
             id="delivery"
         >
 
+
+        <!-- 備考 -->
         <label>備考</label>
+
         <textarea
             id="note"
             placeholder="その他ご要望など"
@@ -165,6 +225,7 @@ button {
         <label>お客様署名</label>
 
         <canvas id="signature"></canvas>
+
 
         <button
             type="button"
@@ -204,13 +265,49 @@ button {
 <script>
 
 /* =========================
+   商品「その他」の表示
+========================= */
+
+function checkOtherProduct() {
+
+    const product =
+        document.getElementById("product").value;
+
+    const otherArea =
+        document.getElementById("otherProductArea");
+
+    const otherInput =
+        document.getElementById("otherProduct");
+
+
+    if (product === "その他") {
+
+        otherArea.style.display = "block";
+
+        otherInput.focus();
+
+    } else {
+
+        otherArea.style.display = "none";
+
+        otherInput.value = "";
+
+    }
+}
+
+
+/* =========================
    署名キャンバス
 ========================= */
 
-const canvas = document.getElementById("signature");
-const ctx = canvas.getContext("2d");
+const canvas =
+    document.getElementById("signature");
+
+const ctx =
+    canvas.getContext("2d");
 
 let drawing = false;
+
 let hasSignature = false;
 
 
@@ -218,20 +315,39 @@ let hasSignature = false;
 
 function resizeCanvas() {
 
-    const rect = canvas.getBoundingClientRect();
+    const rect =
+        canvas.getBoundingClientRect();
 
-    const ratio = window.devicePixelRatio || 1;
+    const ratio =
+        window.devicePixelRatio || 1;
 
-    canvas.width = rect.width * ratio;
-    canvas.height = rect.height * ratio;
 
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    canvas.width =
+        rect.width * ratio;
+
+    canvas.height =
+        rect.height * ratio;
+
+
+    ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
 
     ctx.lineWidth = 2;
+
     ctx.lineCap = "round";
+
     ctx.lineJoin = "round";
+
     ctx.strokeStyle = "#000000";
 }
+
 
 resizeCanvas();
 
@@ -240,105 +356,153 @@ resizeCanvas();
    マウスで署名
 ========================= */
 
-canvas.addEventListener("mousedown", function(e) {
+canvas.addEventListener(
+    "mousedown",
+    function(e) {
 
-    drawing = true;
+        drawing = true;
 
-    const rect = canvas.getBoundingClientRect();
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        e.clientX - rect.left,
-        e.clientY - rect.top
-    );
-});
+        const rect =
+            canvas.getBoundingClientRect();
 
 
-canvas.addEventListener("mousemove", function(e) {
-
-    if (!drawing) return;
-
-    const rect = canvas.getBoundingClientRect();
-
-    ctx.lineTo(
-        e.clientX - rect.left,
-        e.clientY - rect.top
-    );
-
-    ctx.stroke();
-
-    hasSignature = true;
-});
+        ctx.beginPath();
 
 
-canvas.addEventListener("mouseup", function() {
+        ctx.moveTo(
+            e.clientX - rect.left,
+            e.clientY - rect.top
+        );
 
-    drawing = false;
+    }
+);
 
-});
+
+canvas.addEventListener(
+    "mousemove",
+    function(e) {
+
+        if (!drawing) return;
 
 
-canvas.addEventListener("mouseleave", function() {
+        const rect =
+            canvas.getBoundingClientRect();
 
-    drawing = false;
 
-});
+        ctx.lineTo(
+            e.clientX - rect.left,
+            e.clientY - rect.top
+        );
+
+
+        ctx.stroke();
+
+
+        hasSignature = true;
+
+    }
+);
+
+
+canvas.addEventListener(
+    "mouseup",
+    function() {
+
+        drawing = false;
+
+    }
+);
+
+
+canvas.addEventListener(
+    "mouseleave",
+    function() {
+
+        drawing = false;
+
+    }
+);
 
 
 /* =========================
    iPadで署名
 ========================= */
 
-canvas.addEventListener("touchstart", function(e) {
+canvas.addEventListener(
+    "touchstart",
+    function(e) {
 
-    e.preventDefault();
+        e.preventDefault();
 
-    drawing = true;
-
-    const rect = canvas.getBoundingClientRect();
-
-    const touch = e.touches[0];
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        touch.clientX - rect.left,
-        touch.clientY - rect.top
-    );
-
-}, { passive: false });
+        drawing = true;
 
 
-canvas.addEventListener("touchmove", function(e) {
-
-    e.preventDefault();
-
-    if (!drawing) return;
-
-    const rect = canvas.getBoundingClientRect();
-
-    const touch = e.touches[0];
-
-    ctx.lineTo(
-        touch.clientX - rect.left,
-        touch.clientY - rect.top
-    );
-
-    ctx.stroke();
-
-    hasSignature = true;
-
-}, { passive: false });
+        const rect =
+            canvas.getBoundingClientRect();
 
 
-canvas.addEventListener("touchend", function(e) {
+        const touch =
+            e.touches[0];
 
-    e.preventDefault();
 
-    drawing = false;
+        ctx.beginPath();
 
-}, { passive: false });
+
+        ctx.moveTo(
+            touch.clientX - rect.left,
+            touch.clientY - rect.top
+        );
+
+    },
+    { passive: false }
+);
+
+
+canvas.addEventListener(
+    "touchmove",
+    function(e) {
+
+        e.preventDefault();
+
+
+        if (!drawing) return;
+
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        const touch =
+            e.touches[0];
+
+
+        ctx.lineTo(
+            touch.clientX - rect.left,
+            touch.clientY - rect.top
+        );
+
+
+        ctx.stroke();
+
+
+        hasSignature = true;
+
+    },
+    { passive: false }
+);
+
+
+canvas.addEventListener(
+    "touchend",
+    function(e) {
+
+        e.preventDefault();
+
+        drawing = false;
+
+    },
+    { passive: false }
+);
 
 
 /* =========================
@@ -354,30 +518,35 @@ function clearSignature() {
         canvas.height
     );
 
+
     hasSignature = false;
 }
 
 
 /* =========================
-   注文番号を作る
-   例：
-   20261003-001
-   20261003-002
+   注文番号作成
 ========================= */
 
 function createOrderNumber() {
 
-    const today = new Date();
+    const today =
+        new Date();
 
-    const year = today.getFullYear();
 
-    const month = String(
-        today.getMonth() + 1
-    ).padStart(2, "0");
+    const year =
+        today.getFullYear();
 
-    const day = String(
-        today.getDate()
-    ).padStart(2, "0");
+
+    const month =
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const day =
+        String(
+            today.getDate()
+        ).padStart(2, "0");
 
 
     const dateString =
@@ -393,20 +562,28 @@ function createOrderNumber() {
     let count = 0;
 
 
-    orders.forEach(function(order) {
+    orders.forEach(
+        function(order) {
 
-        if (
-            order.orderNumber &&
-            order.orderNumber.startsWith(dateString)
-        ) {
-            count++;
+            if (
+                order.orderNumber &&
+                order.orderNumber.startsWith(
+                    dateString
+                )
+            ) {
+
+                count++;
+
+            }
+
         }
-
-    });
+    );
 
 
     const number =
-        String(count + 1).padStart(3, "0");
+        String(
+            count + 1
+        ).padStart(3, "0");
 
 
     return dateString + "-" + number;
@@ -414,29 +591,86 @@ function createOrderNumber() {
 
 
 /* =========================
-   注文を保存
+   注文保存
 ========================= */
 
 function saveOrder() {
 
     try {
 
-        /* 入力内容 */
+        /* お客様名 */
 
         const name =
-            document.getElementById("name").value.trim();
+            document
+                .getElementById("name")
+                .value
+                .trim();
 
-        const product =
-            document.getElementById("product").value.trim();
+
+        /* 商品 */
+
+        const selectedProduct =
+            document
+                .getElementById("product")
+                .value;
+
+
+        /* その他 */
+
+        const otherProduct =
+            document
+                .getElementById("otherProduct")
+                .value
+                .trim();
+
+
+        /* 商品名を決定 */
+
+        let product = selectedProduct;
+
+
+        if (selectedProduct === "その他") {
+
+            if (!otherProduct) {
+
+                alert(
+                    "その他の商品名を入力してください。"
+                );
+
+                return;
+            }
+
+
+            product =
+                "その他：" +
+                otherProduct;
+        }
+
+
+        /* 金額 */
 
         const price =
-            document.getElementById("price").value.trim();
+            document
+                .getElementById("price")
+                .value
+                .trim();
+
+
+        /* 署名日 */
 
         const delivery =
-            document.getElementById("delivery").value;
+            document
+                .getElementById("delivery")
+                .value;
+
+
+        /* 備考 */
 
         const note =
-            document.getElementById("note").value.trim();
+            document
+                .getElementById("note")
+                .value
+                .trim();
 
 
         /* お客様名チェック */
@@ -445,6 +679,18 @@ function saveOrder() {
 
             alert(
                 "お客様名を入力してください。"
+            );
+
+            return;
+        }
+
+
+        /* 商品チェック */
+
+        if (!selectedProduct) {
+
+            alert(
+                "商品を選択してください。"
             );
 
             return;
@@ -472,7 +718,9 @@ function saveOrder() {
         /* 署名画像 */
 
         const signature =
-            canvas.toDataURL("image/png");
+            canvas.toDataURL(
+                "image/png"
+            );
 
 
         /* 注文データ */
@@ -481,27 +729,35 @@ function saveOrder() {
 
             id: Date.now(),
 
-            orderNumber: orderNumber,
+            orderNumber:
+                orderNumber,
 
             date:
-                new Date().toLocaleString("ja-JP"),
+                new Date()
+                    .toLocaleString("ja-JP"),
 
-            name: name,
+            name:
+                name,
 
-            product: product,
+            product:
+                product,
 
-            price: price,
+            price:
+                price,
 
-            delivery: delivery,
+            delivery:
+                delivery,
 
-            note: note,
+            note:
+                note,
 
-            signature: signature
+            signature:
+                signature
 
         };
 
 
-        /* 保存済み注文を取得 */
+        /* 保存済み注文 */
 
         let orders =
             JSON.parse(
@@ -509,7 +765,7 @@ function saveOrder() {
             ) || [];
 
 
-        /* 新しい注文を追加 */
+        /* 追加 */
 
         orders.push(order);
 
@@ -522,7 +778,7 @@ function saveOrder() {
         );
 
 
-        /* 保存完了 */
+        /* 完了 */
 
         alert(
             "注文を保存しました。\n\n" +
@@ -531,12 +787,12 @@ function saveOrder() {
         );
 
 
-        /* 入力欄を空にする */
+        /* フォームクリア */
 
         clearForm();
 
 
-        /* 保存済み注文を表示 */
+        /* 一覧更新 */
 
         displayOrders();
 
@@ -544,6 +800,7 @@ function saveOrder() {
     } catch (error) {
 
         console.error(error);
+
 
         alert(
             "保存中にエラーが発生しました。\n\n" +
@@ -555,20 +812,45 @@ function saveOrder() {
 
 
 /* =========================
-   入力欄をクリア
+   フォームをクリア
 ========================= */
 
 function clearForm() {
 
-    document.getElementById("name").value = "";
+    document
+        .getElementById("name")
+        .value = "";
 
-    document.getElementById("product").value = "";
 
-    document.getElementById("price").value = "";
+    document
+        .getElementById("product")
+        .value = "";
 
-    document.getElementById("delivery").value = "";
 
-    document.getElementById("note").value = "";
+    document
+        .getElementById("otherProduct")
+        .value = "";
+
+
+    document
+        .getElementById("otherProductArea")
+        .style.display = "none";
+
+
+    document
+        .getElementById("price")
+        .value = "";
+
+
+    document
+        .getElementById("delivery")
+        .value = "";
+
+
+    document
+        .getElementById("note")
+        .value = "";
+
 
     clearSignature();
 }
@@ -582,12 +864,28 @@ function escapeHTML(text) {
 
     if (!text) return "";
 
+
     return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
 
@@ -607,7 +905,7 @@ function displayOrders() {
         ) || [];
 
 
-    /* 注文がない場合 */
+    /* 注文なし */
 
     if (orders.length === 0) {
 
@@ -618,7 +916,7 @@ function displayOrders() {
     }
 
 
-    /* 新しい注文を上にする */
+    /* 新しい順 */
 
     const reversedOrders =
         orders.slice().reverse();
@@ -627,82 +925,150 @@ function displayOrders() {
     ordersArea.innerHTML = "";
 
 
-    reversedOrders.forEach(function(order) {
+    reversedOrders.forEach(
+        function(order) {
 
-        const div =
-            document.createElement("div");
+            const div =
+                document.createElement(
+                    "div"
+                );
 
 
-        div.className = "order";
+            div.className =
+                "order";
 
 
-        div.innerHTML = `
+            div.innerHTML = `
 
-            <div class="order-number">
-                注文番号：
-                ${escapeHTML(order.orderNumber)}
-            </div>
+                <div class="order-number">
 
-            <div>
-                <strong>受付日時：</strong>
-                ${escapeHTML(order.date)}
-            </div>
+                    注文番号：
+                    ${escapeHTML(
+                        order.orderNumber
+                    )}
 
-            <div>
-                <strong>お客様名：</strong>
-                ${escapeHTML(order.name)}
-            </div>
+                </div>
 
-            <div>
-                <strong>商品：</strong>
-                ${escapeHTML(order.product)}
-            </div>
 
-            <div>
-                <strong>金額：</strong>
-                ${escapeHTML(order.price)}
-                円
-            </div>
+                <div>
 
-            <div>
-                <strong>署名日：</strong>
-                ${escapeHTML(order.delivery)}
-            </div>
+                    <strong>
+                        受付日時：
+                    </strong>
 
-            <div>
-                <strong>備考：</strong>
-                ${escapeHTML(order.note)}
-            </div>
+                    ${escapeHTML(
+                        order.date
+                    )}
 
-            <div>
-                <strong>お客様署名：</strong>
-                <br>
+                </div>
 
-                <img
-                    class="signature-image"
-                    src="${order.signature}"
-                    alt="お客様署名"
+
+                <div>
+
+                    <strong>
+                        お客様名：
+                    </strong>
+
+                    ${escapeHTML(
+                        order.name
+                    )}
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        商品：
+                    </strong>
+
+                    ${escapeHTML(
+                        order.product
+                    )}
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        金額：
+                    </strong>
+
+                    ${escapeHTML(
+                        order.price
+                    )}
+
+                    円
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        署名日：
+                    </strong>
+
+                    ${escapeHTML(
+                        order.delivery
+                    )}
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        備考：
+                    </strong>
+
+                    ${escapeHTML(
+                        order.note
+                    )}
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        お客様署名：
+                    </strong>
+
+                    <br>
+
+
+                    <img
+                        class="signature-image"
+                        src="${order.signature}"
+                        alt="お客様署名"
+                    >
+
+                </div>
+
+
+                <button
+                    class="delete-button"
+                    onclick="deleteOrder(${order.id})"
                 >
-            </div>
 
-            <button
-                class="delete-button"
-                onclick="deleteOrder(${order.id})"
-            >
-                この注文を削除
-            </button>
+                    この注文を削除
 
-        `;
+                </button>
+
+            `;
 
 
-        ordersArea.appendChild(div);
+            ordersArea.appendChild(div);
 
-    });
+        }
+    );
 }
 
 
 /* =========================
-   注文を削除
+   注文削除
 ========================= */
 
 function deleteOrder(id) {
@@ -712,6 +1078,7 @@ function deleteOrder(id) {
             "この注文を削除しますか？"
         )
     ) {
+
         return;
     }
 
@@ -723,11 +1090,13 @@ function deleteOrder(id) {
 
 
     orders =
-        orders.filter(function(order) {
+        orders.filter(
+            function(order) {
 
-            return order.id !== id;
+                return order.id !== id;
 
-        });
+            }
+        );
 
 
     localStorage.setItem(
@@ -741,7 +1110,7 @@ function deleteOrder(id) {
 
 
 /* =========================
-   起動時に注文を表示
+   起動時
 ========================= */
 
 displayOrders();
