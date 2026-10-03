@@ -41,8 +41,7 @@ label {
 }
 
 input,
-textarea,
-select {
+textarea {
     width: 100%;
     box-sizing: border-box;
     padding: 12px;
@@ -56,10 +55,6 @@ textarea {
     resize: vertical;
 }
 
-.signature-area {
-    margin-top: 15px;
-}
-
 #signature {
     width: 100%;
     height: 200px;
@@ -67,6 +62,7 @@ textarea {
     border-radius: 8px;
     background: white;
     touch-action: none;
+    display: block;
 }
 
 button {
@@ -101,6 +97,7 @@ button {
     padding: 15px;
     margin-top: 15px;
     background: #fafafa;
+    line-height: 1.8;
 }
 
 .order-number {
@@ -117,73 +114,98 @@ button {
     background: white;
     margin-top: 10px;
 }
-
-.small {
-    color: #777;
-    font-size: 13px;
-}
 </style>
 </head>
+
 
 <body>
 
 <div class="container">
 
-<h1>注文受付</h1>
+    <h1>注文受付</h1>
 
-<div class="card">
+    <!-- 注文入力 -->
+    <div class="card">
 
-<label>お客様名</label>
-<input type="text" id="name" placeholder="例：山田 太郎">
+        <label>お客様名</label>
+        <input
+            type="text"
+            id="name"
+            placeholder="例：山田 太郎"
+        >
 
-<label>電話番号</label>
-<input type="tel" id="phone" placeholder="例：090-1234-5678">
+        <label>商品</label>
+        <input
+            type="text"
+            id="product"
+            placeholder="例：実印・銀行印セット"
+        >
 
-<label>商品</label>
-<input type="text" id="product" placeholder="例：実印・銀行印セット">
+        <label>金額</label>
+        <input
+            type="number"
+            id="price"
+            placeholder="例：15000"
+        >
 
-<label>金額</label>
-<input type="number" id="price" placeholder="例：15000">
+        <label>署名日</label>
+        <input
+            type="date"
+            id="delivery"
+        >
 
-<label>署名日</label>
-<input type="date" id="delivery">
-
-<label>備考</label>
-<textarea id="note" placeholder="その他ご要望など"></textarea>
-
-<div class="signature-area">
-
-<label>お客様署名</label>
-
-<canvas id="signature"></canvas>
-
-<button type="button" class="clear-button" onclick="clearSignature()">
-署名を書き直す
-</button>
-
-</div>
-
-<button type="button" class="save-button" onclick="saveOrder()">
-注文内容と署名を保存
-</button>
-
-</div>
+        <label>備考</label>
+        <textarea
+            id="note"
+            placeholder="その他ご要望など"
+        ></textarea>
 
 
-<div class="card">
+        <!-- 署名 -->
+        <label>お客様署名</label>
 
-<h2>保存済み注文</h2>
+        <canvas id="signature"></canvas>
 
-<div id="orders">
-まだ注文はありません。
-</div>
+        <button
+            type="button"
+            class="clear-button"
+            onclick="clearSignature()"
+        >
+            署名を書き直す
+        </button>
 
-</div>
+
+        <!-- 保存 -->
+        <button
+            type="button"
+            class="save-button"
+            onclick="saveOrder()"
+        >
+            注文内容と署名を保存
+        </button>
+
+    </div>
+
+
+    <!-- 保存済み注文 -->
+    <div class="card">
+
+        <h2>保存済み注文</h2>
+
+        <div id="orders">
+            まだ注文はありません。
+        </div>
+
+    </div>
 
 </div>
 
 
 <script>
+
+/* =========================
+   署名キャンバス
+========================= */
 
 const canvas = document.getElementById("signature");
 const ctx = canvas.getContext("2d");
@@ -192,9 +214,7 @@ let drawing = false;
 let hasSignature = false;
 
 
-/* =========================
-   署名欄の設定
-========================= */
+/* キャンバスサイズ */
 
 function resizeCanvas() {
 
@@ -205,19 +225,19 @@ function resizeCanvas() {
     canvas.width = rect.width * ratio;
     canvas.height = rect.height * ratio;
 
-    ctx.scale(ratio, ratio);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
     ctx.lineWidth = 2;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.strokeStyle = "#000";
+    ctx.strokeStyle = "#000000";
 }
 
 resizeCanvas();
 
 
 /* =========================
-   マウス操作
+   マウスで署名
 ========================= */
 
 canvas.addEventListener("mousedown", function(e) {
@@ -232,7 +252,6 @@ canvas.addEventListener("mousedown", function(e) {
         e.clientX - rect.left,
         e.clientY - rect.top
     );
-
 });
 
 
@@ -250,7 +269,6 @@ canvas.addEventListener("mousemove", function(e) {
     ctx.stroke();
 
     hasSignature = true;
-
 });
 
 
@@ -269,7 +287,7 @@ canvas.addEventListener("mouseleave", function() {
 
 
 /* =========================
-   iPad タッチ操作
+   iPadで署名
 ========================= */
 
 canvas.addEventListener("touchstart", function(e) {
@@ -289,7 +307,7 @@ canvas.addEventListener("touchstart", function(e) {
         touch.clientY - rect.top
     );
 
-});
+}, { passive: false });
 
 
 canvas.addEventListener("touchmove", function(e) {
@@ -311,7 +329,7 @@ canvas.addEventListener("touchmove", function(e) {
 
     hasSignature = true;
 
-});
+}, { passive: false });
 
 
 canvas.addEventListener("touchend", function(e) {
@@ -320,7 +338,7 @@ canvas.addEventListener("touchend", function(e) {
 
     drawing = false;
 
-});
+}, { passive: false });
 
 
 /* =========================
@@ -342,6 +360,9 @@ function clearSignature() {
 
 /* =========================
    注文番号を作る
+   例：
+   20261003-001
+   20261003-002
 ========================= */
 
 function createOrderNumber() {
@@ -358,15 +379,19 @@ function createOrderNumber() {
         today.getDate()
     ).padStart(2, "0");
 
+
     const dateString =
         year + month + day;
+
 
     const orders =
         JSON.parse(
             localStorage.getItem("orders")
         ) || [];
 
+
     let count = 0;
+
 
     orders.forEach(function(order) {
 
@@ -379,8 +404,10 @@ function createOrderNumber() {
 
     });
 
+
     const number =
         String(count + 1).padStart(3, "0");
+
 
     return dateString + "-" + number;
 }
@@ -394,11 +421,10 @@ function saveOrder() {
 
     try {
 
+        /* 入力内容 */
+
         const name =
             document.getElementById("name").value.trim();
-
-        const phone =
-            document.getElementById("phone").value.trim();
 
         const product =
             document.getElementById("product").value.trim();
@@ -417,7 +443,9 @@ function saveOrder() {
 
         if (!name) {
 
-            alert("お客様名を入力してください。");
+            alert(
+                "お客様名を入力してください。"
+            );
 
             return;
         }
@@ -427,16 +455,12 @@ function saveOrder() {
 
         if (!hasSignature) {
 
-            alert("お客様の署名を入力してください。");
+            alert(
+                "お客様の署名を入力してください。"
+            );
 
             return;
         }
-
-
-        /* 署名画像 */
-
-        const signature =
-            canvas.toDataURL("image/png");
 
 
         /* 注文番号 */
@@ -445,9 +469,17 @@ function saveOrder() {
             createOrderNumber();
 
 
+        /* 署名画像 */
+
+        const signature =
+            canvas.toDataURL("image/png");
+
+
         /* 注文データ */
 
         const order = {
+
+            id: Date.now(),
 
             orderNumber: orderNumber,
 
@@ -455,8 +487,6 @@ function saveOrder() {
                 new Date().toLocaleString("ja-JP"),
 
             name: name,
-
-            phone: phone,
 
             product: product,
 
@@ -471,7 +501,7 @@ function saveOrder() {
         };
 
 
-        /* 保存済みデータを取得 */
+        /* 保存済み注文を取得 */
 
         let orders =
             JSON.parse(
@@ -492,15 +522,16 @@ function saveOrder() {
         );
 
 
-        /* 完了表示 */
+        /* 保存完了 */
 
         alert(
-            "注文を保存しました。\n\n注文番号：" +
+            "注文を保存しました。\n\n" +
+            "注文番号：" +
             orderNumber
         );
 
 
-        /* 入力欄をクリア */
+        /* 入力欄を空にする */
 
         clearForm();
 
@@ -520,7 +551,6 @@ function saveOrder() {
         );
 
     }
-
 }
 
 
@@ -532,8 +562,6 @@ function clearForm() {
 
     document.getElementById("name").value = "";
 
-    document.getElementById("phone").value = "";
-
     document.getElementById("product").value = "";
 
     document.getElementById("price").value = "";
@@ -543,7 +571,6 @@ function clearForm() {
     document.getElementById("note").value = "";
 
     clearSignature();
-
 }
 
 
@@ -561,7 +588,6 @@ function escapeHTML(text) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
-
 }
 
 
@@ -575,11 +601,13 @@ function displayOrders() {
         document.getElementById("orders");
 
 
-    let orders =
+    const orders =
         JSON.parse(
             localStorage.getItem("orders")
         ) || [];
 
+
+    /* 注文がない場合 */
 
     if (orders.length === 0) {
 
@@ -592,17 +620,18 @@ function displayOrders() {
 
     /* 新しい注文を上にする */
 
-    orders =
+    const reversedOrders =
         orders.slice().reverse();
 
 
     ordersArea.innerHTML = "";
 
 
-    orders.forEach(function(order) {
+    reversedOrders.forEach(function(order) {
 
         const div =
             document.createElement("div");
+
 
         div.className = "order";
 
@@ -610,7 +639,8 @@ function displayOrders() {
         div.innerHTML = `
 
             <div class="order-number">
-                注文番号：${escapeHTML(order.orderNumber)}
+                注文番号：
+                ${escapeHTML(order.orderNumber)}
             </div>
 
             <div>
@@ -621,11 +651,6 @@ function displayOrders() {
             <div>
                 <strong>お客様名：</strong>
                 ${escapeHTML(order.name)}
-            </div>
-
-            <div>
-                <strong>電話番号：</strong>
-                ${escapeHTML(order.phone)}
             </div>
 
             <div>
@@ -650,59 +675,44 @@ function displayOrders() {
             </div>
 
             <div>
-                <strong>署名：</strong>
+                <strong>お客様署名：</strong>
                 <br>
+
                 <img
                     class="signature-image"
                     src="${order.signature}"
+                    alt="お客様署名"
                 >
             </div>
 
             <button
                 class="delete-button"
-                onclick="deleteOrder(${order.id || 0})">
+                onclick="deleteOrder(${order.id})"
+            >
                 この注文を削除
             </button>
 
         `;
 
 
-        /* idがない古いデータ対策 */
-
-        if (!order.id) {
-
-            order.id = Date.now();
-
-        }
-
-
         ordersArea.appendChild(div);
 
     });
-
-
-    /* idを保存し直す */
-
-    localStorage.setItem(
-        "orders",
-        JSON.stringify(
-            orders.slice().reverse()
-        )
-    );
-
 }
 
 
 /* =========================
-   注文削除
+   注文を削除
 ========================= */
 
 function deleteOrder(id) {
 
-    if (!confirm("この注文を削除しますか？")) {
-
+    if (
+        !confirm(
+            "この注文を削除しますか？"
+        )
+    ) {
         return;
-
     }
 
 
@@ -727,12 +737,11 @@ function deleteOrder(id) {
 
 
     displayOrders();
-
 }
 
 
 /* =========================
-   初期表示
+   起動時に注文を表示
 ========================= */
 
 displayOrders();
