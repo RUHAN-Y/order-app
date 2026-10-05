@@ -55,11 +55,8 @@ body {
 
 h1 {
     text-align: center;
-
     font-size: 32px;
-
-    margin:
-        10px 0 25px;
+    margin: 10px 0 25px;
 }
 
 
@@ -82,7 +79,7 @@ h1 {
 
 
 /* =========================
-   入力
+   入力欄
 ========================= */
 
 label {
@@ -105,8 +102,7 @@ textarea {
 
     padding: 14px;
 
-    border:
-        1px solid #ccc;
+    border: 1px solid #ccc;
 
     border-radius: 10px;
 
@@ -133,7 +129,6 @@ textarea {
 ========================= */
 
 #otherProductArea {
-
     display: none;
 }
 
@@ -143,11 +138,9 @@ textarea {
 ========================= */
 
 #noticeArea {
-
     display: none;
 
     margin-top: 20px;
-
     margin-bottom: 25px;
 }
 
@@ -170,7 +163,7 @@ textarea {
 }
 
 
-/* 注意事項1項目 */
+/* 注意事項 */
 
 .notice-item {
 
@@ -186,20 +179,17 @@ textarea {
 
     background: #f7f7f7;
 
-    border:
-        1px solid #ddd;
+    border: 1px solid #ddd;
 
     border-radius: 10px;
 
     cursor: pointer;
 
-    -webkit-user-select: none;
-
     user-select: none;
 }
 
 
-/* チェックボックス */
+/* チェック部分 */
 
 .notice-checkbox {
 
@@ -209,8 +199,7 @@ textarea {
 
     height: 30px;
 
-    border:
-        2px solid #777;
+    border: 2px solid #777;
 
     border-radius: 5px;
 
@@ -261,7 +250,7 @@ textarea {
 }
 
 
-/* チェック不足 */
+/* 注意事項不足 */
 
 .notice-warning {
 
@@ -275,8 +264,7 @@ textarea {
 
     background: #fff3f3;
 
-    border:
-        1px solid #e0aaaa;
+    border: 1px solid #e0aaaa;
 
     color: #a00000;
 
@@ -286,7 +274,6 @@ textarea {
 }
 
 .notice-warning.show {
-
     display: block;
 }
 
@@ -328,7 +315,6 @@ textarea {
 }
 
 .photo-button:active {
-
     transform: scale(0.98);
 }
 
@@ -363,8 +349,7 @@ textarea {
 
     border-radius: 10px;
 
-    border:
-        1px solid #ccc;
+    border: 1px solid #ccc;
 }
 
 .photo-delete {
@@ -398,7 +383,6 @@ textarea {
 ========================= */
 
 .signature-area {
-
     width: 100%;
 }
 
@@ -412,8 +396,7 @@ textarea {
 
     background: white;
 
-    border:
-        2px solid #aaa;
+    border: 2px solid #aaa;
 
     border-radius: 12px;
 
@@ -464,7 +447,6 @@ textarea {
 }
 
 .save-button:active {
-
     transform: scale(0.98);
 }
 
@@ -482,8 +464,7 @@ textarea {
 
 .order-card {
 
-    border:
-        1px solid #ddd;
+    border: 1px solid #ddd;
 
     border-radius: 14px;
 
@@ -529,8 +510,7 @@ textarea {
 
     border-radius: 8px;
 
-    border:
-        1px solid #ccc;
+    border: 1px solid #ccc;
 }
 
 .saved-signature {
@@ -539,8 +519,7 @@ textarea {
 
     max-width: 500px;
 
-    border:
-        1px solid #ccc;
+    border: 1px solid #ccc;
 
     border-radius: 8px;
 
@@ -566,13 +545,12 @@ textarea {
 
 
 /* =========================
-   iPad横向き
+   PC・iPad横向き
 ========================= */
 
 @media (min-width: 768px) {
 
     body {
-
         padding: 30px;
     }
 
@@ -580,17 +558,14 @@ textarea {
 
         display: grid;
 
-        grid-template-columns:
-            1fr 1fr;
+        grid-template-columns: 1fr 1fr;
 
         gap: 0 25px;
     }
 
     .full-width {
-
         grid-column: 1 / 3;
     }
-
 }
 
 
@@ -601,30 +576,24 @@ textarea {
 @media (max-width: 767px) {
 
     body {
-
         padding: 12px;
     }
 
     h1 {
-
         font-size: 27px;
     }
 
     .card {
-
         padding: 18px;
     }
 
     #signature {
-
         height: 220px;
     }
 
     .notice-text {
-
         font-size: 15px;
     }
-
 }
 
 </style>
@@ -651,7 +620,9 @@ textarea {
 <div class="form-grid">
 
 
-<!-- お客様名 -->
+<!-- =========================
+     お客様名
+========================= -->
 
 <div>
 
@@ -667,7 +638,9 @@ textarea {
 </div>
 
 
-<!-- 商品 -->
+<!-- =========================
+     商品
+========================= -->
 
 <div>
 
@@ -707,30 +680,35 @@ textarea {
 ⑥ ホームページ
 </option>
 
-<option value="その他">
-⑦ その他
+<option value="入稿データ">
+⑦ 入稿データ
+</option>
+
+<option value="伝票">
+⑧ 伝票
+</option>
+
+<option value="オーダーメイド依頼">
+⑨ オーダーメイド依頼
+</option>
+
+<option value="オーダーメイド決定">
+⑩ オーダーメイド決定
+</option>
+
+<option value="持込印材">
+⑪ 持込印材
 </option>
 
 </select>
 
 
-<div id="otherProductArea">
-
-<label>
-その他の商品名
-</label>
-
-<input
-    type="text"
-    id="otherProduct"
-    placeholder="商品名を入力">
-
-</div>
-
 </div>
 
 
-<!-- 受付日 -->
+<!-- =========================
+     受付日
+========================= -->
 
 <div>
 
@@ -745,7 +723,9 @@ textarea {
 </div>
 
 
-<!-- 備考 -->
+<!-- =========================
+     備考
+========================= -->
 
 <div>
 
@@ -839,9 +819,7 @@ textarea {
 
 
 <div class="notice-title">
-
 注意事項
-
 </div>
 
 
@@ -853,487 +831,10 @@ textarea {
 </div>
 
 
-<!-- =========================
-     ① 名刺
-========================= -->
+<!-- ここにJavaScriptで
+     商品別注意事項を表示 -->
 
-<div id="businessCardNotices">
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(0)">
-
-<div
-    id="noticeCheck0"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(1)">
-
-<div
-    id="noticeCheck1"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(2)">
-
-<div
-    id="noticeCheck2"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(3)">
-
-<div
-    id="noticeCheck3"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(4)">
-
-<div
-    id="noticeCheck4"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(5)">
-
-<div
-    id="noticeCheck5"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(6)">
-
-<div
-    id="noticeCheck6"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(7)">
-
-<div
-    id="noticeCheck7"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(8)">
-
-<div
-    id="noticeCheck8"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<!-- =========================
-     ② 印鑑
-========================= -->
-
-<div id="sealNotices">
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(0)">
-
-<div
-    id="noticeCheck0"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-版下の内容を確認いたしました。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(1)">
-
-<div
-    id="noticeCheck1"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。
-
-<div class="notice-red">
-
-最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。
-
-</div>
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(2)">
-
-<div
-    id="noticeCheck2"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(3)">
-
-<div
-    id="noticeCheck3"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(4)">
-
-<div
-    id="noticeCheck4"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(5)">
-
-<div
-    id="noticeCheck5"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-印鑑商品をご注文のお客様は、印鑑製作依頼書（別紙）の内容で彫刻することを了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(6)">
-
-<div
-    id="noticeCheck6"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-注文時のみ電子印（デジタル印鑑）は重要認印、角印データのみお渡しが可能です。実印、及び銀行印のお渡しはセキュリティの観点から行っておりません。
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<!-- =========================
-     ③ スタンプ・ゴム印
-========================= -->
-
-<div id="stampNotices">
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(0)">
-
-<div
-    id="noticeCheck0"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-版下の内容を確認いたしました。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(1)">
-
-<div
-    id="noticeCheck1"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。
-
-<div class="notice-red">
-
-最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。
-
-</div>
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(2)">
-
-<div
-    id="noticeCheck2"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(3)">
-
-<div
-    id="noticeCheck3"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。
-
-</div>
-
-</div>
-
-
-<div
-    class="notice-item"
-    onclick="toggleNotice(4)">
-
-<div
-    id="noticeCheck4"
-    class="notice-checkbox">
-
-☐
-
-</div>
-
-<div class="notice-text">
-
-お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。
-
-</div>
-
-</div>
-
-
-</div>
+<div id="noticeList"></div>
 
 
 <div
@@ -1385,7 +886,9 @@ textarea {
 </div>
 
 
-<!-- 保存 -->
+<!-- =========================
+     保存
+========================= -->
 
 <button
     type="button"
@@ -1408,9 +911,7 @@ textarea {
 
 
 <div class="order-title">
-
 保存済み注文
-
 </div>
 
 
@@ -1427,16 +928,161 @@ textarea {
 <script>
 
 
-/* =========================
+/* =========================================================
    商品別注意事項
-========================= */
+========================================================= */
+
+const noticeData = {
+
+
+    /* =========================================
+       ① 名刺
+    ========================================= */
+
+    "名刺": [
+
+        {
+            text:
+            "弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。"
+        },
+
+        {
+            text:
+            "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。"
+        },
+
+        {
+            text:
+            "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
+        },
+
+        {
+            text:
+            "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+        },
+
+        {
+            text:
+            "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+        },
+
+        {
+            text:
+            "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。"
+        },
+
+        {
+            text:
+            "以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？"
+        },
+
+        {
+            text:
+            "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
+        },
+
+        {
+            text:
+            "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。"
+        }
+
+    ],
+
+
+    /* =========================================
+       ② 印鑑
+    ========================================= */
+
+    "印鑑": [
+
+        {
+            text:
+            "版下の内容を確認いたしました。"
+        },
+
+        {
+            text:
+            "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。",
+            red:
+            "最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。"
+        },
+
+        {
+            text:
+            "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。"
+        },
+
+        {
+            text:
+            "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+        },
+
+        {
+            text:
+            "お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。"
+        },
+
+        {
+            text:
+            "印鑑商品をご注文のお客様は、印鑑製作依頼書（別紙）の内容で彫刻することを了承します。"
+        },
+
+        {
+            text:
+            "注文時のみ電子印（デジタル印鑑）は重要認印、角印データのみお渡しが可能です。実印、及び銀行印のお渡しはセキュリティの観点から行っておりません。"
+        }
+
+    ],
+
+
+    /* =========================================
+       ③ スタンプ・ゴム印
+    ========================================= */
+
+    "スタンプ・ゴム印": [
+
+        {
+            text:
+            "版下の内容を確認いたしました。"
+        },
+
+        {
+            text:
+            "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。",
+            red:
+            "最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。"
+        },
+
+        {
+            text:
+            "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。"
+        },
+
+        {
+            text:
+            "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+        },
+
+        {
+            text:
+            "お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。"
+        }
+
+    ]
+
+};
+
+
+/* =========================================================
+   現在のチェック状態
+========================================================= */
 
 let noticeChecked = [];
 
 
-/* =========================
+/* =========================================================
    商品変更
-========================= */
+========================================================= */
 
 function checkOtherProduct() {
 
@@ -1446,37 +1092,19 @@ function checkOtherProduct() {
         ).value;
 
 
-    const area =
-        document.getElementById(
-            "otherProductArea"
-        );
-
-
-    /* その他 */
-
-    if (product === "その他") {
-
-        area.style.display = "block";
-
-    } else {
-
-        area.style.display = "none";
-
-        document.getElementById(
-            "otherProduct"
-        ).value = "";
-
-    }
-
+    /*
+       今回は「その他」がなくなったため、
+       商品変更時に注意事項を表示
+    */
 
     showProductNotices(product);
 
 }
 
 
-/* =========================
+/* =========================================================
    商品別注意事項表示
-========================= */
+========================================================= */
 
 function showProductNotices(product) {
 
@@ -1485,96 +1113,175 @@ function showProductNotices(product) {
             "noticeArea"
         );
 
-
-    const businessCard =
+    const noticeList =
         document.getElementById(
-            "businessCardNotices"
+            "noticeList"
+        );
+
+    const warning =
+        document.getElementById(
+            "noticeWarning"
         );
 
 
-    const seal =
-        document.getElementById(
-            "sealNotices"
-        );
+    /*
+       一旦リセット
+    */
 
+    noticeList.innerHTML = "";
 
-    const stamp =
-        document.getElementById(
-            "stampNotices"
-        );
-
-
-    /* 全部非表示 */
-
-    noticeArea.style.display = "none";
-
-    businessCard.style.display = "none";
-
-    seal.style.display = "none";
-
-    stamp.style.display = "none";
-
-
-    /* チェックをリセット */
+    warning.classList.remove("show");
 
     noticeChecked = [];
 
 
-    /* 名刺 */
+    /*
+       注意事項がない商品
+    */
 
-    if (product === "名刺") {
-
-        noticeChecked =
-            new Array(9).fill(false);
-
-        noticeArea.style.display = "block";
-
-        businessCard.style.display =
-            "block";
-
-    }
-
-
-    /* 印鑑 */
-
-    else if (product === "印鑑") {
-
-        noticeChecked =
-            new Array(7).fill(false);
-
-        noticeArea.style.display = "block";
-
-        seal.style.display =
-            "block";
-
-    }
-
-
-    /* スタンプ・ゴム印 */
-
-    else if (
-        product === "スタンプ・ゴム印"
+    if (
+        !noticeData[product]
     ) {
 
-        noticeChecked =
-            new Array(5).fill(false);
+        noticeArea.style.display =
+            "none";
 
-        noticeArea.style.display = "block";
-
-        stamp.style.display =
-            "block";
+        return;
 
     }
 
 
-    updateNoticeDisplay();
+    /*
+       注意事項がある商品
+    */
+
+    const notices =
+        noticeData[product];
+
+
+    noticeChecked =
+        new Array(
+            notices.length
+        ).fill(false);
+
+
+    noticeArea.style.display =
+        "block";
+
+
+    /*
+       注意事項を生成
+    */
+
+    notices.forEach(
+        (notice, index) => {
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "notice-item";
+
+
+            item.onclick =
+                function() {
+
+                    toggleNotice(index);
+
+                };
+
+
+            const checkbox =
+                document.createElement(
+                    "div"
+                );
+
+
+            checkbox.className =
+                "notice-checkbox";
+
+
+            checkbox.id =
+                "noticeCheck-" +
+                index;
+
+
+            checkbox.innerHTML =
+                "☐";
+
+
+            const text =
+                document.createElement(
+                    "div"
+                );
+
+
+            text.className =
+                "notice-text";
+
+
+            text.innerHTML =
+                escapeHTML(
+                    notice.text
+                );
+
+
+            /*
+               赤文字がある場合
+            */
+
+            if (
+                notice.red
+            ) {
+
+                const red =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                red.className =
+                    "notice-red";
+
+
+                red.textContent =
+                    notice.red;
+
+
+                text.appendChild(
+                    red
+                );
+
+            }
+
+
+            item.appendChild(
+                checkbox
+            );
+
+
+            item.appendChild(
+                text
+            );
+
+
+            noticeList.appendChild(
+                item
+            );
+
+        }
+    );
 
 }
 
 
-/* =========================
+/* =========================================================
    注意事項チェック
-========================= */
+========================================================= */
 
 function toggleNotice(index) {
 
@@ -1592,15 +1299,44 @@ function toggleNotice(index) {
         !noticeChecked[index];
 
 
-    updateNoticeDisplay();
+    const checkbox =
+        document.getElementById(
+            "noticeCheck-" +
+            index
+        );
+
+
+    if (
+        noticeChecked[index]
+    ) {
+
+        checkbox.innerHTML =
+            "✓";
+
+        checkbox.classList.add(
+            "checked"
+        );
+
+    } else {
+
+        checkbox.innerHTML =
+            "☐";
+
+        checkbox.classList.remove(
+            "checked"
+        );
+
+    }
 
 
     /*
-       全部チェックされたら
+       全部チェック済みなら
        警告を消す
     */
 
-    if (allNoticesChecked()) {
+    if (
+        allNoticesChecked()
+    ) {
 
         document
             .getElementById(
@@ -1615,104 +1351,15 @@ function toggleNotice(index) {
 }
 
 
-/* =========================
-   チェック表示
-========================= */
-
-function updateNoticeDisplay() {
-
-    /*
-       同じIDが商品ごとに存在するため、
-       現在表示されている商品だけを
-       更新する
-    */
-
-    const product =
-        document.getElementById(
-            "product"
-        ).value;
-
-
-    let area = null;
-
-
-    if (product === "名刺") {
-
-        area =
-            document.getElementById(
-                "businessCardNotices"
-            );
-
-    }
-
-    else if (product === "印鑑") {
-
-        area =
-            document.getElementById(
-                "sealNotices"
-            );
-
-    }
-
-    else if (
-        product === "スタンプ・ゴム印"
-    ) {
-
-        area =
-            document.getElementById(
-                "stampNotices"
-            );
-
-    }
-
-
-    if (!area) {
-
-        return;
-
-    }
-
-
-    const checkboxes =
-        area.querySelectorAll(
-            ".notice-checkbox"
-        );
-
-
-    checkboxes.forEach(
-        (checkbox, index) => {
-
-            if (noticeChecked[index]) {
-
-                checkbox.innerHTML =
-                    "✓";
-
-                checkbox.classList.add(
-                    "checked"
-                );
-
-            } else {
-
-                checkbox.innerHTML =
-                    "☐";
-
-                checkbox.classList.remove(
-                    "checked"
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================
-   全チェック確認
-========================= */
+/* =========================================================
+   全注意事項チェック確認
+========================================================= */
 
 function allNoticesChecked() {
+
+    /*
+       注意事項がない商品
+    */
 
     if (
         noticeChecked.length === 0
@@ -1724,16 +1371,19 @@ function allNoticesChecked() {
 
 
     return noticeChecked.every(
-        value =>
-            value === true
+        function(value) {
+
+            return value === true;
+
+        }
     );
 
 }
 
 
-/* =========================
+/* =========================================================
    写真
-========================= */
+========================================================= */
 
 let selectedPhotos = [];
 
@@ -1816,27 +1466,31 @@ function handlePhotos(event) {
     }
 
 
-    files.forEach(file => {
+    files.forEach(
+        function(file) {
 
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function(e) {
-
-                selectedPhotos.push(
-                    e.target.result
-                );
-
-                displayPhotoPreview();
-
-            };
+            const reader =
+                new FileReader();
 
 
-        reader.readAsDataURL(file);
+            reader.onload =
+                function(e) {
 
-    });
+                    selectedPhotos.push(
+                        e.target.result
+                    );
+
+                    displayPhotoPreview();
+
+                };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
 
 
     event.target.value = "";
@@ -1858,7 +1512,7 @@ function displayPhotoPreview() {
 
 
     selectedPhotos.forEach(
-        (photo, index) => {
+        function(photo, index) {
 
             const box =
                 document.createElement(
@@ -1911,9 +1565,9 @@ function removePhoto(index) {
 }
 
 
-/* =========================
+/* =========================================================
    署名
-========================= */
+========================================================= */
 
 const canvas =
     document.getElementById(
@@ -1922,7 +1576,9 @@ const canvas =
 
 
 const ctx =
-    canvas.getContext("2d");
+    canvas.getContext(
+        "2d"
+    );
 
 
 let drawing = false;
@@ -1969,7 +1625,7 @@ function resizeCanvas() {
 }
 
 
-/* 座標 */
+/* 座標取得 */
 
 function getPosition(e) {
 
@@ -2088,6 +1744,7 @@ function stopDrawing(e) {
 
     drawing = false;
 
+
     ctx.closePath();
 
 }
@@ -2160,9 +1817,9 @@ function clearSignature() {
 }
 
 
-/* =========================
-   注文番号
-========================= */
+/* =========================================================
+   注文番号作成
+========================================================= */
 
 function createOrderNumber() {
 
@@ -2206,12 +1863,16 @@ function createOrderNumber() {
 
     const todayOrders =
         orders.filter(
-            order =>
-                order.orderNumber &&
-                order.orderNumber
-                    .startsWith(
+            function(order) {
+
+                return (
+                    order.orderNumber &&
+                    order.orderNumber.startsWith(
                         dateString
                     )
+                );
+
+            }
         );
 
 
@@ -2233,9 +1894,9 @@ function createOrderNumber() {
 }
 
 
-/* =========================
+/* =========================================================
    注文保存
-========================= */
+========================================================= */
 
 function saveOrder() {
 
@@ -2250,21 +1911,13 @@ function saveOrder() {
 
     /* 商品 */
 
-    const productSelect =
+    const product =
         document.getElementById(
             "product"
         ).value;
 
 
-    /* その他 */
-
-    const otherProduct =
-        document.getElementById(
-            "otherProduct"
-        ).value.trim();
-
-
-    /* 日付 */
+    /* 受付日 */
 
     const delivery =
         document.getElementById(
@@ -2284,7 +1937,6 @@ function saveOrder() {
        入力チェック
     ========================= */
 
-
     if (!name) {
 
         alert(
@@ -2296,7 +1948,7 @@ function saveOrder() {
     }
 
 
-    if (!productSelect) {
+    if (!product) {
 
         alert(
             "商品を選択してください。"
@@ -2307,78 +1959,44 @@ function saveOrder() {
     }
 
 
-    if (
-        productSelect === "その他"
-        &&
-        !otherProduct
-    ) {
-
-        alert(
-            "その他の商品名を入力してください。"
-        );
-
-        return;
-
-    }
-
-
     /* =========================
-       商品別注意事項
+       注意事項チェック
     ========================= */
 
     if (
-
-        productSelect === "名刺"
-
-        ||
-
-        productSelect === "印鑑"
-
-        ||
-
-        productSelect ===
-            "スタンプ・ゴム印"
-
+        !allNoticesChecked()
     ) {
 
-
-        if (
-            !allNoticesChecked()
-        ) {
-
-
-            document
-                .getElementById(
-                    "noticeWarning"
-                )
-                .classList.add(
-                    "show"
-                );
-
-
-            alert(
-                "注意事項をすべて確認し、チェックしてください。"
+        const warning =
+            document.getElementById(
+                "noticeWarning"
             );
 
 
-            document
-                .getElementById(
-                    "noticeArea"
-                )
-                .scrollIntoView({
-
-                    behavior:
-                        "smooth",
-
-                    block:
-                        "center"
-
-                });
+        warning.classList.add(
+            "show"
+        );
 
 
-            return;
+        alert(
+            "注意事項をすべて確認し、チェックしてください。"
+        );
 
-        }
+
+        document
+            .getElementById(
+                "noticeArea"
+            )
+            .scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "center"
+
+            });
+
+
+        return;
 
     }
 
@@ -2399,26 +2017,6 @@ function saveOrder() {
 
 
     /* =========================
-       商品名
-    ========================= */
-
-    let product =
-        productSelect;
-
-
-    if (
-        productSelect ===
-        "その他"
-    ) {
-
-        product =
-            "その他：" +
-            otherProduct;
-
-    }
-
-
-    /* =========================
        注文データ
     ========================= */
 
@@ -2432,7 +2030,7 @@ function saveOrder() {
             createOrderNumber(),
 
 
-        date:
+        receptionDate:
             new Date()
                 .toLocaleDateString(
                     "ja-JP"
@@ -2465,29 +2063,10 @@ function saveOrder() {
             ),
 
 
-        /*
-           注意事項了承済み
-        */
-
         noticesAgreed:
-
-            (
-                productSelect ===
-                    "名刺"
-
-                ||
-
-                productSelect ===
-                    "印鑑"
-
-                ||
-
-                productSelect ===
-                    "スタンプ・ゴム印"
-            )
-
-            ? true
-            : false
+            noticeChecked.length > 0
+                ? true
+                : false
 
     };
 
@@ -2504,7 +2083,9 @@ function saveOrder() {
         );
 
 
-    orders.push(order);
+    orders.push(
+        order
+    );
 
 
     try {
@@ -2548,9 +2129,9 @@ function saveOrder() {
 }
 
 
-/* =========================
+/* =========================================================
    フォームリセット
-========================= */
+========================================================= */
 
 function clearForm() {
 
@@ -2566,11 +2147,6 @@ function clearForm() {
 
 
     document.getElementById(
-        "otherProduct"
-    ).value = "";
-
-
-    document.getElementById(
         "delivery"
     ).value = "";
 
@@ -2578,12 +2154,6 @@ function clearForm() {
     document.getElementById(
         "note"
     ).value = "";
-
-
-    document.getElementById(
-        "otherProductArea"
-    ).style.display =
-        "none";
 
 
     /* 写真 */
@@ -2612,6 +2182,11 @@ function clearForm() {
 
 
     document.getElementById(
+        "noticeList"
+    ).innerHTML = "";
+
+
+    document.getElementById(
         "noticeArea"
     ).style.display =
         "none";
@@ -2631,9 +2206,9 @@ function clearForm() {
 }
 
 
-/* =========================
+/* =========================================================
    HTMLエスケープ
-========================= */
+========================================================= */
 
 function escapeHTML(text) {
 
@@ -2667,9 +2242,9 @@ function escapeHTML(text) {
 }
 
 
-/* =========================
+/* =========================================================
    保存済み注文表示
-========================= */
+========================================================= */
 
 function displayOrders() {
 
@@ -2711,7 +2286,7 @@ function displayOrders() {
     ]
     .reverse()
     .forEach(
-        order => {
+        function(order) {
 
 
             /* 写真 */
@@ -2721,18 +2296,16 @@ function displayOrders() {
 
 
             if (
-                order.photos
-                &&
+                order.photos &&
                 order.photos.length > 0
             ) {
-
 
                 photosHTML =
                     `<div class="saved-photos">`;
 
 
                 order.photos.forEach(
-                    photo => {
+                    function(photo) {
 
                         photosHTML +=
                             `<img src="${photo}">`;
@@ -2756,7 +2329,6 @@ function displayOrders() {
             if (
                 order.signature
             ) {
-
 
                 signatureHTML = `
 
@@ -2833,13 +2405,12 @@ function displayOrders() {
 
                 <div class="order-info">
 
-
                     <strong>
                         受付日：
                     </strong>
 
                     ${escapeHTML(
-                        order.date
+                        order.receptionDate
                     )}
 
                     <br>
@@ -2872,8 +2443,7 @@ function displayOrders() {
                     </strong>
 
                     ${escapeHTML(
-                        order.delivery
-                        ||
+                        order.delivery ||
                         "未設定"
                     )}
 
@@ -2887,14 +2457,12 @@ function displayOrders() {
                     <br>
 
                     ${escapeHTML(
-                        order.note
-                        ||
+                        order.note ||
                         "なし"
                     )}
 
 
                     ${noticeHTML}
-
 
                 </div>
 
@@ -2932,12 +2500,11 @@ function displayOrders() {
 }
 
 
-/* =========================
+/* =========================================================
    注文削除
-========================= */
+========================================================= */
 
 function deleteOrder(id) {
-
 
     if (
         !confirm(
@@ -2960,8 +2527,11 @@ function deleteOrder(id) {
 
     orders =
         orders.filter(
-            order =>
-                order.id !== id
+            function(order) {
+
+                return order.id !== id;
+
+            }
         );
 
 
@@ -2978,9 +2548,9 @@ function deleteOrder(id) {
 }
 
 
-/* =========================
+/* =========================================================
    起動時
-========================= */
+========================================================= */
 
 window.addEventListener(
     "resize",
