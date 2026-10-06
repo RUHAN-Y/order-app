@@ -114,8 +114,6 @@ textarea {
   pointer-events: none;
 }
 
-
-/* 商品ボタン共通 */
 .product-option label {
   display: flex;
   align-items: center;
@@ -130,9 +128,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ① 名刺 → 赤
---------------------------------------------------------- */
+/* ① 名刺 → 赤 */
 
 .product-option:nth-child(1) label {
   background: #ffd6d6;
@@ -146,9 +142,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ② 印鑑 → 青
---------------------------------------------------------- */
+/* ② 印鑑 → 青 */
 
 .product-option:nth-child(2) label {
   background: #d6e7ff;
@@ -162,9 +156,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ③ スタンプ・ゴム印 → 水色
---------------------------------------------------------- */
+/* ③ スタンプ・ゴム印 → 水色 */
 
 .product-option:nth-child(3) label {
   background: #d5f5ff;
@@ -178,9 +170,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ④ 封筒 → 黄緑
---------------------------------------------------------- */
+/* ④ 封筒 → 黄緑 */
 
 .product-option:nth-child(4) label {
   background: #e7f6c9;
@@ -194,9 +184,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ⑤ チラシ・パンフレット → 緑
---------------------------------------------------------- */
+/* ⑤ チラシ・パンフレット → 緑 */
 
 .product-option:nth-child(5) label {
   background: #d5f0d8;
@@ -210,9 +198,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ⑥ ホームページ → 灰色
---------------------------------------------------------- */
+/* ⑥ ホームページ → 灰色 */
 
 .product-option:nth-child(6) label {
   background: #e4e4e4;
@@ -226,9 +212,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ⑦ 入稿データ → オレンジ
---------------------------------------------------------- */
+/* ⑦ 入稿データ → オレンジ */
 
 .product-option:nth-child(7) label {
   background: #ffe1bd;
@@ -242,9 +226,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ⑧ 伝票 → 狐色
---------------------------------------------------------- */
+/* ⑧ 伝票 → 狐色 */
 
 .product-option:nth-child(8) label {
   background: #ead2ad;
@@ -258,9 +240,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ⑨ オーダーメイド依頼 → 紫
---------------------------------------------------------- */
+/* ⑨ オーダーメイド依頼 → 紫 */
 
 .product-option:nth-child(9) label {
   background: #eadcff;
@@ -274,9 +254,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ⑩ オーダーメイド決定 → ピンク
---------------------------------------------------------- */
+/* ⑩ オーダーメイド決定 → ピンク */
 
 .product-option:nth-child(10) label {
   background: #ffd9e7;
@@ -290,9 +268,7 @@ textarea {
 }
 
 
-/* ---------------------------------------------------------
-   ⑪ 持込印材 → 白
---------------------------------------------------------- */
+/* ⑪ 持込印材 → 白 */
 
 .product-option:nth-child(11) label {
   background: #ffffff;
@@ -305,8 +281,6 @@ textarea {
   box-shadow: 0 0 0 3px rgba(80,80,80,0.18);
 }
 
-
-/* 商品ボタンを押したとき */
 .product-option label:active {
   transform: scale(0.98);
 }
@@ -715,8 +689,6 @@ textarea {
       <div class="product-grid">
 
 
-        <!-- ① -->
-
         <div class="product-option">
 
           <input
@@ -732,8 +704,6 @@ textarea {
 
         </div>
 
-
-        <!-- ② -->
 
         <div class="product-option">
 
@@ -751,8 +721,6 @@ textarea {
         </div>
 
 
-        <!-- ③ -->
-
         <div class="product-option">
 
           <input
@@ -768,8 +736,6 @@ textarea {
 
         </div>
 
-
-        <!-- ④ -->
 
         <div class="product-option">
 
@@ -787,8 +753,6 @@ textarea {
         </div>
 
 
-        <!-- ⑤ -->
-
         <div class="product-option">
 
           <input
@@ -804,8 +768,6 @@ textarea {
 
         </div>
 
-
-        <!-- ⑥ -->
 
         <div class="product-option">
 
@@ -823,8 +785,6 @@ textarea {
         </div>
 
 
-        <!-- ⑦ -->
-
         <div class="product-option">
 
           <input
@@ -840,8 +800,6 @@ textarea {
 
         </div>
 
-
-        <!-- ⑧ -->
 
         <div class="product-option">
 
@@ -859,8 +817,6 @@ textarea {
         </div>
 
 
-        <!-- ⑨ -->
-
         <div class="product-option">
 
           <input
@@ -877,8 +833,6 @@ textarea {
         </div>
 
 
-        <!-- ⑩ -->
-
         <div class="product-option">
 
           <input
@@ -894,8 +848,6 @@ textarea {
 
         </div>
 
-
-        <!-- ⑪ -->
 
         <div class="product-option">
 
@@ -970,7 +922,6 @@ textarea {
 
     <div class="photo-buttons">
 
-
       <label class="photo-button">
 
         📷 カメラで撮影
@@ -999,7 +950,6 @@ textarea {
         >
 
       </label>
-
 
     </div>
 
@@ -1107,117 +1057,240 @@ textarea {
 <script>
 
 /* =========================================================
-   注意事項
+   注意事項データ
 ========================================================= */
 
 const noticeData = {
 
+
+  /* =======================================================
+     ① 名刺
+  ======================================================= */
+
   "名刺": [
+
     {
-      text: "弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。"
+      text:
+      "弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。"
     },
+
     {
-      text: "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。"
+      text:
+      "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。"
     },
+
     {
-      text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
+      text:
+      "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
     },
+
     {
-      text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+      text:
+      "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
     },
+
     {
-      text: "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+      text:
+      "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
     },
+
     {
-      text: "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。"
+      text:
+      "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。"
     },
+
     {
-      text: "以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？"
+      text:
+      "以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？"
     },
+
     {
-      text: "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
+      text:
+      "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
     },
+
     {
-      text: "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。"
+      text:
+      "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。"
     }
+
   ],
+
+
+  /* =======================================================
+     ② 印鑑
+  ======================================================= */
 
   "印鑑": [
+
     {
-      text: "版下の内容を確認いたしました。"
+      text:
+      "版下の内容を確認いたしました。"
     },
+
     {
-      text: "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。",
-      warning: "最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。"
+      text:
+      "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。",
+
+      warning:
+      "最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。"
     },
+
     {
-      text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。"
+      text:
+      "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。"
     },
+
     {
-      text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+      text:
+      "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
     },
+
     {
-      text: "お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。"
+      text:
+      "お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。"
     },
+
     {
-      text: "印鑑商品をご注文のお客様は、印鑑製作依頼書（別紙）の内容で彫刻することを了承します。"
+      text:
+      "印鑑商品をご注文のお客様は、印鑑製作依頼書（別紙）の内容で彫刻することを了承します。"
     },
+
     {
-      text: "注文時のみ電子印（デジタル印鑑）は重要認印、角印データのみお渡しが可能です。実印、及び銀行印のお渡しはセキュリティの観点から行っておりません。"
+      text:
+      "注文時のみ電子印（デジタル印鑑）は重要認印、角印データのみお渡しが可能です。実印、及び銀行印のお渡しはセキュリティの観点から行っておりません。"
     }
+
   ],
+
+
+  /* =======================================================
+     ③ スタンプ・ゴム印
+  ======================================================= */
 
   "スタンプ・ゴム印": [
+
     {
-      text: "版下の内容を確認いたしました。"
+      text:
+      "版下の内容を確認いたしました。"
     },
+
     {
-      text: "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。",
-      warning: "最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。"
+      text:
+      "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。",
+
+      warning:
+      "最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。"
     },
+
     {
-      text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。"
+      text:
+      "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。"
     },
+
     {
-      text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+      text:
+      "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
     },
+
     {
-      text: "お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。"
+      text:
+      "お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。"
     }
+
   ],
 
+
+  /* =======================================================
+     ⑦ 入稿データ
+  ======================================================= */
+
   "入稿データ": [
+
     {
-      text: "印刷結果は、ご入稿頂いたデータの解像度に依存します。ご入稿データの解像度によっては、荒く印刷されることがあります。"
+      text:
+      "印刷結果は、ご入稿頂いたデータの解像度に依存します。ご入稿データの解像度によっては、荒く印刷されることがあります。"
     },
+
     {
-      text: "QRコード等の印刷の場合、お選び頂いた紙や携帯機種により読み取れない場合がございます。本紙校正にて検証されることをお勧めします。"
+      text:
+      "QRコード等の印刷の場合、お選び頂いた紙や携帯機種により読み取れない場合がございます。本紙校正にて検証されることをお勧めします。"
     },
+
     {
-      text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
+      text:
+      "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
     },
+
     {
-      text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+      text:
+      "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
     },
+
     {
-      text: "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+      text:
+      "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
     },
+
     {
-      text: "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。あくまでも、お作り頂いたデータの内容を確認頂く為のものです。本紙校正オプションなしでご注文頂く場合、以上をご了承下さい。"
+      text:
+      "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。あくまでも、お作り頂いたデータの内容を確認頂く為のものです。本紙校正オプションなしでご注文頂く場合、以上をご了承下さい。"
     },
+
     {
-      text: "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
+      text:
+      "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
     },
+
     {
-      text: "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じる事を了承します。"
+      text:
+      "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じる事を了承します。"
     }
+
+  ],
+
+
+  /* =======================================================
+     ⑪ 持込印材
+  ======================================================= */
+
+  "持込印材": [
+
+    {
+      text:
+      "印材の状態によっては、欠けやクラックが生じることがあることに同意します。（特に石材系印材の場合）"
+    },
+
+    {
+      text:
+      "印材の状態によっては、彫刻内容に若干変化が生じる場合があることに同意します。"
+    },
+
+    {
+      text:
+      "本依頼書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+    },
+
+    {
+      text:
+      "お客様の署名と同時にデザインのご依頼は確定し、確定以降はデザインの内容、仕様など、発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+    }
+
   ]
+
 };
 
 
-/* 名刺と同じ注意事項 */
-noticeData["封筒"] = noticeData["名刺"];
-noticeData["チラシ・パンフレット"] = noticeData["名刺"];
+/* =========================================================
+   ④ 封筒・⑤ チラシ・パンフレット
+   → 名刺と同じ注意事項
+========================================================= */
+
+noticeData["封筒"] =
+  noticeData["名刺"];
+
+noticeData["チラシ・パンフレット"] =
+  noticeData["名刺"];
 
 
 /* =========================================================
@@ -1272,10 +1345,13 @@ const clearSignature =
 ========================================================= */
 
 let photos = [];
+
 let drawing = false;
 
 
-/* 今日の日付 */
+/* =========================================================
+   今日の日付
+========================================================= */
 
 function setToday() {
 
@@ -1286,15 +1362,19 @@ function setToday() {
     today.getFullYear();
 
   const mm =
-    String(today.getMonth() + 1)
-      .padStart(2, "0");
+    String(
+      today.getMonth() + 1
+    ).padStart(2, "0");
 
   const dd =
-    String(today.getDate())
-      .padStart(2, "0");
+    String(
+      today.getDate()
+    ).padStart(2, "0");
+
 
   delivery.value =
     `${yyyy}-${mm}-${dd}`;
+
 }
 
 
@@ -1305,7 +1385,10 @@ setToday();
    メッセージ
 ========================================================= */
 
-function showMessage(text, type) {
+function showMessage(
+  text,
+  type
+) {
 
   message.textContent =
     text;
@@ -1313,12 +1396,16 @@ function showMessage(text, type) {
   message.className =
     "message show " + type;
 
-  setTimeout(() => {
 
-    message.className =
-      "message";
+  setTimeout(
+    () => {
 
-  }, 3500);
+      message.className =
+        "message";
+
+    },
+    3500
+  );
 
 }
 
@@ -1328,127 +1415,149 @@ function showMessage(text, type) {
 ========================================================= */
 
 document
-  .querySelectorAll('input[name="product"]')
-  .forEach(input => {
+  .querySelectorAll(
+    'input[name="product"]'
+  )
+  .forEach(
+    input => {
 
-    input.addEventListener(
-      "change",
-      function() {
+      input.addEventListener(
+        "change",
+        function() {
 
-        const product =
-          this.value.replace(
-            /^[①-⑪] /,
-            ""
-          );
-
-        const notices =
-          noticeData[product] || [];
-
-
-        noticeList.innerHTML = "";
+          const product =
+            this.value.replace(
+              /^[①-⑪] /,
+              ""
+            );
 
 
-        if (notices.length === 0) {
+          const notices =
+            noticeData[product] ||
+            [];
+
+
+          noticeList.innerHTML =
+            "";
+
+
+          /* 注意事項がない商品 */
+
+          if (
+            notices.length === 0
+          ) {
+
+            noticeArea
+              .classList
+              .remove("show");
+
+            return;
+
+          }
+
+
+          /* 注意事項を表示 */
 
           noticeArea
             .classList
-            .remove("show");
-
-          return;
-        }
+            .add("show");
 
 
-        noticeArea
-          .classList
-          .add("show");
+          notices.forEach(
+            (notice, index) => {
 
-
-        notices.forEach(
-          (notice, index) => {
-
-            const item =
-              document.createElement(
-                "div"
-              );
-
-            item.className =
-              "notice-item";
-
-
-            const label =
-              document.createElement(
-                "label"
-              );
-
-            label.className =
-              "notice-label";
-
-
-            const checkbox =
-              document.createElement(
-                "input"
-              );
-
-            checkbox.type =
-              "checkbox";
-
-            checkbox.id =
-              "noticeCheck-" + index;
-
-
-            const text =
-              document.createElement(
-                "span"
-              );
-
-            text.textContent =
-              notice.text;
-
-
-            label.appendChild(
-              checkbox
-            );
-
-            label.appendChild(
-              text
-            );
-
-            item.appendChild(
-              label
-            );
-
-
-            if (notice.warning) {
-
-              const warning =
+              const item =
                 document.createElement(
                   "div"
                 );
 
-              warning.className =
-                "notice-warning";
+              item.className =
+                "notice-item";
 
-              warning.textContent =
-                "⚠ " + notice.warning;
+
+              const label =
+                document.createElement(
+                  "label"
+                );
+
+              label.className =
+                "notice-label";
+
+
+              const checkbox =
+                document.createElement(
+                  "input"
+                );
+
+              checkbox.type =
+                "checkbox";
+
+              checkbox.id =
+                "noticeCheck-" +
+                index;
+
+
+              const text =
+                document.createElement(
+                  "span"
+                );
+
+              text.textContent =
+                notice.text;
+
+
+              label.appendChild(
+                checkbox
+              );
+
+              label.appendChild(
+                text
+              );
+
 
               item.appendChild(
-                warning
+                label
+              );
+
+
+              /* 赤文字の注意文がある場合 */
+
+              if (
+                notice.warning
+              ) {
+
+                const warning =
+                  document.createElement(
+                    "div"
+                  );
+
+                warning.className =
+                  "notice-warning";
+
+                warning.textContent =
+                  "⚠ " +
+                  notice.warning;
+
+
+                item.appendChild(
+                  warning
+                );
+
+              }
+
+
+              noticeList.appendChild(
+                item
               );
 
             }
+          );
 
+        }
+      );
 
-            noticeList.appendChild(
-              item
-            );
-
-          }
-        );
-
-      }
-    );
-
-  });
+    }
+  );
 
 
 /* =========================================================
@@ -1459,9 +1568,12 @@ cameraInput.addEventListener(
   "change",
   function(e) {
 
-    handleFiles(e.target.files);
+    handleFiles(
+      e.target.files
+    );
 
-    cameraInput.value = "";
+    cameraInput.value =
+      "";
 
   }
 );
@@ -1471,21 +1583,30 @@ photoInput.addEventListener(
   "change",
   function(e) {
 
-    handleFiles(e.target.files);
+    handleFiles(
+      e.target.files
+    );
 
-    photoInput.value = "";
+    photoInput.value =
+      "";
 
   }
 );
 
 
-function handleFiles(fileList) {
+function handleFiles(
+  fileList
+) {
 
   const files =
-    Array.from(fileList);
+    Array.from(
+      fileList
+    );
 
 
-  if (photos.length >= 3) {
+  if (
+    photos.length >= 3
+  ) {
 
     showMessage(
       "写真は最大3枚までです。",
@@ -1493,18 +1614,31 @@ function handleFiles(fileList) {
     );
 
     return;
+
   }
 
 
-  for (const file of files) {
+  for (
+    const file of files
+  ) {
 
-    if (photos.length >= 3) {
+    if (
+      photos.length >= 3
+    ) {
+
       break;
+
     }
 
 
-    if (!file.type.startsWith("image/")) {
+    if (
+      !file.type.startsWith(
+        "image/"
+      )
+    ) {
+
       continue;
+
     }
 
 
@@ -1512,7 +1646,9 @@ function handleFiles(fileList) {
       file,
       function(dataUrl) {
 
-        photos.push(dataUrl);
+        photos.push(
+          dataUrl
+        );
 
         renderPhotos();
 
@@ -1524,7 +1660,9 @@ function handleFiles(fileList) {
 }
 
 
-/* 写真圧縮 */
+/* =========================================================
+   写真圧縮
+========================================================= */
 
 function compressImage(
   file,
@@ -1548,6 +1686,7 @@ function compressImage(
           const maxSize =
             1200;
 
+
           let width =
             img.width;
 
@@ -1555,9 +1694,13 @@ function compressImage(
             img.height;
 
 
-          if (width > height) {
+          if (
+            width > height
+          ) {
 
-            if (width > maxSize) {
+            if (
+              width > maxSize
+            ) {
 
               height =
                 Math.round(
@@ -1573,7 +1716,9 @@ function compressImage(
 
           } else {
 
-            if (height > maxSize) {
+            if (
+              height > maxSize
+            ) {
 
               width =
                 Math.round(
@@ -1594,6 +1739,7 @@ function compressImage(
             document.createElement(
               "canvas"
             );
+
 
           tempCanvas.width =
             width;
@@ -1624,7 +1770,9 @@ function compressImage(
             );
 
 
-          callback(dataUrl);
+          callback(
+            dataUrl
+          );
 
         };
 
@@ -1635,16 +1783,21 @@ function compressImage(
     };
 
 
-  reader.readAsDataURL(file);
+  reader.readAsDataURL(
+    file
+  );
 
 }
 
 
-/* 写真表示 */
+/* =========================================================
+   写真表示
+========================================================= */
 
 function renderPhotos() {
 
-  photoPreview.innerHTML = "";
+  photoPreview.innerHTML =
+    "";
 
 
   photos.forEach(
@@ -1698,10 +1851,18 @@ function renderPhotos() {
       );
 
 
-      div.appendChild(img);
-      div.appendChild(button);
+      div.appendChild(
+        img
+      );
 
-      photoPreview.appendChild(div);
+      div.appendChild(
+        button
+      );
+
+
+      photoPreview.appendChild(
+        div
+      );
 
     }
   );
@@ -1710,14 +1871,15 @@ function renderPhotos() {
 
 
 /* =========================================================
-   署名
+   署名キャンバス
 ========================================================= */
 
 function resizeCanvas() {
 
   const ratio =
     Math.max(
-      window.devicePixelRatio || 1,
+      window.devicePixelRatio ||
+      1,
       1
     );
 
@@ -1771,6 +1933,8 @@ window.addEventListener(
 );
 
 
+/* 署名位置 */
+
 function getPosition(e) {
 
   const rect =
@@ -1792,6 +1956,8 @@ function getPosition(e) {
 }
 
 
+/* 署名開始 */
+
 canvas.addEventListener(
   "pointerdown",
   function(e) {
@@ -1811,6 +1977,7 @@ canvas.addEventListener(
 
     ctx.beginPath();
 
+
     ctx.moveTo(
       pos.x,
       pos.y
@@ -1820,12 +1987,18 @@ canvas.addEventListener(
 );
 
 
+/* 署名中 */
+
 canvas.addEventListener(
   "pointermove",
   function(e) {
 
-    if (!drawing) {
+    if (
+      !drawing
+    ) {
+
       return;
+
     }
 
 
@@ -1838,11 +2011,14 @@ canvas.addEventListener(
       pos.y
     );
 
+
     ctx.stroke();
 
   }
 );
 
+
+/* 署名終了 */
 
 canvas.addEventListener(
   "pointerup",
@@ -1866,6 +2042,8 @@ canvas.addEventListener(
 );
 
 
+/* 署名を消す */
+
 clearSignature.addEventListener(
   "click",
   function() {
@@ -1885,10 +2063,15 @@ function clearCanvas() {
     canvas.height
   );
 
+
   resizeCanvas();
 
 }
 
+
+/* =========================================================
+   署名確認
+========================================================= */
 
 function hasSignature() {
 
@@ -1903,7 +2086,8 @@ function hasSignature() {
 
   for (
     let i = 3;
-    i < imageData.data.length;
+    i <
+    imageData.data.length;
     i += 4
   ) {
 
@@ -1945,12 +2129,20 @@ function createOrderNumber() {
     String(
       now.getFullYear()
     ) +
+
     String(
       now.getMonth() + 1
-    ).padStart(2, "0") +
+    ).padStart(
+      2,
+      "0"
+    ) +
+
     String(
       now.getDate()
-    ).padStart(2, "0");
+    ).padStart(
+      2,
+      "0"
+    );
 
 
   const todayOrders =
@@ -1966,7 +2158,10 @@ function createOrderNumber() {
   const number =
     String(
       todayOrders.length + 1
-    ).padStart(3, "0");
+    ).padStart(
+      3,
+      "0"
+    );
 
 
   return (
@@ -1979,16 +2174,21 @@ function createOrderNumber() {
 
 
 /* =========================================================
-   保存
+   注文保存
 ========================================================= */
 
 saveButton.addEventListener(
   "click",
   function() {
 
+
+    /* お客様名 */
+
     const name =
       customerName.value.trim();
 
+
+    /* 商品 */
 
     const productElement =
       document.querySelector(
@@ -1996,52 +2196,72 @@ saveButton.addEventListener(
       );
 
 
+    /* 受付日 */
+
     const receptionDate =
       delivery.value;
 
+
+    /* 備考 */
 
     const note =
       notes.value.trim();
 
 
-    /* 名前 */
+    /* -----------------------------------------------------
+       お客様名チェック
+    ----------------------------------------------------- */
 
-    if (!name) {
+    if (
+      !name
+    ) {
 
       showMessage(
         "お客様名または会社名を入力してください。",
         "error"
       );
 
+
       customerName.focus();
+
 
       return;
 
     }
 
 
-    /* 商品 */
+    /* -----------------------------------------------------
+       商品チェック
+    ----------------------------------------------------- */
 
-    if (!productElement) {
+    if (
+      !productElement
+    ) {
 
       showMessage(
         "商品を選択してください。",
         "error"
       );
 
+
       return;
 
     }
 
 
-    /* 受付日 */
+    /* -----------------------------------------------------
+       受付日チェック
+    ----------------------------------------------------- */
 
-    if (!receptionDate) {
+    if (
+      !receptionDate
+    ) {
 
       showMessage(
         "受付日を入力してください。",
         "error"
       );
+
 
       return;
 
@@ -2052,8 +2272,6 @@ saveButton.addEventListener(
       productElement.value;
 
 
-    /* 注意事項 */
-
     const productName =
       product.replace(
         /^[①-⑪] /,
@@ -2061,11 +2279,19 @@ saveButton.addEventListener(
       );
 
 
+    /* -----------------------------------------------------
+       注意事項チェック
+    ----------------------------------------------------- */
+
     const notices =
-      noticeData[productName] || [];
+      noticeData[
+        productName
+      ] || [];
 
 
-    if (notices.length > 0) {
+    if (
+      notices.length > 0
+    ) {
 
       const checkboxes =
         noticeList.querySelectorAll(
@@ -2082,7 +2308,9 @@ saveButton.addEventListener(
         );
 
 
-      if (!allChecked) {
+      if (
+        !allChecked
+      ) {
 
         showMessage(
           "注意事項をすべて確認してチェックしてください。",
@@ -2091,8 +2319,11 @@ saveButton.addEventListener(
 
 
         noticeArea.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
+          behavior:
+            "smooth",
+
+          block:
+            "center"
         });
 
 
@@ -2103,9 +2334,13 @@ saveButton.addEventListener(
     }
 
 
-    /* 署名 */
+    /* -----------------------------------------------------
+       署名チェック
+    ----------------------------------------------------- */
 
-    if (!hasSignature()) {
+    if (
+      !hasSignature()
+    ) {
 
       showMessage(
         "お客様の署名をお願いします。",
@@ -2118,8 +2353,11 @@ saveButton.addEventListener(
           ".signature-box"
         )
         .scrollIntoView({
-          behavior: "smooth",
-          block: "center"
+          behavior:
+            "smooth",
+
+          block:
+            "center"
         });
 
 
@@ -2128,13 +2366,17 @@ saveButton.addEventListener(
     }
 
 
-    /* 注文番号 */
+    /* -----------------------------------------------------
+       注文番号
+    ----------------------------------------------------- */
 
     const orderNumber =
       createOrderNumber();
 
 
-    /* 署名画像 */
+    /* -----------------------------------------------------
+       署名
+    ----------------------------------------------------- */
 
     const signature =
       canvas.toDataURL(
@@ -2142,7 +2384,9 @@ saveButton.addEventListener(
       );
 
 
-    /* 注文データ */
+    /* -----------------------------------------------------
+       注文データ
+    ----------------------------------------------------- */
 
     const order = {
 
@@ -2176,7 +2420,9 @@ saveButton.addEventListener(
     };
 
 
-    /* 保存 */
+    /* -----------------------------------------------------
+       保存
+    ----------------------------------------------------- */
 
     const orders =
       JSON.parse(
@@ -2186,27 +2432,36 @@ saveButton.addEventListener(
       );
 
 
-    orders.push(order);
+    orders.push(
+      order
+    );
 
 
     try {
 
       localStorage.setItem(
         "orders",
-        JSON.stringify(orders)
+        JSON.stringify(
+          orders
+        )
       );
 
-    } catch (error) {
+    } catch (
+      error
+    ) {
 
       showMessage(
         "保存できませんでした。写真の容量が大きい可能性があります。",
         "error"
       );
 
+
       return;
 
     }
 
+
+    /* 保存完了 */
 
     showMessage(
       `注文番号 ${orderNumber} を保存しました。`,
@@ -2215,6 +2470,7 @@ saveButton.addEventListener(
 
 
     resetForm();
+
 
     renderOrders();
 
@@ -2231,11 +2487,14 @@ function resetForm() {
   customerName.value =
     "";
 
+
   notes.value =
     "";
 
+
   photos =
     [];
+
 
   renderPhotos();
 
@@ -2246,15 +2505,19 @@ function resetForm() {
     )
     .forEach(
       input => {
+
         input.checked =
           false;
+
       }
     );
 
 
   noticeArea
     .classList
-    .remove("show");
+    .remove(
+      "show"
+    );
 
 
   noticeList.innerHTML =
@@ -2262,6 +2525,7 @@ function resetForm() {
 
 
   clearCanvas();
+
 
   setToday();
 
@@ -2286,10 +2550,13 @@ function renderOrders() {
     "";
 
 
-  if (orders.length === 0) {
+  if (
+    orders.length === 0
+  ) {
 
     orderList.innerHTML =
       '<div style="color:#777;">保存された注文はありません。</div>';
+
 
     return;
 
@@ -2297,11 +2564,17 @@ function renderOrders() {
 
 
   const sortedOrders =
-    [...orders].reverse();
+    [
+      ...orders
+    ].reverse();
 
 
   sortedOrders.forEach(
-    (order, reverseIndex) => {
+    (
+      order,
+      reverseIndex
+    ) => {
+
 
       const actualIndex =
         orders.length -
@@ -2314,58 +2587,88 @@ function renderOrders() {
           "div"
         );
 
+
       card.className =
         "order-card";
 
+
+      /* 注文番号 */
 
       const number =
         document.createElement(
           "div"
         );
 
+
       number.className =
         "order-number";
+
 
       number.textContent =
         "注文番号：" +
         order.orderNumber;
 
 
+      /* 注文情報 */
+
       const info =
         document.createElement(
           "div"
         );
+
 
       info.className =
         "order-info";
 
 
       info.innerHTML = `
+
         <strong>お客様：</strong>
-        ${escapeHtml(order.customerName)}
+        ${escapeHtml(
+          order.customerName
+        )}
+
         <br>
 
         <strong>商品：</strong>
-        ${escapeHtml(order.product)}
+        ${escapeHtml(
+          order.product
+        )}
+
         <br>
 
         <strong>受付日：</strong>
-        ${escapeHtml(order.receptionDate)}
+        ${escapeHtml(
+          order.receptionDate
+        )}
+
         <br>
 
         <strong>備考：</strong>
         ${
           order.notes
-            ? escapeHtml(order.notes)
-                .replace(/\n/g, "<br>")
+
+            ? escapeHtml(
+                order.notes
+              ).replace(
+                /\n/g,
+                "<br>"
+              )
+
             : "なし"
         }
+
       `;
 
 
-      card.appendChild(number);
+      card.appendChild(
+        number
+      );
 
-      card.appendChild(info);
+
+      card.appendChild(
+        info
+      );
 
 
       /* 写真 */
@@ -2380,6 +2683,7 @@ function renderOrders() {
             "div"
           );
 
+
         photosDiv.className =
           "order-photos";
 
@@ -2391,6 +2695,7 @@ function renderOrders() {
               document.createElement(
                 "img"
               );
+
 
             img.src =
               photo;
@@ -2413,15 +2718,19 @@ function renderOrders() {
 
       /* 署名 */
 
-      if (order.signature) {
+      if (
+        order.signature
+      ) {
 
         const signatureImg =
           document.createElement(
             "img"
           );
 
+
         signatureImg.className =
           "order-signature";
+
 
         signatureImg.src =
           order.signature;
@@ -2441,11 +2750,14 @@ function renderOrders() {
           "button"
         );
 
+
       deleteButton.className =
         "delete-button";
 
+
       deleteButton.type =
         "button";
+
 
       deleteButton.textContent =
         "この注文を削除";
@@ -2455,14 +2767,19 @@ function renderOrders() {
         "click",
         function() {
 
+
           const ok =
             confirm(
               `注文番号 ${order.orderNumber} を削除しますか？`
             );
 
 
-          if (!ok) {
+          if (
+            !ok
+          ) {
+
             return;
+
           }
 
 
@@ -2505,15 +2822,19 @@ function renderOrders() {
    HTMLエスケープ
 ========================================================= */
 
-function escapeHtml(text) {
+function escapeHtml(
+  text
+) {
 
   const div =
     document.createElement(
       "div"
     );
 
+
   div.textContent =
     text ?? "";
+
 
   return div.innerHTML;
 
