@@ -1,802 +1,717 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>注文受付</title>
+<title>注文・署名管理</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+* {
+box-sizing: border-box;
 }
 
-html,body{
-    margin:0;
-    padding:0;
-    background:#f2f2f2;
-    color:#222;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Helvetica Neue",
-        "Hiragino Kaku Gothic ProN",
-        "Yu Gothic",
-        sans-serif;
+body {
+margin: 0;
+font-family:
+-apple-system,
+BlinkMacSystemFont,
+"Helvetica Neue",
+"Yu Gothic",
+"Hiragino Kaku Gothic ProN",
+Arial,
+sans-serif;
+background: #f3f4f6;
+color: #222;
 }
 
-body{
-    padding-bottom:40px;
+button,
+input,
+textarea {
+font-family: inherit;
 }
 
-.container{
-    width:100%;
-    max-width:760px;
-    margin:0 auto;
-    background:#fff;
-    min-height:100vh;
-    padding:20px;
+button {
+-webkit-tap-highlight-color: transparent;
 }
 
-h1{
-    margin:0 0 20px;
-    text-align:center;
-    font-size:26px;
+/* =========================
+共通
+========================= */
+
+.page {
+display: none;
+min-height: 100vh;
+padding: 20px 16px 40px;
 }
 
-h2{
-    font-size:21px;
-    margin:0 0 16px;
+.page.active {
+display: block;
 }
 
-h3{
-    font-size:18px;
-    margin:0 0 12px;
+.container {
+width: 100%;
+max-width: 700px;
+margin: 0 auto;
 }
 
-.form-group{
-    margin-bottom:24px;
+h1 {
+font-size: 26px;
+text-align: center;
+margin: 10px 0 30px;
 }
 
-label{
-    display:block;
-    font-size:16px;
-    font-weight:bold;
-    margin-bottom:8px;
+h2 {
+font-size: 22px;
+margin: 10px 0 20px;
+}
+
+.section-title {
+font-size: 18px;
+font-weight: bold;
+margin: 28px 0 12px;
+}
+
+.card {
+background: white;
+border-radius: 16px;
+padding: 20px;
+margin-bottom: 16px;
+box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+}
+
+/* =========================
+1ページ目
+========================= */
+
+.home-buttons {
+display: flex;
+flex-direction: column;
+gap: 18px;
+margin-top: 70px;
+}
+
+.home-button {
+width: 100%;
+min-height: 90px;
+border: none;
+border-radius: 18px;
+font-size: 25px;
+font-weight: bold;
+color: white;
+cursor: pointer;
+box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+.home-button:active {
+transform: scale(0.98);
+}
+
+.btn-sign {
+background: #1976d2;
+}
+
+.btn-saved {
+background: #444;
+}
+
+/* =========================
+戻るボタン
+========================= */
+
+.back-button {
+border: none;
+background: #777;
+color: white;
+border-radius: 10px;
+padding: 12px 20px;
+font-size: 16px;
+margin-bottom: 18px;
+cursor: pointer;
+}
+
+/* =========================
+フォーム
+========================= */
+
+.form-group {
+margin-bottom: 22px;
+}
+
+.form-group label {
+display: block;
+font-weight: bold;
+font-size: 17px;
+margin-bottom: 9px;
 }
 
 input[type="text"],
 input[type="date"],
-textarea,
-select{
-    width:100%;
-    min-height:52px;
-    padding:12px;
-    font-size:17px;
-    border:2px solid #ccc;
-    border-radius:10px;
-    background:#fff;
-    color:#222;
-    outline:none;
+textarea {
+width: 100%;
+border: 1px solid #ccc;
+border-radius: 10px;
+padding: 14px;
+font-size: 17px;
+background: #fff;
 }
 
-textarea{
-    min-height:110px;
-    resize:vertical;
+textarea {
+min-height: 110px;
+resize: vertical;
 }
-
-input:focus,
-textarea:focus,
-select:focus{
-    border-color:#555;
-}
-
 
 /* =========================
-   商品
+商品ボタン
 ========================= */
 
-.product-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+.product-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 10px;
 }
 
-.product-btn{
-    min-height:62px;
-    padding:10px;
-    border:3px solid #ccc;
-    border-radius:12px;
-    background:#fff;
-    color:#222;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
+.product-button {
+min-height: 58px;
+border-radius: 10px;
+border: 3px solid transparent;
+font-size: 15px;
+font-weight: bold;
+cursor: pointer;
+background: #eee;
+transition: 0.15s;
 }
 
-.product-btn:active{
-    transform:scale(.97);
+.product-button.selected {
+box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
+transform: scale(1.02);
 }
 
-.product-btn.selected{
-    box-shadow:0 0 0 3px rgba(0,0,0,.12);
+/* 商品カラー */
+
+.product-1 {
+background: #f7b7b7;
 }
 
-.product-1{
-    border-color:#e53935;
+.product-2 {
+background: #a9c9f5;
 }
 
-.product-1.selected{
-    background:#ffebee;
+.product-3 {
+background: #a9e7ee;
 }
 
-.product-2{
-    border-color:#1976d2;
+.product-4 {
+background: #d5e98b;
 }
 
-.product-2.selected{
-    background:#e3f2fd;
+.product-5 {
+background: #a9dca9;
 }
 
-.product-3{
-    border-color:#29b6f6;
+.product-6 {
+background: #d0d0d0;
 }
 
-.product-3.selected{
-    background:#e1f5fe;
+.product-7 {
+background: #f5c27b;
 }
 
-.product-4{
-    border-color:#9ccc65;
+.product-8 {
+background: #d8bd91;
 }
 
-.product-4.selected{
-    background:#f1f8e9;
+.product-9 {
+background: #c8a9e8;
 }
 
-.product-5{
-    border-color:#43a047;
+.product-10 {
+background: #f0a9ca;
 }
 
-.product-5.selected{
-    background:#e8f5e9;
+.product-11 {
+background: #ffffff;
+border-color: #ccc;
 }
-
-.product-6{
-    border-color:#777;
-}
-
-.product-6.selected{
-    background:#eeeeee;
-}
-
-.product-7{
-    border-color:#fb8c00;
-}
-
-.product-7.selected{
-    background:#fff3e0;
-}
-
-.product-8{
-    border-color:#c49a6c;
-}
-
-.product-8.selected{
-    background:#f5eadf;
-}
-
-.product-9{
-    border-color:#8e44ad;
-}
-
-.product-9.selected{
-    background:#f3e5f5;
-}
-
-.product-10{
-    border-color:#ec407a;
-}
-
-.product-10.selected{
-    background:#fce4ec;
-}
-
-.product-11{
-    border-color:#222;
-}
-
-.product-11.selected{
-    background:#f5f5f5;
-}
-
 
 /* =========================
-   日付・備考
+写真
 ========================= */
 
-.date-area{
-    margin-bottom:28px;
+.photo-buttons {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
 }
 
-.notes-area{
-    margin-bottom:28px;
+.photo-button {
+border: none;
+border-radius: 10px;
+padding: 13px 16px;
+font-size: 16px;
+background: #333;
+color: white;
+cursor: pointer;
 }
 
+.photo-list {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+margin-top: 12px;
+}
+
+.photo-item {
+position: relative;
+width: 105px;
+height: 105px;
+}
+
+.photo-item img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+border-radius: 10px;
+border: 1px solid #ccc;
+}
+
+.photo-delete {
+position: absolute;
+top: -7px;
+right: -7px;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+border: none;
+background: #e53935;
+color: white;
+font-size: 18px;
+font-weight: bold;
+}
 
 /* =========================
-   写真
+次へ・保存
 ========================= */
 
-.photo-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-bottom:12px;
+.primary-button {
+width: 100%;
+min-height: 60px;
+border: none;
+border-radius: 13px;
+background: #1976d2;
+color: white;
+font-size: 21px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 20px;
 }
 
-.photo-btn{
-    min-height:58px;
-    border:2px solid #555;
-    border-radius:10px;
-    background:#f7f7f7;
-    font-size:16px;
-    font-weight:bold;
+.primary-button:active {
+transform: scale(0.98);
 }
 
-.photo-preview{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
+.save-button {
+background: #00897b;
 }
 
-.photo-preview-item{
-    position:relative;
+.cancel-button {
+width: 100%;
+min-height: 52px;
+border: none;
+border-radius: 12px;
+background: #777;
+color: white;
+font-size: 18px;
+margin-top: 10px;
 }
-
-.photo-preview img{
-    width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
-    border-radius:8px;
-    border:1px solid #ccc;
-}
-
-.photo-remove{
-    position:absolute;
-    right:4px;
-    top:4px;
-    width:30px;
-    height:30px;
-    min-height:30px;
-    padding:0;
-    border:0;
-    border-radius:50%;
-    background:#d32f2f;
-    color:#fff;
-    font-size:18px;
-    font-weight:bold;
-}
-
 
 /* =========================
-   注意事項
+注意事項
 ========================= */
 
-#noticeArea{
-    display:none;
-    margin-bottom:28px;
+.notice-box {
+background: #fff;
+border-radius: 14px;
+padding: 18px;
+box-shadow: 0 3px 12px rgba(0,0,0,0.06);
 }
 
-.notice-box{
-    border:2px solid #ddd;
-    border-radius:12px;
-    padding:14px;
-    margin-bottom:10px;
-    background:#fafafa;
+.notice-item {
+margin-bottom: 18px;
+padding-bottom: 18px;
+border-bottom: 1px solid #ddd;
 }
 
-.notice-label{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    font-weight:normal;
-    margin:0;
-    line-height:1.6;
+.notice-item:last-child {
+border-bottom: none;
+margin-bottom: 0;
 }
 
-.notice-label input{
-    width:24px;
-    height:24px;
-    flex-shrink:0;
-    margin-top:2px;
+.notice-label {
+display: flex;
+gap: 12px;
+align-items: flex-start;
+font-size: 16px;
+line-height: 1.7;
+cursor: pointer;
 }
 
-.notice-warning{
-    color:#d32f2f;
-    font-weight:bold;
-    margin-top:8px;
-    padding-left:34px;
-    line-height:1.5;
+.notice-label input {
+width: 25px;
+height: 25px;
+flex-shrink: 0;
+margin-top: 2px;
 }
 
+.warning {
+color: #d60000;
+font-weight: bold;
+margin-top: 8px;
+margin-left: 37px;
+line-height: 1.6;
+}
 
 /* =========================
-   署名
+署名
 ========================= */
 
-.signature-area{
-    margin-bottom:28px;
+.signature-area {
+background: white;
+border-radius: 14px;
+padding: 15px;
 }
 
-.signature-wrap{
-    border:2px solid #aaa;
-    border-radius:10px;
-    background:#fff;
-    overflow:hidden;
+.signature-canvas {
+width: 100%;
+height: 260px;
+border: 2px solid #333;
+border-radius: 10px;
+background: white;
+touch-action: none;
+display: block;
 }
 
-#signatureCanvas{
-    display:block;
-    width:100%;
-    height:220px;
-    background:#fff;
-    touch-action:none;
+.signature-buttons {
+display: flex;
+gap: 10px;
+margin-top: 10px;
 }
 
-.signature-buttons{
-    display:flex;
-    gap:10px;
-    padding:10px;
-    border-top:1px solid #ddd;
+.signature-buttons button {
+flex: 1;
+min-height: 48px;
+border: none;
+border-radius: 10px;
+background: #777;
+color: white;
+font-size: 16px;
 }
-
-.signature-buttons button{
-    flex:1;
-}
-
-.clear-btn{
-    min-height:48px;
-    border:2px solid #999;
-    border-radius:8px;
-    background:#f5f5f5;
-    font-size:15px;
-    font-weight:bold;
-}
-
 
 /* =========================
-   保存
+保存済み一覧
 ========================= */
 
-.save-btn{
-    width:100%;
-    min-height:64px;
-    border:0;
-    border-radius:12px;
-    background:#222;
-    color:#fff;
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:35px;
+.search-box {
+background: white;
+padding: 18px;
+border-radius: 14px;
+margin-bottom: 18px;
 }
 
-.save-btn:active{
-    background:#555;
+.search-buttons {
+display: flex;
+gap: 10px;
 }
 
+.search-buttons button {
+flex: 1;
+min-height: 50px;
+border: none;
+border-radius: 10px;
+font-size: 17px;
+font-weight: bold;
+}
+
+.search-button {
+background: #1976d2;
+color: white;
+}
+
+.reset-button {
+background: #777;
+color: white;
+}
+
+.result-count {
+font-weight: bold;
+margin: 15px 0;
+}
+
+.order-card {
+background: white;
+border-radius: 14px;
+padding: 18px;
+margin-bottom: 15px;
+box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+.order-header {
+font-size: 18px;
+font-weight: bold;
+margin-bottom: 12px;
+}
+
+.order-info {
+line-height: 1.8;
+}
+
+.order-actions {
+display: flex;
+gap: 10px;
+margin-top: 15px;
+}
+
+.order-actions button {
+flex: 1;
+min-height: 46px;
+border: none;
+border-radius: 9px;
+color: white;
+font-size: 16px;
+}
+
+.view-button {
+background: #1976d2;
+}
+
+.edit-button {
+background: #00897b;
+}
+
+.delete-button {
+background: #e53935;
+}
 
 /* =========================
-   保存済み注文
+詳細モーダル
 ========================= */
 
-.saved-section{
-    border-top:3px solid #222;
-    padding-top:25px;
+.modal {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.6);
+display: none;
+align-items: flex-start;
+justify-content: center;
+overflow-y: auto;
+padding: 20px;
+z-index: 1000;
 }
 
+.modal.active {
+display: flex;
+}
+
+.modal-content {
+width: 100%;
+max-width: 700px;
+background: #f5f5f5;
+border-radius: 16px;
+padding: 20px;
+margin: auto;
+}
+
+.modal-title {
+font-size: 22px;
+font-weight: bold;
+margin-bottom: 20px;
+}
+
+.locked-box {
+background: #eee;
+border: 1px solid #ccc;
+padding: 14px;
+border-radius: 10px;
+color: #555;
+}
+
+.detail-photo-grid {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.detail-photo-grid img {
+width: 120px;
+height: 120px;
+object-fit: cover;
+border-radius: 10px;
+}
+
+.detail-signature {
+width: 100%;
+border: 1px solid #ccc;
+border-radius: 10px;
+background: white;
+}
+
+.close-modal {
+width: 100%;
+min-height: 52px;
+border: none;
+border-radius: 10px;
+background: #555;
+color: white;
+font-size: 18px;
+margin-top: 20px;
+}
 
 /* =========================
-   検索
+レスポンシブ
 ========================= */
 
-.search-box{
-    background:#f7f7f7;
-    border:2px solid #ddd;
-    border-radius:14px;
-    padding:16px;
-    margin-bottom:18px;
+@media (min-width: 600px) {
+.page {
+padding-top: 35px;
 }
 
-.search-title{
-    font-size:19px;
-    font-weight:bold;
-    margin-bottom:15px;
+.home-buttons {
+max-width: 500px;
+margin-left: auto;
+margin-right: auto;
 }
 
-.search-group{
-    margin-bottom:14px;
+.product-grid {
+grid-template-columns: repeat(3, 1fr);
 }
-
-.search-group:last-child{
-    margin-bottom:0;
 }
-
-.search-group label{
-    font-size:15px;
-    margin-bottom:6px;
-}
-
-.search-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:15px;
-}
-
-.search-btn{
-    min-height:52px;
-    border:2px solid #333;
-    border-radius:9px;
-    background:#333;
-    color:#fff;
-    font-size:16px;
-    font-weight:bold;
-}
-
-.reset-search-btn{
-    min-height:52px;
-    border:2px solid #888;
-    border-radius:9px;
-    background:#fff;
-    color:#222;
-    font-size:16px;
-    font-weight:bold;
-}
-
-.search-result-count{
-    font-size:15px;
-    font-weight:bold;
-    margin:15px 0;
-    padding:10px 12px;
-    border-radius:8px;
-    background:#eee;
-}
-
-
-/* =========================
-   注文カード
-========================= */
-
-.order-card{
-    border:2px solid #ddd;
-    border-radius:14px;
-    padding:16px;
-    margin-bottom:16px;
-    background:#fff;
-}
-
-.order-number{
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:12px;
-}
-
-.order-info{
-    line-height:1.8;
-    margin-bottom:12px;
-}
-
-.order-product{
-    display:inline-block;
-    padding:5px 10px;
-    border-radius:7px;
-    background:#eee;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.saved-photos{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
-    margin:12px 0;
-}
-
-.saved-photos img{
-    width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
-    border-radius:8px;
-    border:1px solid #ccc;
-}
-
-.saved-signature{
-    margin-top:12px;
-}
-
-.saved-signature-title{
-    font-weight:bold;
-    margin-bottom:6px;
-}
-
-.saved-signature img{
-    width:100%;
-    max-height:220px;
-    object-fit:contain;
-    border:1px solid #ccc;
-    border-radius:8px;
-    background:#fff;
-}
-
-.saved-notices{
-    margin-top:14px;
-    padding:12px;
-    border-radius:8px;
-    background:#f5f5f5;
-    font-size:13px;
-    line-height:1.6;
-}
-
-.order-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:14px;
-}
-
-.edit-btn{
-    min-height:48px;
-    border:2px solid #1976d2;
-    border-radius:9px;
-    background:#fff;
-    color:#1976d2;
-    font-size:16px;
-    font-weight:bold;
-}
-
-.delete-btn{
-    min-height:48px;
-    border:2px solid #d32f2f;
-    border-radius:9px;
-    background:#fff;
-    color:#d32f2f;
-    font-size:16px;
-    font-weight:bold;
-}
-
-.no-result{
-    text-align:center;
-    padding:30px 10px;
-    color:#777;
-}
-
-
-/* =========================
-   編集画面
-========================= */
-
-#editModal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.7);
-    z-index:1000;
-    overflow-y:auto;
-    padding:20px 10px;
-}
-
-.edit-modal-box{
-    width:100%;
-    max-width:700px;
-    margin:0 auto;
-    background:#fff;
-    border-radius:16px;
-    padding:20px;
-}
-
-.edit-title{
-    font-size:22px;
-    font-weight:bold;
-    margin-bottom:20px;
-    text-align:center;
-}
-
-.locked-box{
-    border:2px solid #ddd;
-    border-radius:10px;
-    padding:14px;
-    background:#f5f5f5;
-    margin-bottom:20px;
-}
-
-.locked-title{
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.locked-text{
-    font-size:14px;
-    color:#555;
-    line-height:1.6;
-}
-
-
-/* 商品固定表示 */
-
-.locked-product{
-    border:2px solid #1976d2;
-    border-radius:10px;
-    padding:14px;
-    background:#f5f5f5;
-    font-size:18px;
-    font-weight:bold;
-}
-
-
-/* 編集署名 */
-
-.edit-signature{
-    margin-top:10px;
-}
-
-.edit-signature img{
-    width:100%;
-    max-height:220px;
-    object-fit:contain;
-    border:1px solid #ccc;
-    border-radius:8px;
-    background:#fff;
-}
-
-
-/* 編集ボタン */
-
-.edit-actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:20px;
-}
-
-.edit-save-btn{
-    min-height:56px;
-    border:0;
-    border-radius:10px;
-    background:#222;
-    color:#fff;
-    font-size:17px;
-    font-weight:bold;
-}
-
-.edit-cancel-btn{
-    min-height:56px;
-    border:2px solid #888;
-    border-radius:10px;
-    background:#fff;
-    font-size:17px;
-    font-weight:bold;
-}
-
-
-/* =========================
-   スマホ
-========================= */
-
-@media(max-width:600px){
-
-    .container{
-        padding:15px;
-    }
-
-    .product-btn{
-        font-size:14px;
-        min-height:58px;
-    }
-
-    .photo-buttons{
-        grid-template-columns:1fr;
-    }
-
-    .search-buttons{
-        grid-template-columns:1fr;
-    }
-
-    .edit-actions{
-        grid-template-columns:1fr;
-    }
-
-}
-
 </style>
 </head>
 
 <body>
 
+<!-- =====================================================
+1ページ目：ホーム
+===================================================== -->
+
+<div id="homePage" class="page active">
 <div class="container">
 
-<h1>注文受付</h1>
+<h1>署名管理</h1>
+
+<div class="home-buttons">
+
+<button
+id="goSignButton"
+class="home-button btn-sign">
+署名画面へ
+</button>
+
+<button
+id="savedOrdersButton"
+class="home-button btn-saved">
+署名保存済
+</button>
+
+</div>
+
+</div>
+</div>
 
 
-<!-- =========================
-     お客様名
-========================= -->
+<!-- =====================================================
+2ページ目：お客様情報
+===================================================== -->
 
+<div id="orderPage" class="page">
+<div class="container">
+
+<button
+id="orderBackButton"
+class="back-button">
+← 戻る
+</button>
+
+<h1>お客様情報</h1>
+
+<div class="card">
+
+<!-- お客様名 -->
 <div class="form-group">
-
 <label for="customerName">
 お客様名または会社名
 </label>
 
 <input
-    type="text"
-    id="customerName"
-    placeholder="例：株式会社〇〇・山田太郎"
->
-
+type="text"
+id="customerName"
+placeholder="お名前または会社名を入力">
 </div>
 
 
-<!-- =========================
-     商品カテゴリー
-========================= -->
-
+<!-- 商品 -->
 <div class="form-group">
 
 <label>
-商品カテゴリー
+商品
 </label>
 
-<div class="product-grid">
+<div id="productGrid" class="product-grid">
 
-<button type="button" class="product-btn product-1" data-product="① 名刺">
+<button class="product-button product-1"
+data-product="① 名刺">
 ① 名刺
 </button>
 
-<button type="button" class="product-btn product-2" data-product="② 印鑑">
+<button class="product-button product-2"
+data-product="② 印鑑">
 ② 印鑑
 </button>
 
-<button type="button" class="product-btn product-3" data-product="③ スタンプ・ゴム印">
+<button class="product-button product-3"
+data-product="③ スタンプ・ゴム印">
 ③ スタンプ・ゴム印
 </button>
 
-<button type="button" class="product-btn product-4" data-product="④ 封筒">
+<button class="product-button product-4"
+data-product="④ 封筒">
 ④ 封筒
 </button>
 
-<button type="button" class="product-btn product-5" data-product="⑤ チラシ・パンフレット">
+<button class="product-button product-5"
+data-product="⑤ チラシ・パンフレット">
 ⑤ チラシ・パンフレット
 </button>
 
-<button type="button" class="product-btn product-6" data-product="⑥ ホームページ">
+<button class="product-button product-6"
+data-product="⑥ ホームページ">
 ⑥ ホームページ
 </button>
 
-<button type="button" class="product-btn product-7" data-product="⑦ 入稿データ">
+<button class="product-button product-7"
+data-product="⑦ 入稿データ">
 ⑦ 入稿データ
 </button>
 
-<button type="button" class="product-btn product-8" data-product="⑧ 伝票">
+<button class="product-button product-8"
+data-product="⑧ 伝票">
 ⑧ 伝票
 </button>
 
-<button type="button" class="product-btn product-9" data-product="⑨ オーダーメイド依頼">
+<button class="product-button product-9"
+data-product="⑨ オーダーメイド依頼">
 ⑨ オーダーメイド依頼
 </button>
 
-<button type="button" class="product-btn product-10" data-product="⑩ オーダーメイド決定">
+<button class="product-button product-10"
+data-product="⑩ オーダーメイド決定">
 ⑩ オーダーメイド決定
 </button>
 
-<button type="button" class="product-btn product-11" data-product="⑪ 持込印材">
+<button class="product-button product-11"
+data-product="⑪ 持込印材">
 ⑪ 持込印材
 </button>
 
@@ -805,127 +720,154 @@ select:focus{
 </div>
 
 
-<!-- =========================
-     受付日
-========================= -->
-
-<div class="form-group date-area">
+<!-- 受付日 -->
+<div class="form-group">
 
 <label for="delivery">
 受付日
 </label>
 
 <input
-    type="date"
-    id="delivery"
->
+type="date"
+id="delivery">
 
 </div>
 
 
-<!-- =========================
-     注意事項
-========================= -->
-
-<div id="noticeArea">
-
-<h3>注意事項</h3>
-
-<div id="noticeList"></div>
-
-</div>
-
-
-<!-- =========================
-     写真
-========================= -->
-
+<!-- 写真 -->
 <div class="form-group">
 
 <label>
-お客様ご用意の材料・参考資料
+お客様提供資料の写真
 </label>
 
 <div class="photo-buttons">
 
 <button
-    type="button"
-    class="photo-btn"
-    id="cameraButton">
+type="button"
+id="cameraButton"
+class="photo-button">
 📷 カメラで撮影
 </button>
 
 <button
-    type="button"
-    class="photo-btn"
-    id="photoButton">
+type="button"
+id="photoButton"
+class="photo-button">
 🖼 写真から選ぶ
 </button>
 
 </div>
 
 <input
-    type="file"
-    id="cameraInput"
-    accept="image/*"
-    capture="environment"
-    style="display:none"
->
+type="file"
+id="cameraInput"
+accept="image/*"
+capture="environment"
+style="display:none;">
 
 <input
-    type="file"
-    id="photoInput"
-    accept="image/*"
-    multiple
-    style="display:none"
->
+type="file"
+id="photoInput"
+accept="image/*"
+multiple
+style="display:none;">
 
 <div
-    id="photoPreview"
-    class="photo-preview">
+id="photoList"
+class="photo-list">
 </div>
 
 </div>
 
 
-<!-- =========================
-     備考
-========================= -->
-
-<div class="form-group notes-area">
+<!-- 備考 -->
+<div class="form-group">
 
 <label for="notes">
 備考
 </label>
 
 <textarea
-    id="notes"
-    placeholder="ご注文に関する内容などを入力してください"
-></textarea>
+id="notes"
+placeholder="備考があれば入力してください"></textarea>
 
 </div>
 
 
-<!-- =========================
-     署名
-========================= -->
+<button
+id="nextButton"
+class="primary-button">
+次へ
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+3ページ目：注意事項＋署名
+===================================================== -->
+
+<div id="signaturePage" class="page">
+<div class="container">
+
+<button
+id="signatureBackButton"
+class="back-button">
+← 戻る
+</button>
+
+<h1>注意事項・お客様署名</h1>
+
+
+<!-- 現在のお客様情報 -->
+<div class="card">
+
+<div class="section-title">
+お客様情報
+</div>
+
+<div id="signatureOrderInfo"></div>
+
+</div>
+
+
+<!-- 注意事項 -->
+<div class="card">
+
+<div class="section-title">
+注意事項
+</div>
+
+<div
+id="noticeList"
+class="notice-box">
+</div>
+
+</div>
+
+
+<!-- 署名 -->
+<div class="card">
+
+<div class="section-title">
+お客様署名
+</div>
 
 <div class="signature-area">
 
-<label>
-お客様署名
-</label>
-
-<div class="signature-wrap">
-
-<canvas id="signatureCanvas"></canvas>
+<canvas
+id="signatureCanvas"
+class="signature-canvas">
+</canvas>
 
 <div class="signature-buttons">
 
 <button
-    type="button"
-    class="clear-btn"
-    id="clearSignature">
+id="clearSignatureButton">
 署名を消す
 </button>
 
@@ -933,123 +875,96 @@ select:focus{
 
 </div>
 
+
+<button
+id="saveOrderButton"
+class="primary-button save-button">
+保存する
+</button>
+
+</div>
+
+</div>
 </div>
 
 
-<!-- =========================
-     保存
-========================= -->
+<!-- =====================================================
+保存済み一覧ページ
+===================================================== -->
+
+<div id="savedPage" class="page">
+<div class="container">
 
 <button
-    type="button"
-    class="save-btn"
-    id="saveButton">
-注文を保存する
+id="savedBackButton"
+class="back-button">
+← 戻る
 </button>
 
-
-<!-- =========================
-     保存済み注文
-========================= -->
-
-<div class="saved-section">
-
-<h2>保存済み注文</h2>
+<h1>署名保存済</h1>
 
 
 <!-- 検索 -->
-
 <div class="search-box">
 
-<div class="search-title">
-🔎 過去の注文を検索
-</div>
-
-
-<div class="search-group">
+<div class="form-group">
 
 <label for="searchDate">
-① 日付検索
+受付日
 </label>
 
 <input
-    type="date"
-    id="searchDate"
->
+type="date"
+id="searchDate">
 
 </div>
 
 
-<div class="search-group">
+<div class="form-group">
 
 <label for="searchName">
-② 名前または会社名検索
+お客様名・会社名
 </label>
 
 <input
-    type="text"
-    id="searchName"
-    placeholder="例：田中"
->
+type="text"
+id="searchName"
+placeholder="名前で検索">
 
 </div>
 
 
-<div class="search-group">
+<div class="form-group">
 
 <label for="searchProduct">
-③ 商品カテゴリー検索
+商品
 </label>
 
-<select id="searchProduct">
+<select
+id="searchProduct"
+style="
+width:100%;
+padding:14px;
+font-size:17px;
+border:1px solid #ccc;
+border-radius:10px;
+">
 
 <option value="">
-すべての商品カテゴリー
+すべての商品
 </option>
 
-<option value="① 名刺">
-① 名刺
-</option>
-
-<option value="② 印鑑">
-② 印鑑
-</option>
-
-<option value="③ スタンプ・ゴム印">
-③ スタンプ・ゴム印
-</option>
-
-<option value="④ 封筒">
-④ 封筒
-</option>
-
-<option value="⑤ チラシ・パンフレット">
-⑤ チラシ・パンフレット
-</option>
-
-<option value="⑥ ホームページ">
-⑥ ホームページ
-</option>
-
-<option value="⑦ 入稿データ">
-⑦ 入稿データ
-</option>
-
-<option value="⑧ 伝票">
-⑧ 伝票
-</option>
-
-<option value="⑨ オーダーメイド依頼">
-⑨ オーダーメイド依頼
-</option>
-
-<option value="⑩ オーダーメイド決定">
-⑩ オーダーメイド決定
-</option>
-
-<option value="⑪ 持込印材">
-⑪ 持込印材
-</option>
+<option>① 名刺</option>
+<option>② 印鑑</option>
+<option>③ スタンプ・ゴム印</option>
+<option>④ 封筒</option>
+<option>⑤ チラシ・パンフレット</option>
+<option>⑥ ホームページ</option>
+<option>⑦ 入稿データ</option>
+<option>⑧ 伝票</option>
+<option>⑨ オーダーメイド依頼</option>
+<option>⑩ オーダーメイド決定</option>
+<option>⑪ 持込印材</option>
 
 </select>
 
@@ -1059,17 +974,15 @@ select:focus{
 <div class="search-buttons">
 
 <button
-    type="button"
-    class="search-btn"
-    id="searchButton">
-🔎 検索
+id="searchButton"
+class="search-button">
+検索
 </button>
 
 <button
-    type="button"
-    class="reset-search-btn"
-    id="resetSearchButton">
-検索条件をクリア
+id="resetSearchButton"
+class="reset-button">
+クリア
 </button>
 
 </div>
@@ -1078,2491 +991,2332 @@ select:focus{
 
 
 <div
-    id="searchResultCount"
-    class="search-result-count">
-保存済み注文：0件
+id="searchResultCount"
+class="result-count">
 </div>
 
 
-<div id="savedOrders"></div>
+<div id="savedOrdersList"></div>
 
 </div>
-
-</div>
-
-
-<!-- ==================================================
-     編集画面
-================================================== -->
-
-<div id="editModal">
-
-<div class="edit-modal-box">
-
-<div class="edit-title">
-✏️ 注文情報を編集
 </div>
 
 
-<!-- 注文番号：固定 -->
+<!-- =====================================================
+詳細表示モーダル
+===================================================== -->
+
+<div
+id="detailModal"
+class="modal">
+
+<div class="modal-content">
+
+<div class="modal-title">
+保存内容
+</div>
+
+<div id="detailContent"></div>
+
+<button
+id="closeDetailButton"
+class="close-modal">
+閉じる
+</button>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+編集モーダル
+===================================================== -->
+
+<div
+id="editModal"
+class="modal">
+
+<div class="modal-content">
+
+<div class="modal-title">
+保存内容を編集
+</div>
+
 
 <div class="form-group">
 
 <label>
-🔒 注文番号
-</label>
-
-<input
-    type="text"
-    id="editOrderNumber"
-    disabled
->
-
-</div>
-
-
-<!-- お客様名：編集可能 -->
-
-<div class="form-group">
-
-<label for="editCustomerName">
 お客様名または会社名
 </label>
 
 <input
-    type="text"
-    id="editCustomerName"
->
+type="text"
+id="editCustomerName">
 
 </div>
 
-
-<!-- 商品：編集不可 -->
 
 <div class="form-group">
 
 <label>
-🔒 商品カテゴリー
+商品
 </label>
 
 <div
-    id="editProductDisplay"
-    class="locked-product">
-</div>
-
-<div
-    class="locked-text"
-    style="margin-top:8px;">
-商品カテゴリーは保存後に編集できません。
+id="editProduct"
+class="locked-box">
 </div>
 
 </div>
 
-
-<!-- 受付日：編集可能 -->
 
 <div class="form-group">
 
-<label for="editDelivery">
+<label>
 受付日
 </label>
 
 <input
-    type="date"
-    id="editDelivery"
->
+type="date"
+id="editDelivery">
 
 </div>
 
 
-<!-- 写真：編集可能 -->
-
 <div class="form-group">
 
 <label>
-お客様ご用意の材料・参考資料
+写真
 </label>
 
 <div class="photo-buttons">
 
 <button
-    type="button"
-    class="photo-btn"
-    id="editCameraButton">
-📷 カメラで撮影
+type="button"
+id="editCameraButton"
+class="photo-button">
+📷 カメラ
 </button>
 
 <button
-    type="button"
-    class="photo-btn"
-    id="editPhotoButton">
-🖼 写真から選ぶ
+type="button"
+id="editPhotoButton"
+class="photo-button">
+🖼 写真
 </button>
 
 </div>
 
 <input
-    type="file"
-    id="editCameraInput"
-    accept="image/*"
-    capture="environment"
-    style="display:none"
->
+type="file"
+id="editCameraInput"
+accept="image/*"
+capture="environment"
+style="display:none;">
 
 <input
-    type="file"
-    id="editPhotoInput"
-    accept="image/*"
-    multiple
-    style="display:none"
->
+type="file"
+id="editPhotoInput"
+accept="image/*"
+multiple
+style="display:none;">
 
 <div
-    id="editPhotoPreview"
-    class="photo-preview">
+id="editPhotoList"
+class="photo-list">
 </div>
 
 </div>
 
-
-<!-- 備考：編集可能 -->
 
 <div class="form-group">
 
-<label for="editNotes">
+<label>
 備考
 </label>
 
-<textarea id="editNotes"></textarea>
+<textarea
+id="editNotes"></textarea>
 
 </div>
 
-
-<!-- 署名：固定 -->
-
-<div class="locked-box">
-
-<div class="locked-title">
-🔒 お客様署名
-</div>
-
-<div class="locked-text">
-
-保存済みのお客様署名です。<br>
-署名は編集・変更できません。
-
-<div class="edit-signature">
-
-<img
-    id="editSignaturePreview"
-    alt="保存済み署名"
->
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- 注意事項：固定 -->
-
-<div class="locked-box">
-
-<div class="locked-title">
-🔒 注意事項
-</div>
-
-<div class="locked-text">
-
-保存時の注意事項の内容と確認状態を保持しています。<br>
-注意事項のチェック状態・内容は編集できません。
-
-<div
-    id="editNoticePreview">
-</div>
-
-</div>
-
-</div>
-
-
-<!-- 編集ボタン -->
-
-<div class="edit-actions">
 
 <button
-    type="button"
-    class="edit-save-btn"
-    id="editSaveButton">
-変更を保存
+id="updateOrderButton"
+class="primary-button save-button">
+保存内容を更新
 </button>
 
 <button
-    type="button"
-    class="edit-cancel-btn"
-    id="editCancelButton">
+id="cancelEditButton"
+class="cancel-button">
 キャンセル
 </button>
 
 </div>
-
-</div>
-
 </div>
 
 
 <script>
 
 /* =====================================================
-   商品カテゴリー
+基本設定
 ===================================================== */
 
-const products = [
-
-    "① 名刺",
-    "② 印鑑",
-    "③ スタンプ・ゴム印",
-    "④ 封筒",
-    "⑤ チラシ・パンフレット",
-    "⑥ ホームページ",
-    "⑦ 入稿データ",
-    "⑧ 伝票",
-    "⑨ オーダーメイド依頼",
-    "⑩ オーダーメイド決定",
-    "⑪ 持込印材"
-
-];
+const STORAGE_KEY = "orderAppOrders_v1";
 
 
 /* =====================================================
-   注意事項
+注意事項
 ===================================================== */
 
 const notices = {
 
-"① 名刺":[
-
-`弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。`,
-
-`弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。`,
-
-`店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。`,
-
-`本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。`,
-
-`お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。`,
-
-`お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。`,
-
-`以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？`,
-
-`お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。`,
-
-`後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。`
-
-],
-
-"④ 封筒":[
-
-`弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。`,
-
-`弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。`,
-
-`店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。`,
-
-`本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。`,
-
-`お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。`,
-
-`お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。`,
-
-`以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？`,
-
-`お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。`,
-
-`後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。`
-
-],
-
-"⑤ チラシ・パンフレット":[
-
-`弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。`,
-
-`弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。`,
-
-`店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。`,
-
-`本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。`,
-
-`お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。`,
-
-`お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。`,
-
-`以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？`,
-
-`お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。`,
-
-`後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。`
-
-],
-
-"② 印鑑":[
-
-`版下の内容を確認いたしました。`,
-
+"① 名刺": [
 {
-    text:`弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。`,
-    warning:`最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。`
+text: "弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。"
 },
-
-`店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。`,
-
-`本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。`,
-
-`お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。`,
-
-`印鑑商品をご注文のお客様は、印鑑製作依頼書（別紙）の内容で彫刻することを了承します。`,
-
-`注文時のみ電子印（デジタル印鑑）は重要認印、角印データのみお渡しが可能です。実印、及び銀行印のお渡しはセキュリティの観点から行っておりません。`
-
-],
-
-"③ スタンプ・ゴム印":[
-
-`版下の内容を確認いたしました。`,
-
 {
-    text:`弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。`,
-    warning:`最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。`
+text: "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。"
 },
-
-`店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。`,
-
-`本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。`,
-
-`お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。`
-
+{
+text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
+},
+{
+text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+},
+{
+text: "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+},
+{
+text: "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。"
+},
+{
+text: "以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？"
+},
+{
+text: "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
+},
+{
+text: "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。"
+}
 ],
 
-"⑦ 入稿データ":[
 
-`印刷結果は、ご入稿頂いたデータの解像度に依存します。ご入稿データの解像度によっては、荒く印刷されることがあります。`,
-
-`QRコード等の印刷の場合、お選び頂いた紙や携帯機種により読み取れない場合がございます。本紙校正にて検証されることをお勧めします。`,
-
-`店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。`,
-
-`本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。`,
-
-`お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。`,
-
-`お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。あくまでも、お作り頂いたデータの内容を確認頂く為のものです。本紙校正オプションなしでご注文頂く場合、以上をご了承下さい。`,
-
-`お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。`,
-
-`後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じる事を了承します。`
-
+"④ 封筒": [
+{
+text: "弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。"
+},
+{
+text: "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。"
+},
+{
+text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
+},
+{
+text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+},
+{
+text: "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+},
+{
+text: "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。"
+},
+{
+text: "以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？"
+},
+{
+text: "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
+},
+{
+text: "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。"
+}
 ],
 
-"⑪ 持込印材":[
 
-`印材の状態によっては、欠けやクラックが生じることがあることに同意します。（特に石材系印材の場合）`,
+"⑤ チラシ・パンフレット": [
+{
+text: "弊社作成の版下データ及び弊社で改変を行った入稿データの、著作権は弊社に帰属し、データのお渡し出来ない事を了承します。"
+},
+{
+text: "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。"
+},
+{
+text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
+},
+{
+text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+},
+{
+text: "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+},
+{
+text: "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。実際の出力結果により近い形をご希望のお客様には、実際に印刷する用紙を用いた本紙校正オプションをお勧めしております。"
+},
+{
+text: "以上ご了承の上、本紙校正オプションなしでご注文頂いても問題ございませんか？"
+},
+{
+text: "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
+},
+{
+text: "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じることを了承します。"
+}
+],
 
-`印材の状態によっては、彫刻内容に若干変化が生じる場合があることに同意します。`,
 
-`本依頼書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。`,
+"② 印鑑": [
+{
+text: "版下の内容を確認いたしました。"
+},
+{
+text: "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。",
+warning: "最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。"
+},
+{
+text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。"
+},
+{
+text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+},
+{
+text: "お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。"
+},
+{
+text: "印鑑商品をご注文のお客様は、印鑑製作依頼書（別紙）の内容で彫刻することを了承します。"
+},
+{
+text: "注文時のみ電子印（デジタル印鑑）は重要認印、角印データのみお渡しが可能です。実印、及び銀行印のお渡しはセキュリティの観点から行っておりません。"
+}
+],
 
-`お客様の署名と同時にデザインのご依頼は確定し、確定以降はデザインの内容、仕様など、発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。`
 
+"③ スタンプ・ゴム印": [
+{
+text: "版下の内容を確認いたしました。"
+},
+{
+text: "弊社での作業の有無にかかわらず、最終の原稿正誤チェックはお客様によるものとさせて頂くことに了承します。",
+warning: "最後のデータチェックはお時間をしっかり取って頂き、校正内容に間違いがないか念入りにお確かめください。"
+},
+{
+text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで彫刻に誤差があることに了承します。"
+},
+{
+text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+},
+{
+text: "お客様の署名と同時に内容は確定し、確定以降は彫刻内容の変更、数量の減少、素材の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更、追加がある場合は新たにご発注頂く必要があります。"
+}
+],
+
+
+"⑦ 入稿データ": [
+{
+text: "印刷結果は、ご入稿頂いたデータの解像度に依存します。ご入稿データの解像度によっては、荒く印刷されることがあります。"
+},
+{
+text: "QRコード等の印刷の場合、お選び頂いた紙や携帯機種により読み取れない場合がございます。本紙校正にて検証されることをお勧めします。"
+},
+{
+text: "店舗ごと、季節毎、気温・湿度の違い、機器の入れ替えなどで色の出方やインキの乗りに誤差があることに了承します。"
+},
+{
+text: "本指示書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+},
+{
+text: "お客様の署名と同時に印刷内容は確定し、確定以降は印刷内容の変更、印刷枚数の変更、用紙の変更、納期の変更など発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+},
+{
+text: "お客様確認用に出力したもの（コピー用紙）と実際の印刷用紙では発色が異なります。あくまでも、お作り頂いたデータの内容を確認頂く為のものです。本紙校正オプションなしでご注文頂く場合、以上をご了承下さい。"
+},
+{
+text: "お客様がご用意されたデータ（版下・画像含）の場合で、CMYKに変換されていないデータの場合、画面と実際の印刷に大幅な色の相違が出る事がございます。あらかじめご了承ください。"
+},
+{
+text: "後加工を伴う名刺、カード類やその他印刷物は印刷機が店頭確認用の機械と異なる為、色差が生じる事を了承します。"
+}
+],
+
+
+"⑪ 持込印材": [
+{
+text: "印材の状態によっては、欠けやクラックが生じることがあることに同意します。（特に石材系印材の場合）"
+},
+{
+text: "印材の状態によっては、彫刻内容に若干変化が生じる場合があることに同意します。"
+},
+{
+text: "本依頼書にチェック及び署名後の返品・交換・キャンセル・ご返金等は一切出来ないことに了承します。"
+},
+{
+text: "お客様の署名と同時にデザインのご依頼は確定し、確定以降はデザインの内容、仕様など、発注内容の変更が一切出来なくなることに了承します。変更がある場合は新たにご発注いただく必要があります。"
+}
 ]
 
 };
 
 
 /* =====================================================
-   DOM
+状態
 ===================================================== */
 
-const customerName =
-    document.getElementById("customerName");
-
-const delivery =
-    document.getElementById("delivery");
-
-const notes =
-    document.getElementById("notes");
-
-const noticeArea =
-    document.getElementById("noticeArea");
-
-const noticeList =
-    document.getElementById("noticeList");
-
-const savedOrders =
-    document.getElementById("savedOrders");
-
-const searchDate =
-    document.getElementById("searchDate");
-
-const searchName =
-    document.getElementById("searchName");
-
-const searchProduct =
-    document.getElementById("searchProduct");
-
-const searchResultCount =
-    document.getElementById("searchResultCount");
-
-
-/* =====================================================
-   今日の日付
-===================================================== */
-
-function getToday(){
-
-    const now = new Date();
-
-    const y =
-        now.getFullYear();
-
-    const m =
-        String(
-            now.getMonth()+1
-        ).padStart(2,"0");
-
-    const d =
-        String(
-            now.getDate()
-        ).padStart(2,"0");
-
-    return `${y}-${m}-${d}`;
-
-}
-
-delivery.value =
-    getToday();
-
-
-/* =====================================================
-   商品選択
-===================================================== */
-
-document
-.querySelectorAll(".product-btn")
-.forEach(
-    button => {
-
-        button.addEventListener(
-            "click",
-            function(){
-
-                document
-                .querySelectorAll(
-                    ".product-btn"
-                )
-                .forEach(
-                    btn =>
-                        btn.classList
-                        .remove(
-                            "selected"
-                        )
-                );
-
-                this.classList.add(
-                    "selected"
-                );
-
-                selectedProduct =
-                    this.dataset.product;
-
-                renderNotices();
-
-            }
-        );
-
-    }
-);
-
+let currentOrder = {
+customerName: "",
+product: "",
+delivery: "",
+photos: [],
+notes: ""
+};
 
 let selectedProduct = "";
 
+let editingOrderKey = null;
+
+let editPhotos = [];
+
 
 /* =====================================================
-   注意事項表示
+ページ切り替え
 ===================================================== */
 
-function renderNotices(){
+function showPage(pageId) {
 
-    noticeList.innerHTML = "";
+document.querySelectorAll(".page").forEach(page => {
+page.classList.remove("active");
+});
 
-    const current =
-        notices[selectedProduct];
+document.getElementById(pageId).classList.add("active");
 
-
-    if(
-        !current ||
-        current.length === 0
-    ){
-
-        noticeArea.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    noticeArea.style.display =
-        "block";
-
-
-    current.forEach(
-        (notice,index)=>{
-
-            const box =
-                document.createElement(
-                    "div"
-                );
-
-            box.className =
-                "notice-box";
-
-
-            const text =
-                typeof notice === "string"
-                ? notice
-                : notice.text;
-
-
-            const warning =
-                typeof notice === "object"
-                ? notice.warning
-                : "";
-
-
-            box.innerHTML = `
-
-                <label class="notice-label">
-
-                    <input
-                        type="checkbox"
-                        class="notice-check"
-                        id="noticeCheck-${index}"
-                    >
-
-                    <span>
-                        ${escapeHTML(text)}
-                    </span>
-
-                </label>
-
-                ${
-                    warning
-                    ?
-                    `<div class="notice-warning">
-                        ⚠ ${escapeHTML(warning)}
-                    </div>`
-                    :
-                    ""
-                }
-
-            `;
-
-
-            noticeList.appendChild(
-                box
-            );
-
-        }
-    );
-
+window.scrollTo(0, 0);
 }
 
 
 /* =====================================================
-   HTMLエスケープ
+日付
 ===================================================== */
 
-function escapeHTML(text){
+function getToday() {
 
-    return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+const now = new Date();
 
+const year = now.getFullYear();
+
+const month = String(
+now.getMonth() + 1
+).padStart(2, "0");
+
+const day = String(
+now.getDate()
+).padStart(2, "0");
+
+return `${year}-${month}-${day}`;
 }
 
 
 /* =====================================================
-   写真
+注文取得・保存
 ===================================================== */
 
-const cameraButton =
-    document.getElementById(
-        "cameraButton"
-    );
+function getOrders() {
 
-const photoButton =
-    document.getElementById(
-        "photoButton"
-    );
+try {
 
-const cameraInput =
-    document.getElementById(
-        "cameraInput"
-    );
+return JSON.parse(
+localStorage.getItem(STORAGE_KEY)
+) || [];
 
-const photoInput =
-    document.getElementById(
-        "photoInput"
-    );
+} catch (error) {
 
-const photoPreview =
-    document.getElementById(
-        "photoPreview"
-    );
+return [];
 
-
-cameraButton.addEventListener(
-    "click",
-    ()=>{
-        cameraInput.click();
-    }
-);
-
-
-photoButton.addEventListener(
-    "click",
-    ()=>{
-        photoInput.click();
-    }
-);
-
-
-cameraInput.addEventListener(
-    "change",
-    function(){
-
-        handlePhotos(
-            this.files
-        );
-
-        this.value = "";
-
-    }
-);
-
-
-photoInput.addEventListener(
-    "change",
-    function(){
-
-        handlePhotos(
-            this.files
-        );
-
-        this.value = "";
-
-    }
-);
-
-
-function handlePhotos(files){
-
-    const fileArray =
-        Array.from(files);
-
-
-    if(
-        selectedPhotos.length +
-        fileArray.length > 3
-    ){
-
-        alert(
-            "写真は最大3枚まで保存できます。"
-        );
-
-        return;
-
-    }
-
-
-    fileArray.forEach(
-        file => {
-
-            compressImage(file)
-            .then(
-                dataURL => {
-
-                    selectedPhotos.push(
-                        dataURL
-                    );
-
-                    renderPhotoPreview();
-
-                }
-            );
-
-        }
-    );
-
+}
 }
 
 
-let selectedPhotos = [];
+function saveOrders(orders) {
 
-
-function compressImage(file){
-
-    return new Promise(
-        (resolve,reject)=>{
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                function(e){
-
-                    const img =
-                        new Image();
-
-
-                    img.onload =
-                        function(){
-
-                            const maxSize =
-                                1200;
-
-                            let width =
-                                img.width;
-
-                            let height =
-                                img.height;
-
-
-                            if(
-                                width >
-                                maxSize
-                            ){
-
-                                height =
-                                    Math.round(
-                                        height *
-                                        maxSize /
-                                        width
-                                    );
-
-                                width =
-                                    maxSize;
-
-                            }
-
-
-                            if(
-                                height >
-                                maxSize
-                            ){
-
-                                width =
-                                    Math.round(
-                                        width *
-                                        maxSize /
-                                        height
-                                    );
-
-                                height =
-                                    maxSize;
-
-                            }
-
-
-                            const canvas =
-                                document
-                                .createElement(
-                                    "canvas"
-                                );
-
-
-                            canvas.width =
-                                width;
-
-                            canvas.height =
-                                height;
-
-
-                            const ctx =
-                                canvas
-                                .getContext(
-                                    "2d"
-                                );
-
-
-                            ctx.drawImage(
-                                img,
-                                0,
-                                0,
-                                width,
-                                height
-                            );
-
-
-                            resolve(
-                                canvas.toDataURL(
-                                    "image/jpeg",
-                                    0.75
-                                )
-                            );
-
-                        };
-
-
-                    img.onerror =
-                        reject;
-
-                    img.src =
-                        e.target.result;
-
-                };
-
-
-            reader.onerror =
-                reject;
-
-            reader.readAsDataURL(
-                file
-            );
-
-        }
-    );
-
-}
-
-
-function renderPhotoPreview(){
-
-    photoPreview.innerHTML = "";
-
-
-    selectedPhotos.forEach(
-        (photo,index)=>{
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-            item.className =
-                "photo-preview-item";
-
-
-            item.innerHTML = `
-
-                <img
-                    src="${photo}"
-                    alt="写真${index+1}"
-                >
-
-                <button
-                    type="button"
-                    class="photo-remove">
-                    ×
-                </button>
-
-            `;
-
-
-            item
-            .querySelector(
-                ".photo-remove"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    selectedPhotos.splice(
-                        index,
-                        1
-                    );
-
-                    renderPhotoPreview();
-
-                }
-            );
-
-
-            photoPreview.appendChild(
-                item
-            );
-
-        }
-    );
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(orders)
+);
 
 }
 
 
 /* =====================================================
-   署名
+注文番号
+===================================================== */
+
+function generateOrderNumber() {
+
+const today = getToday();
+
+const todayText = today.replace(/-/g, "");
+
+const orders = getOrders();
+
+const count = orders.filter(order =>
+order.orderNumber &&
+order.orderNumber.startsWith(todayText)
+).length;
+
+const number = String(count + 1).padStart(3, "0");
+
+return `${todayText}-${number}`;
+}
+
+
+/* =====================================================
+写真圧縮
+===================================================== */
+
+function compressImage(file) {
+
+return new Promise((resolve, reject) => {
+
+const reader = new FileReader();
+
+reader.onload = function(event) {
+
+const img = new Image();
+
+img.onload = function() {
+
+const maxSize = 1200;
+
+let width = img.width;
+let height = img.height;
+
+if (width > maxSize || height > maxSize) {
+
+if (width > height) {
+
+height =
+Math.round(
+height * maxSize / width
+);
+
+width = maxSize;
+
+} else {
+
+width =
+Math.round(
+width * maxSize / height
+);
+
+height = maxSize;
+
+}
+}
+
+const canvas =
+document.createElement("canvas");
+
+canvas.width = width;
+canvas.height = height;
+
+const ctx = canvas.getContext("2d");
+
+ctx.drawImage(
+img,
+0,
+0,
+width,
+height
+);
+
+resolve(
+canvas.toDataURL(
+"image/jpeg",
+0.75
+)
+);
+
+};
+
+img.onerror = reject;
+
+img.src = event.target.result;
+};
+
+reader.onerror = reject;
+
+reader.readAsDataURL(file);
+
+});
+
+}
+
+
+/* =====================================================
+写真追加
+===================================================== */
+
+async function addPhotos(files, targetArray, renderFunction) {
+
+const fileArray = Array.from(files);
+
+const remaining =
+3 - targetArray.length;
+
+if (remaining <= 0) {
+
+alert("写真は最大3枚までです。");
+
+return;
+
+}
+
+const filesToAdd =
+fileArray.slice(0, remaining);
+
+for (const file of filesToAdd) {
+
+try {
+
+const compressed =
+await compressImage(file);
+
+targetArray.push(compressed);
+
+} catch (error) {
+
+console.error(error);
+
+}
+}
+
+renderFunction();
+}
+
+
+/* =====================================================
+写真表示
+===================================================== */
+
+function renderCurrentPhotos() {
+
+const list =
+document.getElementById("photoList");
+
+list.innerHTML = "";
+
+currentOrder.photos.forEach((photo, index) => {
+
+const div =
+document.createElement("div");
+
+div.className = "photo-item";
+
+div.innerHTML = `
+<img src="${photo}">
+<button
+class="photo-delete"
+data-index="${index}">
+×
+</button>
+`;
+
+list.appendChild(div);
+
+});
+
+list.querySelectorAll(".photo-delete")
+.forEach(button => {
+
+button.addEventListener(
+"click",
+() => {
+
+const index =
+Number(
+button.dataset.index
+);
+
+currentOrder.photos.splice(
+index,
+1
+);
+
+renderCurrentPhotos();
+
+}
+);
+
+});
+
+}
+
+
+/* =====================================================
+商品選択
+===================================================== */
+
+document.querySelectorAll(".product-button")
+.forEach(button => {
+
+button.addEventListener(
+"click",
+() => {
+
+document.querySelectorAll(
+".product-button"
+).forEach(btn => {
+btn.classList.remove("selected");
+});
+
+button.classList.add("selected");
+
+selectedProduct =
+button.dataset.product;
+
+currentOrder.product =
+selectedProduct;
+
+}
+);
+
+});
+
+
+/* =====================================================
+署名キャンバス
 ===================================================== */
 
 const canvas =
-    document.getElementById(
-        "signatureCanvas"
-    );
+document.getElementById(
+"signatureCanvas"
+);
 
 const ctx =
-    canvas.getContext("2d");
+canvas.getContext("2d");
+
 
 let drawing = false;
 
-
-function resizeCanvas(){
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-    const ratio =
-        window.devicePixelRatio ||
-        1;
+let lastX = 0;
+let lastY = 0;
 
 
-    canvas.width =
-        rect.width * ratio;
+function setupCanvas() {
 
-    canvas.height =
-        rect.height * ratio;
+const rect =
+canvas.getBoundingClientRect();
 
+const ratio =
+window.devicePixelRatio || 1;
 
-    ctx.scale(
-        ratio,
-        ratio
-    );
+canvas.width =
+rect.width * ratio;
 
+canvas.height =
+rect.height * ratio;
 
-    ctx.lineWidth =
-        2.5;
+ctx.setTransform(
+ratio,
+0,
+0,
+ratio,
+0,
+0
+);
 
-    ctx.lineCap =
-        "round";
+ctx.lineWidth = 2.5;
 
-    ctx.lineJoin =
-        "round";
+ctx.lineCap = "round";
 
-    ctx.strokeStyle =
-        "#111";
+ctx.lineJoin = "round";
+
+ctx.strokeStyle = "#111";
 
 }
 
-resizeCanvas();
 
+function getPointerPosition(event) {
 
-function getPosition(e){
+const rect =
+canvas.getBoundingClientRect();
 
-    const rect =
-        canvas.getBoundingClientRect();
-
-
-    return {
-
-        x:
-            e.clientX -
-            rect.left,
-
-        y:
-            e.clientY -
-            rect.top
-
-    };
+return {
+x: event.clientX - rect.left,
+y: event.clientY - rect.top
+};
 
 }
 
 
 canvas.addEventListener(
-    "pointerdown",
-    function(e){
+"pointerdown",
+event => {
 
-        drawing = true;
+event.preventDefault();
 
-        const pos =
-            getPosition(e);
+drawing = true;
 
+const pos =
+getPointerPosition(event);
 
-        ctx.beginPath();
+lastX = pos.x;
+lastY = pos.y;
 
-        ctx.moveTo(
-            pos.x,
-            pos.y
-        );
+canvas.setPointerCapture(
+event.pointerId
+);
 
-    }
+}
 );
 
 
 canvas.addEventListener(
-    "pointermove",
-    function(e){
+"pointermove",
+event => {
 
-        if(!drawing) return;
+if (!drawing) return;
 
+event.preventDefault();
 
-        const pos =
-            getPosition(e);
+const pos =
+getPointerPosition(event);
 
+ctx.beginPath();
 
-        ctx.lineTo(
-            pos.x,
-            pos.y
-        );
+ctx.moveTo(
+lastX,
+lastY
+);
 
-        ctx.stroke();
+ctx.lineTo(
+pos.x,
+pos.y
+);
 
-    }
+ctx.stroke();
+
+lastX = pos.x;
+lastY = pos.y;
+
+}
 );
 
 
 canvas.addEventListener(
-    "pointerup",
-    function(){
+"pointerup",
+event => {
 
-        drawing = false;
+drawing = false;
 
-        ctx.closePath();
+try {
 
-    }
+canvas.releasePointerCapture(
+event.pointerId
+);
+
+} catch(e) {}
+
+}
 );
 
 
 canvas.addEventListener(
-    "pointerleave",
-    function(){
+"pointercancel",
+() => {
 
-        drawing = false;
+drawing = false;
 
-    }
+}
 );
 
 
-document
-.getElementById(
-    "clearSignature"
-)
-.addEventListener(
-    "click",
-    clearSignature
+function clearSignature() {
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+setupCanvas();
+
+}
+
+
+function hasSignature() {
+
+const data =
+ctx.getImageData(
+0,
+0,
+canvas.width,
+canvas.height
+).data;
+
+for (
+let i = 3;
+i < data.length;
+i += 4
+) {
+
+if (data[i] > 0) {
+
+return true;
+
+}
+
+}
+
+return false;
+
+}
+
+
+/* =====================================================
+注意事項表示
+===================================================== */
+
+function renderNotices(product) {
+
+const list =
+document.getElementById(
+"noticeList"
+);
+
+list.innerHTML = "";
+
+const productNotices =
+notices[product] || [];
+
+if (productNotices.length === 0) {
+
+list.innerHTML = `
+<p>
+この商品には注意事項はありません。
+</p>
+`;
+
+return;
+
+}
+
+productNotices.forEach(
+(notice, index) => {
+
+const div =
+document.createElement("div");
+
+div.className =
+"notice-item";
+
+div.innerHTML = `
+<label class="notice-label">
+
+<input
+type="checkbox"
+class="notice-checkbox"
+data-index="${index}">
+
+<span>
+${notice.text}
+</span>
+
+</label>
+
+${
+notice.warning
+?
+`<div class="warning">
+⚠ ${notice.warning}
+</div>`
+:
+""
+}
+
+`;
+
+list.appendChild(div);
+
+}
+);
+
+}
+
+
+/* =====================================================
+注意事項チェック確認
+===================================================== */
+
+function areAllNoticesChecked() {
+
+const checkboxes =
+document.querySelectorAll(
+".notice-checkbox"
+);
+
+if (checkboxes.length === 0) {
+
+return true;
+
+}
+
+return Array.from(checkboxes)
+.every(checkbox =>
+checkbox.checked
+);
+
+}
+
+
+/* =====================================================
+署名ページ情報
+===================================================== */
+
+function renderSignatureOrderInfo() {
+
+document.getElementById(
+"signatureOrderInfo"
+).innerHTML = `
+
+<div style="line-height:1.9;">
+
+<strong>お客様名・会社名：</strong>
+${escapeHtml(currentOrder.customerName)}
+
+<br>
+
+<strong>商品：</strong>
+${escapeHtml(currentOrder.product)}
+
+<br>
+
+<strong>受付日：</strong>
+${escapeHtml(currentOrder.delivery)}
+
+${
+currentOrder.notes
+?
+`
+<br>
+<strong>備考：</strong>
+${escapeHtml(currentOrder.notes)}
+`
+:
+""
+}
+
+</div>
+`;
+
+}
+
+
+/* =====================================================
+2ページ目 → 3ページ目
+===================================================== */
+
+document.getElementById(
+"nextButton"
+).addEventListener(
+"click",
+() => {
+
+const customerName =
+document.getElementById(
+"customerName"
+).value.trim();
+
+const delivery =
+document.getElementById(
+"delivery"
+).value;
+
+const notes =
+document.getElementById(
+"notes"
+).value.trim();
+
+
+if (!customerName) {
+
+alert(
+"お客様名または会社名を入力してください。"
+);
+
+return;
+
+}
+
+
+if (!selectedProduct) {
+
+alert(
+"商品を選択してください。"
+);
+
+return;
+
+}
+
+
+if (!delivery) {
+
+alert(
+"受付日を入力してください。"
+);
+
+return;
+
+}
+
+
+currentOrder.customerName =
+customerName;
+
+currentOrder.delivery =
+delivery;
+
+currentOrder.notes =
+notes;
+
+
+renderSignatureOrderInfo();
+
+renderNotices(
+currentOrder.product
 );
 
 
-function clearSignature(){
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-}
-
-
-/* =====================================================
-   LocalStorage
-===================================================== */
-
-const STORAGE_KEY =
-    "orderAppOrders";
-
-
-function getOrders(){
-
-    try{
-
-        return JSON.parse(
-            localStorage.getItem(
-                STORAGE_KEY
-            ) || "[]"
-        );
-
-    }catch(e){
-
-        return [];
-
-    }
-
-}
-
-
-function saveOrders(orders){
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(orders)
-    );
-
-}
-
-
-/* =====================================================
-   注文番号
-===================================================== */
-
-function createOrderNumber(date){
-
-    const orders =
-        getOrders();
-
-
-    const sameDay =
-        orders.filter(
-            order =>
-                order.delivery === date
-        );
-
-
-    const number =
-        String(
-            sameDay.length + 1
-        ).padStart(
-            3,
-            "0"
-        );
-
-
-    return date.replace(
-        /-/g,
-        ""
-    )
-    + "-"
-    + number;
-
-}
-
-
-/* =====================================================
-   署名確認
-===================================================== */
-
-function hasSignature(){
-
-    const pixels =
-        ctx.getImageData(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        ).data;
-
-
-    for(
-        let i=3;
-        i<pixels.length;
-        i+=4
-    ){
-
-        if(
-            pixels[i] !== 0
-        ){
-
-            return true;
-
-        }
-
-    }
-
-
-    return false;
-
-}
-
-
-/* =====================================================
-   注文保存
-===================================================== */
-
-document
-.getElementById(
-    "saveButton"
-)
-.addEventListener(
-    "click",
-    saveOrder
+showPage(
+"signaturePage"
 );
 
 
-function saveOrder(){
+setTimeout(() => {
 
-    if(
-        !customerName.value.trim()
-    ){
+setupCanvas();
 
-        alert(
-            "お客様名または会社名を入力してください。"
-        );
-
-        return;
-
-    }
-
-
-    if(!selectedProduct){
-
-        alert(
-            "商品カテゴリーを選択してください。"
-        );
-
-        return;
-
-    }
-
-
-    if(!delivery.value){
-
-        alert(
-            "受付日を入力してください。"
-        );
-
-        return;
-
-    }
-
-
-    const currentNotices =
-        notices[selectedProduct] || [];
-
-
-    if(
-        currentNotices.length > 0
-    ){
-
-        const checks =
-            document.querySelectorAll(
-                ".notice-check"
-            );
-
-
-        const allChecked =
-            Array.from(checks)
-            .every(
-                check =>
-                    check.checked
-            );
-
-
-        if(!allChecked){
-
-            alert(
-                "注意事項をすべて確認し、チェックしてください。"
-            );
-
-            return;
-
-        }
-
-    }
-
-
-    if(!hasSignature()){
-
-        alert(
-            "お客様の署名を入力してください。"
-        );
-
-        return;
-
-    }
-
-
-    const orders =
-        getOrders();
-
-
-    const order = {
-
-        orderNumber:
-            createOrderNumber(
-                delivery.value
-            ),
-
-        customerName:
-            customerName.value.trim(),
-
-        product:
-            selectedProduct,
-
-        delivery:
-            delivery.value,
-
-        notes:
-            notes.value.trim(),
-
-        photos:
-            selectedPhotos.slice(),
-
-        signature:
-            canvas.toDataURL(
-                "image/png"
-            ),
-
-        noticesAgreed:
-            currentNotices.length > 0,
-
-        noticeTexts:
-            currentNotices.map(
-                notice =>
-                    typeof notice === "string"
-                    ? notice
-                    : notice.text
-            ),
-
-        createdAt:
-            new Date().toISOString()
-
-    };
-
-
-    orders.unshift(
-        order
-    );
-
-
-    try{
-
-        saveOrders(
-            orders
-        );
-
-    }catch(e){
-
-        alert(
-            "保存容量を超えた可能性があります。\n写真を減らして再度お試しください。"
-        );
-
-        return;
-
-    }
-
-
-    alert(
-        "注文を保存しました。\n\n" +
-        "注文番号：" +
-        order.orderNumber
-    );
-
-
-    resetForm();
-
-    displayOrders();
+}, 50);
 
 }
-
-
-/* =====================================================
-   フォームリセット
-===================================================== */
-
-function resetForm(){
-
-    customerName.value =
-        "";
-
-    notes.value =
-        "";
-
-    delivery.value =
-        getToday();
-
-    selectedProduct =
-        "";
-
-    selectedPhotos =
-        [];
-
-    photoPreview.innerHTML =
-        "";
-
-    document
-    .querySelectorAll(
-        ".product-btn"
-    )
-    .forEach(
-        btn =>
-            btn.classList.remove(
-                "selected"
-            )
-    );
-
-    noticeArea.style.display =
-        "none";
-
-    noticeList.innerHTML =
-        "";
-
-    clearSignature();
-
-}
-
-
-/* =====================================================
-   検索
-===================================================== */
-
-function searchOrders(){
-
-    const date =
-        searchDate.value;
-
-    const name =
-        searchName.value
-        .trim()
-        .toLowerCase();
-
-    const product =
-        searchProduct.value;
-
-
-    const orders =
-        getOrders();
-
-
-    const filtered =
-        orders.filter(
-            order => {
-
-                if(
-                    date &&
-                    order.delivery !== date
-                ){
-
-                    return false;
-
-                }
-
-
-                if(name){
-
-                    const customer =
-                        String(
-                            order.customerName ||
-                            ""
-                        )
-                        .toLowerCase();
-
-
-                    if(
-                        !customer.includes(
-                            name
-                        )
-                    ){
-
-                        return false;
-
-                    }
-
-                }
-
-
-                if(
-                    product &&
-                    order.product !==
-                    product
-                ){
-
-                    return false;
-
-                }
-
-
-                return true;
-
-            }
-        );
-
-
-    displayFilteredOrders(
-        filtered
-    );
-
-}
-
-
-/* =====================================================
-   保存済み注文表示
-===================================================== */
-
-function displayOrders(){
-
-    displayFilteredOrders(
-        getOrders()
-    );
-
-}
-
-
-function displayFilteredOrders(
-    orders
-){
-
-    savedOrders.innerHTML =
-        "";
-
-
-    searchResultCount.textContent =
-        `検索結果：${orders.length}件`;
-
-
-    if(
-        orders.length === 0
-    ){
-
-        savedOrders.innerHTML = `
-
-            <div class="no-result">
-
-                該当する注文がありません。
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    orders.forEach(
-        order => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "order-card";
-
-
-            let photosHTML =
-                "";
-
-
-            if(
-                order.photos &&
-                order.photos.length > 0
-            ){
-
-                photosHTML = `
-
-                    <div class="saved-photos">
-
-                        ${
-                            order.photos
-                            .map(
-                                photo =>
-                                `<img
-                                    src="${photo}"
-                                    alt="注文写真"
-                                >`
-                            )
-                            .join("")
-                        }
-
-                    </div>
-
-                `;
-
-            }
-
-
-            let signatureHTML =
-                "";
-
-
-            if(order.signature){
-
-                signatureHTML = `
-
-                    <div class="saved-signature">
-
-                        <div class="saved-signature-title">
-                            🔒 お客様署名
-                        </div>
-
-                        <img
-                            src="${order.signature}"
-                            alt="お客様署名"
-                        >
-
-                    </div>
-
-                `;
-
-            }
-
-
-            let noticesHTML =
-                "";
-
-
-            if(
-                order.noticesAgreed &&
-                order.noticeTexts &&
-                order.noticeTexts.length
-            ){
-
-                noticesHTML = `
-
-                    <div class="saved-notices">
-
-                        <strong>
-                            🔒 注意事項確認済み
-                        </strong>
-
-                        <br>
-
-                        ${order.noticeTexts.length}
-                        項目
-
-                    </div>
-
-                `;
-
-            }
-
-
-            card.innerHTML = `
-
-                <div class="order-number">
-
-                    注文番号：
-                    ${escapeHTML(
-                        order.orderNumber
-                    )}
-
-                </div>
-
-
-                <div class="order-info">
-
-                    <div class="order-product">
-
-                        ${escapeHTML(
-                            order.product
-                        )}
-
-                    </div>
-
-                    <br>
-
-
-                    <strong>
-                        お客様名・会社名：
-                    </strong>
-
-                    ${escapeHTML(
-                        order.customerName
-                    )}
-
-                    <br>
-
-
-                    <strong>
-                        受付日：
-                    </strong>
-
-                    ${escapeHTML(
-                        order.delivery
-                    )}
-
-
-                    ${
-                        order.notes
-                        ?
-                        `<br>
-
-                        <strong>
-                            備考：
-                        </strong>
-
-                        ${escapeHTML(
-                            order.notes
-                        )}`
-                        :
-                        ""
-                    }
-
-                </div>
-
-
-                ${photosHTML}
-
-                ${signatureHTML}
-
-                ${noticesHTML}
-
-
-                <div class="order-buttons">
-
-                    <button
-                        type="button"
-                        class="edit-btn">
-
-                        ✏️ 編集
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="delete-btn">
-
-                        🗑 削除
-
-                    </button>
-
-                </div>
-
-            `;
-
-
-            card
-            .querySelector(
-                ".edit-btn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    openEditModal(
-                        order
-                    );
-
-                }
-            );
-
-
-            card
-            .querySelector(
-                ".delete-btn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    deleteOrder(
-                        order
-                    );
-
-                }
-            );
-
-
-            savedOrders.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   編集用変数
-===================================================== */
-
-let editingOrderKey =
-    null;
-
-let editSelectedPhotos =
-    [];
-
-
-/* =====================================================
-   編集DOM
-===================================================== */
-
-const editModal =
-    document.getElementById(
-        "editModal"
-    );
-
-const editCustomerName =
-    document.getElementById(
-        "editCustomerName"
-    );
-
-const editDelivery =
-    document.getElementById(
-        "editDelivery"
-    );
-
-const editNotes =
-    document.getElementById(
-        "editNotes"
-    );
-
-const editOrderNumber =
-    document.getElementById(
-        "editOrderNumber"
-    );
-
-const editProductDisplay =
-    document.getElementById(
-        "editProductDisplay"
-    );
-
-const editPhotoPreview =
-    document.getElementById(
-        "editPhotoPreview"
-    );
-
-const editSignaturePreview =
-    document.getElementById(
-        "editSignaturePreview"
-    );
-
-const editNoticePreview =
-    document.getElementById(
-        "editNoticePreview"
-    );
-
-
-/* =====================================================
-   編集画面を開く
-===================================================== */
-
-function openEditModal(
-    order
-){
-
-    editingOrderKey = {
-
-        orderNumber:
-            order.orderNumber,
-
-        createdAt:
-            order.createdAt
-
-    };
-
-
-    /* 注文番号は固定 */
-
-    editOrderNumber.value =
-        order.orderNumber;
-
-
-    /* 名前は編集可能 */
-
-    editCustomerName.value =
-        order.customerName || "";
-
-
-    /* 商品は表示だけ */
-
-    editProductDisplay.textContent =
-        order.product || "未設定";
-
-
-    /* 受付日は編集可能 */
-
-    editDelivery.value =
-        order.delivery || "";
-
-
-    /* 備考は編集可能 */
-
-    editNotes.value =
-        order.notes || "";
-
-
-    /* 写真 */
-
-    editSelectedPhotos =
-        order.photos
-        ? order.photos.slice()
-        : [];
-
-
-    renderEditPhotos();
-
-
-    /* 署名は固定 */
-
-    if(order.signature){
-
-        editSignaturePreview.src =
-            order.signature;
-
-        editSignaturePreview.style.display =
-            "block";
-
-    }else{
-
-        editSignaturePreview.removeAttribute(
-            "src"
-        );
-
-    }
-
-
-    /* 注意事項は固定 */
-
-    renderEditNotices(
-        order
-    );
-
-
-    editModal.style.display =
-        "block";
-
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-/* =====================================================
-   編集写真表示
-===================================================== */
-
-function renderEditPhotos(){
-
-    editPhotoPreview.innerHTML =
-        "";
-
-
-    editSelectedPhotos.forEach(
-        (photo,index)=>{
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-
-            item.className =
-                "photo-preview-item";
-
-
-            item.innerHTML = `
-
-                <img
-                    src="${photo}"
-                    alt="写真${index+1}"
-                >
-
-                <button
-                    type="button"
-                    class="photo-remove">
-                    ×
-                </button>
-
-            `;
-
-
-            item
-            .querySelector(
-                ".photo-remove"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    editSelectedPhotos
-                    .splice(
-                        index,
-                        1
-                    );
-
-                    renderEditPhotos();
-
-                }
-            );
-
-
-            editPhotoPreview
-            .appendChild(
-                item
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   編集注意事項表示
-===================================================== */
-
-function renderEditNotices(
-    order
-){
-
-    editNoticePreview.innerHTML =
-        "";
-
-
-    const current =
-        order.noticeTexts || [];
-
-
-    if(
-        current.length === 0
-    ){
-
-        editNoticePreview.innerHTML =
-            "この注文には注意事項はありません。";
-
-        return;
-
-    }
-
-
-    current.forEach(
-        (text,index)=>{
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.style.marginTop =
-                "8px";
-
-
-            div.innerHTML = `
-
-                ☑
-                ${escapeHTML(text)}
-
-            `;
-
-
-            editNoticePreview
-            .appendChild(
-                div
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   編集写真入力
-===================================================== */
-
-const editCameraButton =
-    document.getElementById(
-        "editCameraButton"
-    );
-
-const editPhotoButton =
-    document.getElementById(
-        "editPhotoButton"
-    );
-
-const editCameraInput =
-    document.getElementById(
-        "editCameraInput"
-    );
-
-const editPhotoInput =
-    document.getElementById(
-        "editPhotoInput"
-    );
-
-
-editCameraButton.addEventListener(
-    "click",
-    ()=>{
-        editCameraInput.click();
-    }
-);
-
-
-editPhotoButton.addEventListener(
-    "click",
-    ()=>{
-        editPhotoInput.click();
-    }
-);
-
-
-editCameraInput.addEventListener(
-    "change",
-    function(){
-
-        handleEditPhotos(
-            this.files
-        );
-
-        this.value = "";
-
-    }
-);
-
-
-editPhotoInput.addEventListener(
-    "change",
-    function(){
-
-        handleEditPhotos(
-            this.files
-        );
-
-        this.value = "";
-
-    }
-);
-
-
-function handleEditPhotos(
-    files
-){
-
-    const fileArray =
-        Array.from(files);
-
-
-    if(
-        editSelectedPhotos.length +
-        fileArray.length > 3
-    ){
-
-        alert(
-            "写真は最大3枚まで保存できます。"
-        );
-
-        return;
-
-    }
-
-
-    fileArray.forEach(
-        file => {
-
-            compressImage(file)
-            .then(
-                dataURL => {
-
-                    editSelectedPhotos
-                    .push(dataURL);
-
-                    renderEditPhotos();
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   編集保存
-===================================================== */
-
-document
-.getElementById(
-    "editSaveButton"
-)
-.addEventListener(
-    "click",
-    saveEditedOrder
-);
-
-
-function saveEditedOrder(){
-
-    if(
-        !editingOrderKey
-    ){
-
-        return;
-
-    }
-
-
-    if(
-        !editCustomerName.value.trim()
-    ){
-
-        alert(
-            "お客様名または会社名を入力してください。"
-        );
-
-        return;
-
-    }
-
-
-    if(
-        !editDelivery.value
-    ){
-
-        alert(
-            "受付日を入力してください。"
-        );
-
-        return;
-
-    }
-
-
-    const orders =
-        getOrders();
-
-
-    const targetIndex =
-        orders.findIndex(
-            order =>
-                order.orderNumber ===
-                editingOrderKey.orderNumber
-                &&
-                order.createdAt ===
-                editingOrderKey.createdAt
-        );
-
-
-    if(
-        targetIndex === -1
-    ){
-
-        alert(
-            "編集する注文が見つかりません。"
-        );
-
-        closeEditModal();
-
-        return;
-
-    }
-
-
-    /*
-    =====================================================
-    変更するのは以下だけ
-
-    ・お客様名
-    ・受付日
-    ・写真
-    ・備考
-
-    以下は絶対に変更しない
-
-    ・注文番号
-    ・商品カテゴリー
-    ・お客様署名
-    ・注意事項
-    ・注意事項確認状態
-    ・作成日時
-    =====================================================
-    */
-
-
-    orders[targetIndex].customerName =
-        editCustomerName.value.trim();
-
-
-    orders[targetIndex].delivery =
-        editDelivery.value;
-
-
-    orders[targetIndex].photos =
-        editSelectedPhotos.slice();
-
-
-    orders[targetIndex].notes =
-        editNotes.value.trim();
-
-
-    try{
-
-        saveOrders(
-            orders
-        );
-
-    }catch(e){
-
-        alert(
-            "保存容量を超えた可能性があります。\n写真を減らして再度お試しください。"
-        );
-
-        return;
-
-    }
-
-
-    alert(
-        "注文情報を変更しました。"
-    );
-
-
-    closeEditModal();
-
-
-    /*
-       現在の検索条件を
-       そのまま維持
-    */
-
-    searchOrders();
-
-}
-
-
-/* =====================================================
-   編集キャンセル
-===================================================== */
-
-document
-.getElementById(
-    "editCancelButton"
-)
-.addEventListener(
-    "click",
-    closeEditModal
-);
-
-
-function closeEditModal(){
-
-    editModal.style.display =
-        "none";
-
-
-    document.body.style.overflow =
-        "";
-
-
-    editingOrderKey =
-        null;
-
-}
-
-
-/* =====================================================
-   注文削除
-===================================================== */
-
-function deleteOrder(
-    targetOrder
-){
-
-    const answer =
-        confirm(
-            "この注文を削除しますか？\n\n" +
-            "注文番号：" +
-            targetOrder.orderNumber
-        );
-
-
-    if(!answer){
-
-        return;
-
-    }
-
-
-    const orders =
-        getOrders();
-
-
-    const filtered =
-        orders.filter(
-            order =>
-                !(
-                    order.orderNumber ===
-                    targetOrder.orderNumber
-                    &&
-                    order.createdAt ===
-                    targetOrder.createdAt
-                )
-        );
-
-
-    saveOrders(
-        filtered
-    );
-
-
-    searchOrders();
-
-}
-
-
-/* =====================================================
-   検索
-===================================================== */
-
-document
-.getElementById(
-    "searchButton"
-)
-.addEventListener(
-    "click",
-    searchOrders
-);
-
-
-document
-.getElementById(
-    "resetSearchButton"
-)
-.addEventListener(
-    "click",
-    function(){
-
-        searchDate.value =
-            "";
-
-        searchName.value =
-            "";
-
-        searchProduct.value =
-            "";
-
-        displayOrders();
-
-    }
 );
 
 
 /* =====================================================
-   自動検索
+署名保存
 ===================================================== */
 
-searchName.addEventListener(
-    "input",
-    searchOrders
+document.getElementById(
+"saveOrderButton"
+).addEventListener(
+"click",
+() => {
+
+if (!areAllNoticesChecked()) {
+
+alert(
+"すべての注意事項を確認してチェックしてください。"
 );
 
-searchDate.addEventListener(
-    "change",
-    searchOrders
+return;
+
+}
+
+
+if (!hasSignature()) {
+
+alert(
+"お客様の署名を入力してください。"
 );
 
-searchProduct.addEventListener(
-    "change",
-    searchOrders
+return;
+
+}
+
+
+const signature =
+canvas.toDataURL(
+"image/png"
+);
+
+
+const productNotices =
+notices[currentOrder.product] || [];
+
+
+const noticeTexts =
+productNotices.map(
+notice => notice.text
+);
+
+
+const order = {
+
+orderNumber:
+generateOrderNumber(),
+
+createdAt:
+new Date().toISOString(),
+
+customerName:
+currentOrder.customerName,
+
+product:
+currentOrder.product,
+
+delivery:
+currentOrder.delivery,
+
+photos:
+[...currentOrder.photos],
+
+notes:
+currentOrder.notes,
+
+signature:
+signature,
+
+noticeTexts:
+noticeTexts,
+
+noticesAgreed:
+true
+
+};
+
+
+const orders =
+getOrders();
+
+orders.push(order);
+
+saveOrders(orders);
+
+
+alert(
+"保存しました。"
+);
+
+
+resetNewOrder();
+
+showPage(
+"homePage"
+);
+
+}
 );
 
 
 /* =====================================================
-   初期表示
+新規入力リセット
 ===================================================== */
 
-displayOrders();
+function resetNewOrder() {
+
+currentOrder = {
+
+customerName: "",
+
+product: "",
+
+delivery: getToday(),
+
+photos: [],
+
+notes: ""
+
+};
+
+
+selectedProduct = "";
+
+
+document.getElementById(
+"customerName"
+).value = "";
+
+
+document.getElementById(
+"delivery"
+).value = getToday();
+
+
+document.getElementById(
+"notes"
+).value = "";
+
+
+document.querySelectorAll(
+".product-button"
+).forEach(button => {
+
+button.classList.remove(
+"selected"
+);
+
+});
+
+
+renderCurrentPhotos();
+
+clearSignature();
+
+}
+
+
+/* =====================================================
+ホーム → 署名画面
+===================================================== */
+
+document.getElementById(
+"goSignButton"
+).addEventListener(
+"click",
+() => {
+
+resetNewOrder();
+
+showPage(
+"orderPage"
+);
+
+}
+);
+
+
+/* =====================================================
+2ページ目 戻る
+===================================================== */
+
+document.getElementById(
+"orderBackButton"
+).addEventListener(
+"click",
+() => {
+
+showPage(
+"homePage"
+);
+
+}
+);
+
+
+/* =====================================================
+3ページ目 戻る
+===================================================== */
+
+document.getElementById(
+"signatureBackButton"
+).addEventListener(
+"click",
+() => {
+
+showPage(
+"orderPage"
+);
+
+}
+);
+
+
+/* =====================================================
+写真ボタン
+===================================================== */
+
+document.getElementById(
+"cameraButton"
+).addEventListener(
+"click",
+() => {
+
+document.getElementById(
+"cameraInput"
+).click();
+
+}
+);
+
+
+document.getElementById(
+"photoButton"
+).addEventListener(
+"click",
+() => {
+
+document.getElementById(
+"photoInput"
+).click();
+
+}
+);
+
+
+document.getElementById(
+"cameraInput"
+).addEventListener(
+"change",
+async event => {
+
+await addPhotos(
+event.target.files,
+currentOrder.photos,
+renderCurrentPhotos
+);
+
+event.target.value = "";
+
+}
+);
+
+
+document.getElementById(
+"photoInput"
+).addEventListener(
+"change",
+async event => {
+
+await addPhotos(
+event.target.files,
+currentOrder.photos,
+renderCurrentPhotos
+);
+
+event.target.value = "";
+
+}
+);
+
+
+/* =====================================================
+保存済み一覧
+===================================================== */
+
+function renderSavedOrders(
+orders = getOrders()
+) {
+
+const list =
+document.getElementById(
+"savedOrdersList"
+);
+
+list.innerHTML = "";
+
+
+document.getElementById(
+"searchResultCount"
+).textContent =
+`${orders.length}件`;
+
+
+if (orders.length === 0) {
+
+list.innerHTML = `
+<div class="card">
+保存された署名はありません。
+</div>
+`;
+
+return;
+
+}
+
+
+const sortedOrders =
+[...orders].sort(
+(a, b) =>
+new Date(b.createdAt)
+-
+new Date(a.createdAt)
+);
+
+
+sortedOrders.forEach(order => {
+
+const card =
+document.createElement("div");
+
+card.className =
+"order-card";
+
+
+const key =
+getOrderKey(order);
+
+
+card.innerHTML = `
+
+<div class="order-header">
+${escapeHtml(order.customerName)}
+</div>
+
+<div class="order-info">
+
+<strong>受付日：</strong>
+${escapeHtml(order.delivery)}
+
+<br>
+
+<strong>商品：</strong>
+${escapeHtml(order.product)}
+
+<br>
+
+<strong>注文番号：</strong>
+${escapeHtml(order.orderNumber)}
+
+</div>
+
+
+<div class="order-actions">
+
+<button
+class="view-button"
+data-action="view"
+data-key="${key}">
+詳細
+</button>
+
+<button
+class="edit-button"
+data-action="edit"
+data-key="${key}">
+編集
+</button>
+
+<button
+class="delete-button"
+data-action="delete"
+data-key="${key}">
+削除
+</button>
+
+</div>
+`;
+
+
+list.appendChild(card);
+
+});
+
+
+list.querySelectorAll(
+"button[data-action]"
+).forEach(button => {
+
+button.addEventListener(
+"click",
+() => {
+
+const action =
+button.dataset.action;
+
+const key =
+button.dataset.key;
+
+
+const order =
+getOrders().find(
+item =>
+getOrderKey(item)
+=== key
+);
+
+
+if (!order) return;
+
+
+if (action === "view") {
+
+showOrderDetail(
+order
+);
+
+}
+
+
+if (action === "edit") {
+
+openEditModal(
+order
+);
+
+}
+
+
+if (action === "delete") {
+
+deleteOrder(
+order
+);
+
+}
+
+}
+);
+
+});
+
+}
+
+
+/* =====================================================
+注文キー
+===================================================== */
+
+function getOrderKey(order) {
+
+return `${order.orderNumber}_${order.createdAt}`;
+
+}
+
+
+/* =====================================================
+保存済みページ
+===================================================== */
+
+document.getElementById(
+"savedOrdersButton"
+).addEventListener(
+"click",
+() => {
+
+renderSavedOrders();
+
+showPage(
+"savedPage"
+);
+
+}
+);
+
+
+/* =====================================================
+保存済みページ 戻る
+===================================================== */
+
+document.getElementById(
+"savedBackButton"
+).addEventListener(
+"click",
+() => {
+
+showPage(
+"homePage"
+);
+
+}
+);
+
+
+/* =====================================================
+検索
+===================================================== */
+
+function searchOrders() {
+
+const date =
+document.getElementById(
+"searchDate"
+).value;
+
+
+const name =
+document.getElementById(
+"searchName"
+).value
+.trim()
+.toLowerCase();
+
+
+const product =
+document.getElementById(
+"searchProduct"
+).value;
+
+
+const orders =
+getOrders();
+
+
+const filtered =
+orders.filter(order => {
+
+const matchDate =
+!date ||
+order.delivery === date;
+
+
+const matchName =
+!name ||
+(order.customerName || "")
+.toLowerCase()
+.includes(name);
+
+
+const matchProduct =
+!product ||
+order.product === product;
+
+
+return (
+matchDate &&
+matchName &&
+matchProduct
+);
+
+});
+
+
+renderSavedOrders(
+filtered
+);
+
+}
+
+
+document.getElementById(
+"searchButton"
+).addEventListener(
+"click",
+searchOrders
+);
+
+
+document.getElementById(
+"resetSearchButton"
+).addEventListener(
+"click",
+() => {
+
+document.getElementById(
+"searchDate"
+).value = "";
+
+
+document.getElementById(
+"searchName"
+).value = "";
+
+
+document.getElementById(
+"searchProduct"
+).value = "";
+
+
+renderSavedOrders();
+
+}
+);
+
+
+document.getElementById(
+"searchName"
+).addEventListener(
+"input",
+searchOrders
+);
+
+
+document.getElementById(
+"searchDate"
+).addEventListener(
+"change",
+searchOrders
+);
+
+
+document.getElementById(
+"searchProduct"
+).addEventListener(
+"change",
+searchOrders
+);
+
+
+/* =====================================================
+詳細表示
+===================================================== */
+
+function showOrderDetail(order) {
+
+const modal =
+document.getElementById(
+"detailModal"
+);
+
+const content =
+document.getElementById(
+"detailContent"
+);
+
+
+let photosHtml = "";
+
+if (
+order.photos &&
+order.photos.length > 0
+) {
+
+photosHtml = `
+<div class="section-title">
+写真
+</div>
+
+<div class="detail-photo-grid">
+
+${order.photos.map(photo => `
+<img src="${photo}">
+`).join("")}
+
+</div>
+`;
+
+}
+
+
+let noticesHtml = "";
+
+if (
+order.noticeTexts &&
+order.noticeTexts.length > 0
+) {
+
+noticesHtml = `
+<div class="section-title">
+確認した注意事項
+</div>
+
+<div class="card">
+
+${order.noticeTexts.map(
+(text, index) => `
+<div
+style="
+padding:10px 0;
+border-bottom:1px solid #ddd;
+line-height:1.6;
+">
+☑ ${escapeHtml(text)}
+</div>
+`
+).join("")}
+
+</div>
+`;
+
+}
+
+
+content.innerHTML = `
+
+<div class="card">
+
+<strong>注文番号</strong>
+
+<p>
+${escapeHtml(order.orderNumber)}
+</p>
+
+
+<strong>お客様名・会社名</strong>
+
+<p>
+${escapeHtml(order.customerName)}
+</p>
+
+
+<strong>商品</strong>
+
+<p>
+${escapeHtml(order.product)}
+</p>
+
+
+<strong>受付日</strong>
+
+<p>
+${escapeHtml(order.delivery)}
+</p>
+
+
+${
+order.notes
+?
+`
+<strong>備考</strong>
+
+<p>
+${escapeHtml(order.notes)}
+</p>
+`
+:
+""
+}
+
+</div>
+
+
+${noticesHtml}
+
+
+${photosHtml}
+
+
+<div class="section-title">
+お客様署名
+</div>
+
+<div class="card">
+
+<img
+src="${order.signature}"
+class="detail-signature">
+
+</div>
+
+`;
+
+
+modal.classList.add(
+"active"
+);
+
+}
+
+
+document.getElementById(
+"closeDetailButton"
+).addEventListener(
+"click",
+() => {
+
+document.getElementById(
+"detailModal"
+).classList.remove(
+"active"
+);
+
+}
+);
+
+
+/* =====================================================
+削除
+===================================================== */
+
+function deleteOrder(order) {
+
+const result =
+confirm(
+`「${order.customerName}」の署名データを削除しますか？`
+);
+
+
+if (!result) return;
+
+
+const key =
+getOrderKey(order);
+
+
+const orders =
+getOrders().filter(
+item =>
+getOrderKey(item)
+!== key
+);
+
+
+saveOrders(
+orders
+);
+
+
+searchOrders();
+
+}
+
+
+/* =====================================================
+編集
+===================================================== */
+
+function openEditModal(order) {
+
+editingOrderKey =
+getOrderKey(order);
+
+
+document.getElementById(
+"editCustomerName"
+).value =
+order.customerName || "";
+
+
+document.getElementById(
+"editDelivery"
+).value =
+order.delivery || "";
+
+
+document.getElementById(
+"editProduct"
+).textContent =
+`${order.product}（変更できません）`;
+
+
+document.getElementById(
+"editNotes"
+).value =
+order.notes || "";
+
+
+editPhotos =
+order.photos
+? [...order.photos]
+: [];
+
+
+renderEditPhotos();
+
+
+document.getElementById(
+"editModal"
+).classList.add(
+"active"
+);
+
+}
+
+
+/* =====================================================
+編集写真表示
+===================================================== */
+
+function renderEditPhotos() {
+
+const list =
+document.getElementById(
+"editPhotoList"
+);
+
+list.innerHTML = "";
+
+
+editPhotos.forEach(
+(photo, index) => {
+
+const div =
+document.createElement("div");
+
+div.className =
+"photo-item";
+
+
+div.innerHTML = `
+
+<img src="${photo}">
+
+<button
+class="photo-delete"
+data-index="${index}">
+×
+</button>
+
+`;
+
+
+list.appendChild(div);
+
+}
+);
+
+
+list.querySelectorAll(
+".photo-delete"
+).forEach(button => {
+
+button.addEventListener(
+"click",
+() => {
+
+const index =
+Number(
+button.dataset.index
+);
+
+editPhotos.splice(
+index,
+1
+);
+
+renderEditPhotos();
+
+}
+);
+
+});
+
+}
+
+
+/* =====================================================
+編集写真追加
+===================================================== */
+
+document.getElementById(
+"editCameraButton"
+).addEventListener(
+"click",
+() => {
+
+document.getElementById(
+"editCameraInput"
+).click();
+
+}
+);
+
+
+document.getElementById(
+"editPhotoButton"
+).addEventListener(
+"click",
+() => {
+
+document.getElementById(
+"editPhotoInput"
+).click();
+
+}
+);
+
+
+document.getElementById(
+"editCameraInput"
+).addEventListener(
+"change",
+async event => {
+
+await addPhotos(
+event.target.files,
+editPhotos,
+renderEditPhotos
+);
+
+event.target.value = "";
+
+}
+);
+
+
+document.getElementById(
+"editPhotoInput"
+).addEventListener(
+"change",
+async event => {
+
+await addPhotos(
+event.target.files,
+editPhotos,
+renderEditPhotos
+);
+
+event.target.value = "";
+
+}
+);
+
+
+/* =====================================================
+編集保存
+===================================================== */
+
+document.getElementById(
+"updateOrderButton"
+).addEventListener(
+"click",
+() => {
+
+const customerName =
+document.getElementById(
+"editCustomerName"
+).value.trim();
+
+
+const delivery =
+document.getElementById(
+"editDelivery"
+).value;
+
+
+const notes =
+document.getElementById(
+"editNotes"
+).value.trim();
+
+
+if (!customerName) {
+
+alert(
+"お客様名または会社名を入力してください。"
+);
+
+return;
+
+}
+
+
+if (!delivery) {
+
+alert(
+"受付日を入力してください。"
+);
+
+return;
+
+}
+
+
+const orders =
+getOrders();
+
+
+const index =
+orders.findIndex(
+order =>
+getOrderKey(order)
+=== editingOrderKey
+);
+
+
+if (index === -1) {
+
+alert(
+"対象データが見つかりません。"
+);
+
+return;
+
+}
+
+
+/*
+* 編集できるのは
+*
+* ・お客様名
+* ・受付日
+* ・写真
+* ・備考
+*
+* のみ。
+*
+* 商品・署名・注意事項・注文番号は
+* 変更しない。
+*/
+
+orders[index].customerName =
+customerName;
+
+
+orders[index].delivery =
+delivery;
+
+
+orders[index].photos =
+[...editPhotos];
+
+
+orders[index].notes =
+notes;
+
+
+saveOrders(
+orders
+);
+
+
+alert(
+"保存内容を更新しました。"
+);
+
+
+document.getElementById(
+"editModal"
+).classList.remove(
+"active"
+);
+
+
+editingOrderKey = null;
+
+
+searchOrders();
+
+}
+);
+
+
+/* =====================================================
+編集キャンセル
+===================================================== */
+
+document.getElementById(
+"cancelEditButton"
+).addEventListener(
+"click",
+() => {
+
+document.getElementById(
+"editModal"
+).classList.remove(
+"active"
+);
+
+editingOrderKey = null;
+
+}
+);
+
+
+/* =====================================================
+HTMLエスケープ
+===================================================== */
+
+function escapeHtml(value) {
+
+if (value === null ||
+value === undefined) {
+
+return "";
+
+}
+
+
+return String(value)
+.replace(/&/g, "&amp;")
+.replace(/</g, "&lt;")
+.replace(/>/g, "&gt;")
+.replace(/"/g, "&quot;")
+.replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+初期化
+===================================================== */
+
+document.getElementById(
+"delivery"
+).value = getToday();
+
+
+renderCurrentPhotos();
+
 
 </script>
 
