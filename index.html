@@ -98,6 +98,7 @@ select:focus{
     border-color:#555;
 }
 
+
 /* =========================
    商品
 ========================= */
@@ -128,38 +129,94 @@ select:focus{
     box-shadow:0 0 0 3px rgba(0,0,0,.12);
 }
 
-.product-1{border-color:#e53935}
-.product-1.selected{background:#ffebee}
+.product-1{
+    border-color:#e53935;
+}
 
-.product-2{border-color:#1976d2}
-.product-2.selected{background:#e3f2fd}
+.product-1.selected{
+    background:#ffebee;
+}
 
-.product-3{border-color:#29b6f6}
-.product-3.selected{background:#e1f5fe}
+.product-2{
+    border-color:#1976d2;
+}
 
-.product-4{border-color:#9ccc65}
-.product-4.selected{background:#f1f8e9}
+.product-2.selected{
+    background:#e3f2fd;
+}
 
-.product-5{border-color:#43a047}
-.product-5.selected{background:#e8f5e9}
+.product-3{
+    border-color:#29b6f6;
+}
 
-.product-6{border-color:#777}
-.product-6.selected{background:#eeeeee}
+.product-3.selected{
+    background:#e1f5fe;
+}
 
-.product-7{border-color:#fb8c00}
-.product-7.selected{background:#fff3e0}
+.product-4{
+    border-color:#9ccc65;
+}
 
-.product-8{border-color:#c49a6c}
-.product-8.selected{background:#f5eadf}
+.product-4.selected{
+    background:#f1f8e9;
+}
 
-.product-9{border-color:#8e44ad}
-.product-9.selected{background:#f3e5f5}
+.product-5{
+    border-color:#43a047;
+}
 
-.product-10{border-color:#ec407a}
-.product-10.selected{background:#fce4ec}
+.product-5.selected{
+    background:#e8f5e9;
+}
 
-.product-11{border-color:#222}
-.product-11.selected{background:#f5f5f5}
+.product-6{
+    border-color:#777;
+}
+
+.product-6.selected{
+    background:#eeeeee;
+}
+
+.product-7{
+    border-color:#fb8c00;
+}
+
+.product-7.selected{
+    background:#fff3e0;
+}
+
+.product-8{
+    border-color:#c49a6c;
+}
+
+.product-8.selected{
+    background:#f5eadf;
+}
+
+.product-9{
+    border-color:#8e44ad;
+}
+
+.product-9.selected{
+    background:#f3e5f5;
+}
+
+.product-10{
+    border-color:#ec407a;
+}
+
+.product-10.selected{
+    background:#fce4ec;
+}
+
+.product-11{
+    border-color:#222;
+}
+
+.product-11.selected{
+    background:#f5f5f5;
+}
+
 
 /* =========================
    日付・備考
@@ -172,6 +229,7 @@ select:focus{
 .notes-area{
     margin-bottom:28px;
 }
+
 
 /* =========================
    写真
@@ -227,6 +285,7 @@ select:focus{
     font-weight:bold;
 }
 
+
 /* =========================
    注意事項
 ========================= */
@@ -267,6 +326,7 @@ select:focus{
     padding-left:34px;
     line-height:1.5;
 }
+
 
 /* =========================
    署名
@@ -311,6 +371,7 @@ select:focus{
     font-weight:bold;
 }
 
+
 /* =========================
    保存
 ========================= */
@@ -331,14 +392,16 @@ select:focus{
     background:#555;
 }
 
+
 /* =========================
-   保存済み
+   保存済み注文
 ========================= */
 
 .saved-section{
     border-top:3px solid #222;
     padding-top:25px;
 }
+
 
 /* =========================
    検索
@@ -406,6 +469,7 @@ select:focus{
     border-radius:8px;
     background:#eee;
 }
+
 
 /* =========================
    注文カード
@@ -514,6 +578,7 @@ select:focus{
     color:#777;
 }
 
+
 /* =========================
    編集画面
 ========================= */
@@ -563,6 +628,37 @@ select:focus{
     line-height:1.6;
 }
 
+
+/* 商品固定表示 */
+
+.locked-product{
+    border:2px solid #1976d2;
+    border-radius:10px;
+    padding:14px;
+    background:#f5f5f5;
+    font-size:18px;
+    font-weight:bold;
+}
+
+
+/* 編集署名 */
+
+.edit-signature{
+    margin-top:10px;
+}
+
+.edit-signature img{
+    width:100%;
+    max-height:220px;
+    object-fit:contain;
+    border:1px solid #ccc;
+    border-radius:8px;
+    background:#fff;
+}
+
+
+/* 編集ボタン */
+
 .edit-actions{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -589,20 +685,6 @@ select:focus{
     font-weight:bold;
 }
 
-/* 編集署名 */
-
-.edit-signature{
-    margin-top:10px;
-}
-
-.edit-signature img{
-    width:100%;
-    max-height:220px;
-    object-fit:contain;
-    border:1px solid #ccc;
-    border-radius:8px;
-    background:#fff;
-}
 
 /* =========================
    スマホ
@@ -627,10 +709,6 @@ select:focus{
         grid-template-columns:1fr;
     }
 
-    .order-buttons{
-        grid-template-columns:1fr 1fr;
-    }
-
     .edit-actions{
         grid-template-columns:1fr;
     }
@@ -645,6 +723,7 @@ select:focus{
 <div class="container">
 
 <h1>注文受付</h1>
+
 
 <!-- =========================
      お客様名
@@ -677,27 +756,49 @@ select:focus{
 
 <div class="product-grid">
 
-<button type="button" class="product-btn product-1" data-product="① 名刺">① 名刺</button>
+<button type="button" class="product-btn product-1" data-product="① 名刺">
+① 名刺
+</button>
 
-<button type="button" class="product-btn product-2" data-product="② 印鑑">② 印鑑</button>
+<button type="button" class="product-btn product-2" data-product="② 印鑑">
+② 印鑑
+</button>
 
-<button type="button" class="product-btn product-3" data-product="③ スタンプ・ゴム印">③ スタンプ・ゴム印</button>
+<button type="button" class="product-btn product-3" data-product="③ スタンプ・ゴム印">
+③ スタンプ・ゴム印
+</button>
 
-<button type="button" class="product-btn product-4" data-product="④ 封筒">④ 封筒</button>
+<button type="button" class="product-btn product-4" data-product="④ 封筒">
+④ 封筒
+</button>
 
-<button type="button" class="product-btn product-5" data-product="⑤ チラシ・パンフレット">⑤ チラシ・パンフレット</button>
+<button type="button" class="product-btn product-5" data-product="⑤ チラシ・パンフレット">
+⑤ チラシ・パンフレット
+</button>
 
-<button type="button" class="product-btn product-6" data-product="⑥ ホームページ">⑥ ホームページ</button>
+<button type="button" class="product-btn product-6" data-product="⑥ ホームページ">
+⑥ ホームページ
+</button>
 
-<button type="button" class="product-btn product-7" data-product="⑦ 入稿データ">⑦ 入稿データ</button>
+<button type="button" class="product-btn product-7" data-product="⑦ 入稿データ">
+⑦ 入稿データ
+</button>
 
-<button type="button" class="product-btn product-8" data-product="⑧ 伝票">⑧ 伝票</button>
+<button type="button" class="product-btn product-8" data-product="⑧ 伝票">
+⑧ 伝票
+</button>
 
-<button type="button" class="product-btn product-9" data-product="⑨ オーダーメイド依頼">⑨ オーダーメイド依頼</button>
+<button type="button" class="product-btn product-9" data-product="⑨ オーダーメイド依頼">
+⑨ オーダーメイド依頼
+</button>
 
-<button type="button" class="product-btn product-10" data-product="⑩ オーダーメイド決定">⑩ オーダーメイド決定</button>
+<button type="button" class="product-btn product-10" data-product="⑩ オーダーメイド決定">
+⑩ オーダーメイド決定
+</button>
 
-<button type="button" class="product-btn product-11" data-product="⑪ 持込印材">⑪ 持込印材</button>
+<button type="button" class="product-btn product-11" data-product="⑪ 持込印材">
+⑪ 持込印材
+</button>
 
 </div>
 
@@ -714,7 +815,10 @@ select:focus{
 受付日
 </label>
 
-<input type="date" id="delivery">
+<input
+    type="date"
+    id="delivery"
+>
 
 </div>
 
@@ -744,11 +848,17 @@ select:focus{
 
 <div class="photo-buttons">
 
-<button type="button" class="photo-btn" id="cameraButton">
+<button
+    type="button"
+    class="photo-btn"
+    id="cameraButton">
 📷 カメラで撮影
 </button>
 
-<button type="button" class="photo-btn" id="photoButton">
+<button
+    type="button"
+    class="photo-btn"
+    id="photoButton">
 🖼 写真から選ぶ
 </button>
 
@@ -770,7 +880,10 @@ select:focus{
     style="display:none"
 >
 
-<div id="photoPreview" class="photo-preview"></div>
+<div
+    id="photoPreview"
+    class="photo-preview">
+</div>
 
 </div>
 
@@ -852,13 +965,17 @@ select:focus{
 🔎 過去の注文を検索
 </div>
 
+
 <div class="search-group">
 
 <label for="searchDate">
 ① 日付検索
 </label>
 
-<input type="date" id="searchDate">
+<input
+    type="date"
+    id="searchDate"
+>
 
 </div>
 
@@ -890,17 +1007,49 @@ select:focus{
 すべての商品カテゴリー
 </option>
 
-<option value="① 名刺">① 名刺</option>
-<option value="② 印鑑">② 印鑑</option>
-<option value="③ スタンプ・ゴム印">③ スタンプ・ゴム印</option>
-<option value="④ 封筒">④ 封筒</option>
-<option value="⑤ チラシ・パンフレット">⑤ チラシ・パンフレット</option>
-<option value="⑥ ホームページ">⑥ ホームページ</option>
-<option value="⑦ 入稿データ">⑦ 入稿データ</option>
-<option value="⑧ 伝票">⑧ 伝票</option>
-<option value="⑨ オーダーメイド依頼">⑨ オーダーメイド依頼</option>
-<option value="⑩ オーダーメイド決定">⑩ オーダーメイド決定</option>
-<option value="⑪ 持込印材">⑪ 持込印材</option>
+<option value="① 名刺">
+① 名刺
+</option>
+
+<option value="② 印鑑">
+② 印鑑
+</option>
+
+<option value="③ スタンプ・ゴム印">
+③ スタンプ・ゴム印
+</option>
+
+<option value="④ 封筒">
+④ 封筒
+</option>
+
+<option value="⑤ チラシ・パンフレット">
+⑤ チラシ・パンフレット
+</option>
+
+<option value="⑥ ホームページ">
+⑥ ホームページ
+</option>
+
+<option value="⑦ 入稿データ">
+⑦ 入稿データ
+</option>
+
+<option value="⑧ 伝票">
+⑧ 伝票
+</option>
+
+<option value="⑨ オーダーメイド依頼">
+⑨ オーダーメイド依頼
+</option>
+
+<option value="⑩ オーダーメイド決定">
+⑩ オーダーメイド決定
+</option>
+
+<option value="⑪ 持込印材">
+⑪ 持込印材
+</option>
 
 </select>
 
@@ -942,9 +1091,9 @@ select:focus{
 </div>
 
 
-<!-- =========================
-     編集モーダル
-========================= -->
+<!-- ==================================================
+     編集画面
+================================================== -->
 
 <div id="editModal">
 
@@ -955,10 +1104,12 @@ select:focus{
 </div>
 
 
+<!-- 注文番号：固定 -->
+
 <div class="form-group">
 
 <label>
-注文番号
+🔒 注文番号
 </label>
 
 <input
@@ -969,6 +1120,8 @@ select:focus{
 
 </div>
 
+
+<!-- お客様名：編集可能 -->
 
 <div class="form-group">
 
@@ -984,19 +1137,29 @@ select:focus{
 </div>
 
 
+<!-- 商品：編集不可 -->
+
 <div class="form-group">
 
 <label>
-商品カテゴリー
+🔒 商品カテゴリー
 </label>
 
 <div
-    class="product-grid"
-    id="editProductGrid">
+    id="editProductDisplay"
+    class="locked-product">
+</div>
+
+<div
+    class="locked-text"
+    style="margin-top:8px;">
+商品カテゴリーは保存後に編集できません。
 </div>
 
 </div>
 
+
+<!-- 受付日：編集可能 -->
 
 <div class="form-group">
 
@@ -1011,6 +1174,8 @@ select:focus{
 
 </div>
 
+
+<!-- 写真：編集可能 -->
 
 <div class="form-group">
 
@@ -1060,6 +1225,8 @@ select:focus{
 </div>
 
 
+<!-- 備考：編集可能 -->
+
 <div class="form-group">
 
 <label for="editNotes">
@@ -1071,7 +1238,7 @@ select:focus{
 </div>
 
 
-<!-- 署名固定 -->
+<!-- 署名：固定 -->
 
 <div class="locked-box">
 
@@ -1098,7 +1265,7 @@ select:focus{
 </div>
 
 
-<!-- 注意事項固定 -->
+<!-- 注意事項：固定 -->
 
 <div class="locked-box">
 
@@ -1108,15 +1275,19 @@ select:focus{
 
 <div class="locked-text">
 
-保存時の注意事項の確認状態を保持しています。<br>
+保存時の注意事項の内容と確認状態を保持しています。<br>
 注意事項のチェック状態・内容は編集できません。
 
-<div id="editNoticePreview"></div>
-
+<div
+    id="editNoticePreview">
 </div>
 
 </div>
 
+</div>
+
+
+<!-- 編集ボタン -->
 
 <div class="edit-actions">
 
@@ -1162,16 +1333,6 @@ const products = [
     "⑪ 持込印材"
 
 ];
-
-let selectedProduct = "";
-
-let selectedPhotos = [];
-
-let editingOrderKey = null;
-
-let editSelectedProduct = "";
-
-let editSelectedPhotos = [];
 
 
 /* =====================================================
@@ -1362,52 +1523,69 @@ function getToday(){
 
     const now = new Date();
 
-    const y = now.getFullYear();
+    const y =
+        now.getFullYear();
 
     const m =
-        String(now.getMonth()+1)
-        .padStart(2,"0");
+        String(
+            now.getMonth()+1
+        ).padStart(2,"0");
 
     const d =
-        String(now.getDate())
-        .padStart(2,"0");
+        String(
+            now.getDate()
+        ).padStart(2,"0");
 
     return `${y}-${m}-${d}`;
 
 }
 
-delivery.value = getToday();
+delivery.value =
+    getToday();
 
 
 /* =====================================================
-   商品ボタン
+   商品選択
 ===================================================== */
 
 document
 .querySelectorAll(".product-btn")
-.forEach(button => {
+.forEach(
+    button => {
 
-    button.addEventListener(
-        "click",
-        function(){
+        button.addEventListener(
+            "click",
+            function(){
 
-            document
-            .querySelectorAll(".product-btn")
-            .forEach(btn =>
-                btn.classList.remove("selected")
-            );
+                document
+                .querySelectorAll(
+                    ".product-btn"
+                )
+                .forEach(
+                    btn =>
+                        btn.classList
+                        .remove(
+                            "selected"
+                        )
+                );
 
-            this.classList.add("selected");
+                this.classList.add(
+                    "selected"
+                );
 
-            selectedProduct =
-                this.dataset.product;
+                selectedProduct =
+                    this.dataset.product;
 
-            renderNotices();
+                renderNotices();
 
-        }
-    );
+            }
+        );
 
-});
+    }
+);
+
+
+let selectedProduct = "";
 
 
 /* =====================================================
@@ -1421,13 +1599,19 @@ function renderNotices(){
     const current =
         notices[selectedProduct];
 
-    if(!current || current.length === 0){
+
+    if(
+        !current ||
+        current.length === 0
+    ){
 
         noticeArea.style.display =
             "none";
 
         return;
+
     }
+
 
     noticeArea.style.display =
         "block";
@@ -1437,20 +1621,25 @@ function renderNotices(){
         (notice,index)=>{
 
             const box =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             box.className =
                 "notice-box";
+
 
             const text =
                 typeof notice === "string"
                 ? notice
                 : notice.text;
 
+
             const warning =
                 typeof notice === "object"
                 ? notice.warning
                 : "";
+
 
             box.innerHTML = `
 
@@ -1480,7 +1669,10 @@ function renderNotices(){
 
             `;
 
-            noticeList.appendChild(box);
+
+            noticeList.appendChild(
+                box
+            );
 
         }
     );
@@ -1509,19 +1701,29 @@ function escapeHTML(text){
 ===================================================== */
 
 const cameraButton =
-    document.getElementById("cameraButton");
+    document.getElementById(
+        "cameraButton"
+    );
 
 const photoButton =
-    document.getElementById("photoButton");
+    document.getElementById(
+        "photoButton"
+    );
 
 const cameraInput =
-    document.getElementById("cameraInput");
+    document.getElementById(
+        "cameraInput"
+    );
 
 const photoInput =
-    document.getElementById("photoInput");
+    document.getElementById(
+        "photoInput"
+    );
 
 const photoPreview =
-    document.getElementById("photoPreview");
+    document.getElementById(
+        "photoPreview"
+    );
 
 
 cameraButton.addEventListener(
@@ -1544,7 +1746,9 @@ cameraInput.addEventListener(
     "change",
     function(){
 
-        handlePhotos(this.files);
+        handlePhotos(
+            this.files
+        );
 
         this.value = "";
 
@@ -1556,7 +1760,9 @@ photoInput.addEventListener(
     "change",
     function(){
 
-        handlePhotos(this.files);
+        handlePhotos(
+            this.files
+        );
 
         this.value = "";
 
@@ -1569,6 +1775,7 @@ function handlePhotos(files){
     const fileArray =
         Array.from(files);
 
+
     if(
         selectedPhotos.length +
         fileArray.length > 3
@@ -1579,22 +1786,33 @@ function handlePhotos(files){
         );
 
         return;
+
     }
 
-    fileArray.forEach(file => {
 
-        compressImage(file)
-        .then(dataURL => {
+    fileArray.forEach(
+        file => {
 
-            selectedPhotos.push(dataURL);
+            compressImage(file)
+            .then(
+                dataURL => {
 
-            renderPhotoPreview();
+                    selectedPhotos.push(
+                        dataURL
+                    );
 
-        });
+                    renderPhotoPreview();
 
-    });
+                }
+            );
+
+        }
+    );
 
 }
+
+
+let selectedPhotos = [];
 
 
 function compressImage(file){
@@ -1605,11 +1823,13 @@ function compressImage(file){
             const reader =
                 new FileReader();
 
+
             reader.onload =
                 function(e){
 
                     const img =
                         new Image();
+
 
                     img.onload =
                         function(){
@@ -1623,7 +1843,11 @@ function compressImage(file){
                             let height =
                                 img.height;
 
-                            if(width > maxSize){
+
+                            if(
+                                width >
+                                maxSize
+                            ){
 
                                 height =
                                     Math.round(
@@ -1634,9 +1858,14 @@ function compressImage(file){
 
                                 width =
                                     maxSize;
+
                             }
 
-                            if(height > maxSize){
+
+                            if(
+                                height >
+                                maxSize
+                            ){
 
                                 width =
                                     Math.round(
@@ -1647,7 +1876,9 @@ function compressImage(file){
 
                                 height =
                                     maxSize;
+
                             }
+
 
                             const canvas =
                                 document
@@ -1655,15 +1886,20 @@ function compressImage(file){
                                     "canvas"
                                 );
 
+
                             canvas.width =
                                 width;
 
                             canvas.height =
                                 height;
 
+
                             const ctx =
                                 canvas
-                                .getContext("2d");
+                                .getContext(
+                                    "2d"
+                                );
+
 
                             ctx.drawImage(
                                 img,
@@ -1672,6 +1908,7 @@ function compressImage(file){
                                 width,
                                 height
                             );
+
 
                             resolve(
                                 canvas.toDataURL(
@@ -1682,6 +1919,7 @@ function compressImage(file){
 
                         };
 
+
                     img.onerror =
                         reject;
 
@@ -1690,10 +1928,13 @@ function compressImage(file){
 
                 };
 
+
             reader.onerror =
                 reject;
 
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(
+                file
+            );
 
         }
     );
@@ -1704,6 +1945,7 @@ function compressImage(file){
 function renderPhotoPreview(){
 
     photoPreview.innerHTML = "";
+
 
     selectedPhotos.forEach(
         (photo,index)=>{
@@ -1716,6 +1958,7 @@ function renderPhotoPreview(){
             item.className =
                 "photo-preview-item";
 
+
             item.innerHTML = `
 
                 <img
@@ -1725,15 +1968,17 @@ function renderPhotoPreview(){
 
                 <button
                     type="button"
-                    class="photo-remove"
-                    data-photo-index="${index}">
+                    class="photo-remove">
                     ×
                 </button>
 
             `;
 
+
             item
-            .querySelector(".photo-remove")
+            .querySelector(
+                ".photo-remove"
+            )
             .addEventListener(
                 "click",
                 function(){
@@ -1748,7 +1993,10 @@ function renderPhotoPreview(){
                 }
             );
 
-            photoPreview.appendChild(item);
+
+            photoPreview.appendChild(
+                item
+            );
 
         }
     );
@@ -1777,7 +2025,9 @@ function resizeCanvas(){
         canvas.getBoundingClientRect();
 
     const ratio =
-        window.devicePixelRatio || 1;
+        window.devicePixelRatio ||
+        1;
+
 
     canvas.width =
         rect.width * ratio;
@@ -1785,12 +2035,15 @@ function resizeCanvas(){
     canvas.height =
         rect.height * ratio;
 
+
     ctx.scale(
         ratio,
         ratio
     );
 
-    ctx.lineWidth = 2.5;
+
+    ctx.lineWidth =
+        2.5;
 
     ctx.lineCap =
         "round";
@@ -1810,6 +2063,7 @@ function getPosition(e){
 
     const rect =
         canvas.getBoundingClientRect();
+
 
     return {
 
@@ -1835,6 +2089,7 @@ canvas.addEventListener(
         const pos =
             getPosition(e);
 
+
         ctx.beginPath();
 
         ctx.moveTo(
@@ -1852,8 +2107,10 @@ canvas.addEventListener(
 
         if(!drawing) return;
 
+
         const pos =
             getPosition(e);
+
 
         ctx.lineTo(
             pos.x,
@@ -1889,7 +2146,9 @@ canvas.addEventListener(
 
 
 document
-.getElementById("clearSignature")
+.getElementById(
+    "clearSignature"
+)
 .addEventListener(
     "click",
     clearSignature
@@ -1954,26 +2213,35 @@ function createOrderNumber(date){
     const orders =
         getOrders();
 
+
     const sameDay =
         orders.filter(
             order =>
                 order.delivery === date
         );
 
+
     const number =
         String(
             sameDay.length + 1
-        ).padStart(3,"0");
+        ).padStart(
+            3,
+            "0"
+        );
 
-    return date.replace(/-/g,"")
-        + "-"
-        + number;
+
+    return date.replace(
+        /-/g,
+        ""
+    )
+    + "-"
+    + number;
 
 }
 
 
 /* =====================================================
-   署名チェック
+   署名確認
 ===================================================== */
 
 function hasSignature(){
@@ -1986,13 +2254,16 @@ function hasSignature(){
             canvas.height
         ).data;
 
+
     for(
         let i=3;
         i<pixels.length;
         i+=4
     ){
 
-        if(pixels[i] !== 0){
+        if(
+            pixels[i] !== 0
+        ){
 
             return true;
 
@@ -2000,17 +2271,20 @@ function hasSignature(){
 
     }
 
+
     return false;
 
 }
 
 
 /* =====================================================
-   保存
+   注文保存
 ===================================================== */
 
 document
-.getElementById("saveButton")
+.getElementById(
+    "saveButton"
+)
 .addEventListener(
     "click",
     saveOrder
@@ -2019,13 +2293,16 @@ document
 
 function saveOrder(){
 
-    if(!customerName.value.trim()){
+    if(
+        !customerName.value.trim()
+    ){
 
         alert(
             "お客様名または会社名を入力してください。"
         );
 
         return;
+
     }
 
 
@@ -2036,6 +2313,7 @@ function saveOrder(){
         );
 
         return;
+
     }
 
 
@@ -2046,6 +2324,7 @@ function saveOrder(){
         );
 
         return;
+
     }
 
 
@@ -2053,12 +2332,15 @@ function saveOrder(){
         notices[selectedProduct] || [];
 
 
-    if(currentNotices.length > 0){
+    if(
+        currentNotices.length > 0
+    ){
 
         const checks =
             document.querySelectorAll(
                 ".notice-check"
             );
+
 
         const allChecked =
             Array.from(checks)
@@ -2067,6 +2349,7 @@ function saveOrder(){
                     check.checked
             );
 
+
         if(!allChecked){
 
             alert(
@@ -2074,6 +2357,7 @@ function saveOrder(){
             );
 
             return;
+
         }
 
     }
@@ -2086,6 +2370,7 @@ function saveOrder(){
         );
 
         return;
+
     }
 
 
@@ -2137,12 +2422,16 @@ function saveOrder(){
     };
 
 
-    orders.unshift(order);
+    orders.unshift(
+        order
+    );
 
 
     try{
 
-        saveOrders(orders);
+        saveOrders(
+            orders
+        );
 
     }catch(e){
 
@@ -2156,7 +2445,8 @@ function saveOrder(){
 
 
     alert(
-        "注文を保存しました。\n\n注文番号：" +
+        "注文を保存しました。\n\n" +
+        "注文番号：" +
         order.orderNumber
     );
 
@@ -2174,21 +2464,28 @@ function saveOrder(){
 
 function resetForm(){
 
-    customerName.value = "";
+    customerName.value =
+        "";
 
-    notes.value = "";
+    notes.value =
+        "";
 
     delivery.value =
         getToday();
 
-    selectedProduct = "";
+    selectedProduct =
+        "";
 
-    selectedPhotos = [];
+    selectedPhotos =
+        [];
 
-    photoPreview.innerHTML = "";
+    photoPreview.innerHTML =
+        "";
 
     document
-    .querySelectorAll(".product-btn")
+    .querySelectorAll(
+        ".product-btn"
+    )
     .forEach(
         btn =>
             btn.classList.remove(
@@ -2199,7 +2496,8 @@ function resetForm(){
     noticeArea.style.display =
         "none";
 
-    noticeList.innerHTML = "";
+    noticeList.innerHTML =
+        "";
 
     clearSignature();
 
@@ -2223,54 +2521,63 @@ function searchOrders(){
     const product =
         searchProduct.value;
 
+
     const orders =
         getOrders();
 
+
     const filtered =
-        orders.filter(order => {
-
-            if(
-                date &&
-                order.delivery !== date
-            ){
-
-                return false;
-
-            }
-
-
-            if(name){
-
-                const customer =
-                    String(
-                        order.customerName || ""
-                    )
-                    .toLowerCase();
+        orders.filter(
+            order => {
 
                 if(
-                    !customer.includes(name)
+                    date &&
+                    order.delivery !== date
                 ){
 
                     return false;
 
                 }
 
+
+                if(name){
+
+                    const customer =
+                        String(
+                            order.customerName ||
+                            ""
+                        )
+                        .toLowerCase();
+
+
+                    if(
+                        !customer.includes(
+                            name
+                        )
+                    ){
+
+                        return false;
+
+                    }
+
+                }
+
+
+                if(
+                    product &&
+                    order.product !==
+                    product
+                ){
+
+                    return false;
+
+                }
+
+
+                return true;
+
             }
-
-
-            if(
-                product &&
-                order.product !== product
-            ){
-
-                return false;
-
-            }
-
-
-            return true;
-
-        });
+        );
 
 
     displayFilteredOrders(
@@ -2297,13 +2604,17 @@ function displayFilteredOrders(
     orders
 ){
 
-    savedOrders.innerHTML = "";
+    savedOrders.innerHTML =
+        "";
+
 
     searchResultCount.textContent =
         `検索結果：${orders.length}件`;
 
 
-    if(orders.length === 0){
+    if(
+        orders.length === 0
+    ){
 
         savedOrders.innerHTML = `
 
@@ -2316,6 +2627,7 @@ function displayFilteredOrders(
         `;
 
         return;
+
     }
 
 
@@ -2327,11 +2639,14 @@ function displayFilteredOrders(
                     "div"
                 );
 
+
             card.className =
                 "order-card";
 
 
-            let photosHTML = "";
+            let photosHTML =
+                "";
+
 
             if(
                 order.photos &&
@@ -2361,7 +2676,9 @@ function displayFilteredOrders(
             }
 
 
-            let signatureHTML = "";
+            let signatureHTML =
+                "";
+
 
             if(order.signature){
 
@@ -2385,7 +2702,9 @@ function displayFilteredOrders(
             }
 
 
-            let noticesHTML = "";
+            let noticesHTML =
+                "";
+
 
             if(
                 order.noticesAgreed &&
@@ -2403,7 +2722,8 @@ function displayFilteredOrders(
 
                         <br>
 
-                        ${order.noticeTexts.length}項目
+                        ${order.noticeTexts.length}
+                        項目
 
                     </div>
 
@@ -2436,6 +2756,7 @@ function displayFilteredOrders(
 
                     <br>
 
+
                     <strong>
                         お客様名・会社名：
                     </strong>
@@ -2446,6 +2767,7 @@ function displayFilteredOrders(
 
                     <br>
 
+
                     <strong>
                         受付日：
                     </strong>
@@ -2454,13 +2776,16 @@ function displayFilteredOrders(
                         order.delivery
                     )}
 
+
                     ${
                         order.notes
                         ?
                         `<br>
+
                         <strong>
                             備考：
                         </strong>
+
                         ${escapeHTML(
                             order.notes
                         )}`
@@ -2483,13 +2808,18 @@ function displayFilteredOrders(
                     <button
                         type="button"
                         class="edit-btn">
+
                         ✏️ 編集
+
                     </button>
+
 
                     <button
                         type="button"
                         class="delete-btn">
+
                         🗑 削除
+
                     </button>
 
                 </div>
@@ -2498,7 +2828,9 @@ function displayFilteredOrders(
 
 
             card
-            .querySelector(".edit-btn")
+            .querySelector(
+                ".edit-btn"
+            )
             .addEventListener(
                 "click",
                 function(){
@@ -2512,7 +2844,9 @@ function displayFilteredOrders(
 
 
             card
-            .querySelector(".delete-btn")
+            .querySelector(
+                ".delete-btn"
+            )
             .addEventListener(
                 "click",
                 function(){
@@ -2536,7 +2870,18 @@ function displayFilteredOrders(
 
 
 /* =====================================================
-   編集モーダル
+   編集用変数
+===================================================== */
+
+let editingOrderKey =
+    null;
+
+let editSelectedPhotos =
+    [];
+
+
+/* =====================================================
+   編集DOM
 ===================================================== */
 
 const editModal =
@@ -2564,9 +2909,9 @@ const editOrderNumber =
         "editOrderNumber"
     );
 
-const editProductGrid =
+const editProductDisplay =
     document.getElementById(
-        "editProductGrid"
+        "editProductDisplay"
     );
 
 const editPhotoPreview =
@@ -2585,106 +2930,56 @@ const editNoticePreview =
     );
 
 
-/* 商品ボタンを編集画面に作る */
-
-function createEditProductButtons(){
-
-    editProductGrid.innerHTML = "";
-
-    products.forEach(
-        (product,index)=>{
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-            button.type =
-                "button";
-
-            button.className =
-                `product-btn product-${index+1}`;
-
-            button.textContent =
-                product;
-
-            button.dataset.product =
-                product;
-
-
-            button.addEventListener(
-                "click",
-                function(){
-
-                    editSelectedProduct =
-                        product;
-
-                    editProductGrid
-                    .querySelectorAll(
-                        ".product-btn"
-                    )
-                    .forEach(
-                        btn =>
-                            btn.classList
-                            .remove(
-                                "selected"
-                            )
-                    );
-
-                    button.classList.add(
-                        "selected"
-                    );
-
-                }
-            );
-
-
-            editProductGrid.appendChild(
-                button
-            );
-
-        }
-    );
-
-}
-
-createEditProductButtons();
-
-
 /* =====================================================
-   編集を開く
+   編集画面を開く
 ===================================================== */
 
-function openEditModal(order){
+function openEditModal(
+    order
+){
 
     editingOrderKey = {
+
         orderNumber:
             order.orderNumber,
 
         createdAt:
             order.createdAt
+
     };
 
+
+    /* 注文番号は固定 */
 
     editOrderNumber.value =
         order.orderNumber;
 
 
+    /* 名前は編集可能 */
+
     editCustomerName.value =
         order.customerName || "";
 
+
+    /* 商品は表示だけ */
+
+    editProductDisplay.textContent =
+        order.product || "未設定";
+
+
+    /* 受付日は編集可能 */
 
     editDelivery.value =
         order.delivery || "";
 
 
+    /* 備考は編集可能 */
+
     editNotes.value =
         order.notes || "";
 
 
-    editSelectedProduct =
-        order.product;
-
+    /* 写真 */
 
     editSelectedPhotos =
         order.photos
@@ -2692,25 +2987,10 @@ function openEditModal(order){
         : [];
 
 
-    editProductGrid
-    .querySelectorAll(
-        ".product-btn"
-    )
-    .forEach(
-        button => {
-
-            button.classList.toggle(
-                "selected",
-                button.dataset.product ===
-                order.product
-            );
-
-        }
-    );
-
-
     renderEditPhotos();
 
+
+    /* 署名は固定 */
 
     if(order.signature){
 
@@ -2729,6 +3009,8 @@ function openEditModal(order){
     }
 
 
+    /* 注意事項は固定 */
+
     renderEditNotices(
         order
     );
@@ -2736,6 +3018,7 @@ function openEditModal(order){
 
     editModal.style.display =
         "block";
+
 
     document.body.style.overflow =
         "hidden";
@@ -2749,7 +3032,9 @@ function openEditModal(order){
 
 function renderEditPhotos(){
 
-    editPhotoPreview.innerHTML = "";
+    editPhotoPreview.innerHTML =
+        "";
+
 
     editSelectedPhotos.forEach(
         (photo,index)=>{
@@ -2759,8 +3044,10 @@ function renderEditPhotos(){
                     "div"
                 );
 
+
             item.className =
                 "photo-preview-item";
+
 
             item.innerHTML = `
 
@@ -2810,23 +3097,30 @@ function renderEditPhotos(){
 
 
 /* =====================================================
-   編集注意事項
+   編集注意事項表示
 ===================================================== */
 
-function renderEditNotices(order){
+function renderEditNotices(
+    order
+){
 
-    editNoticePreview.innerHTML = "";
+    editNoticePreview.innerHTML =
+        "";
+
 
     const current =
         order.noticeTexts || [];
 
 
-    if(current.length === 0){
+    if(
+        current.length === 0
+    ){
 
         editNoticePreview.innerHTML =
             "この注文には注意事項はありません。";
 
         return;
+
     }
 
 
@@ -2838,8 +3132,10 @@ function renderEditNotices(order){
                     "div"
                 );
 
+
             div.style.marginTop =
                 "8px";
+
 
             div.innerHTML = `
 
@@ -2847,6 +3143,7 @@ function renderEditNotices(order){
                 ${escapeHTML(text)}
 
             `;
+
 
             editNoticePreview
             .appendChild(
@@ -2928,7 +3225,9 @@ editPhotoInput.addEventListener(
 );
 
 
-function handleEditPhotos(files){
+function handleEditPhotos(
+    files
+){
 
     const fileArray =
         Array.from(files);
@@ -2944,6 +3243,7 @@ function handleEditPhotos(files){
         );
 
         return;
+
     }
 
 
@@ -2969,7 +3269,7 @@ function handleEditPhotos(files){
 
 
 /* =====================================================
-   編集を保存
+   編集保存
 ===================================================== */
 
 document
@@ -2984,7 +3284,9 @@ document
 
 function saveEditedOrder(){
 
-    if(!editingOrderKey){
+    if(
+        !editingOrderKey
+    ){
 
         return;
 
@@ -3000,26 +3302,20 @@ function saveEditedOrder(){
         );
 
         return;
+
     }
 
 
-    if(!editSelectedProduct){
-
-        alert(
-            "商品カテゴリーを選択してください。"
-        );
-
-        return;
-    }
-
-
-    if(!editDelivery.value){
+    if(
+        !editDelivery.value
+    ){
 
         alert(
             "受付日を入力してください。"
         );
 
         return;
+
     }
 
 
@@ -3038,7 +3334,9 @@ function saveEditedOrder(){
         );
 
 
-    if(targetIndex === -1){
+    if(
+        targetIndex === -1
+    ){
 
         alert(
             "編集する注文が見つかりません。"
@@ -3047,41 +3345,42 @@ function saveEditedOrder(){
         closeEditModal();
 
         return;
+
     }
 
 
     /*
-       ここが重要です。
+    =====================================================
+    変更するのは以下だけ
 
-       customerName
-       product
-       delivery
-       photos
-       notes
+    ・お客様名
+    ・受付日
+    ・写真
+    ・備考
 
-       だけ変更。
+    以下は絶対に変更しない
 
-       signature
-       noticesAgreed
-       noticeTexts
-       orderNumber
-       createdAt
-
-       は変更しません。
+    ・注文番号
+    ・商品カテゴリー
+    ・お客様署名
+    ・注意事項
+    ・注意事項確認状態
+    ・作成日時
+    =====================================================
     */
 
 
     orders[targetIndex].customerName =
         editCustomerName.value.trim();
 
-    orders[targetIndex].product =
-        editSelectedProduct;
 
     orders[targetIndex].delivery =
         editDelivery.value;
 
+
     orders[targetIndex].photos =
         editSelectedPhotos.slice();
+
 
     orders[targetIndex].notes =
         editNotes.value.trim();
@@ -3089,7 +3388,9 @@ function saveEditedOrder(){
 
     try{
 
-        saveOrders(orders);
+        saveOrders(
+            orders
+        );
 
     }catch(e){
 
@@ -3111,8 +3412,8 @@ function saveEditedOrder(){
 
 
     /*
-       検索条件があれば
-       その条件を維持して再表示
+       現在の検索条件を
+       そのまま維持
     */
 
     searchOrders();
@@ -3139,8 +3440,10 @@ function closeEditModal(){
     editModal.style.display =
         "none";
 
+
     document.body.style.overflow =
         "";
+
 
     editingOrderKey =
         null;
@@ -3149,7 +3452,7 @@ function closeEditModal(){
 
 
 /* =====================================================
-   削除
+   注文削除
 ===================================================== */
 
 function deleteOrder(
@@ -3199,20 +3502,18 @@ function deleteOrder(
 
 
 /* =====================================================
-   検索ボタン
+   検索
 ===================================================== */
 
 document
-.getElementById("searchButton")
+.getElementById(
+    "searchButton"
+)
 .addEventListener(
     "click",
     searchOrders
 );
 
-
-/* =====================================================
-   検索条件クリア
-===================================================== */
 
 document
 .getElementById(
@@ -3222,11 +3523,14 @@ document
     "click",
     function(){
 
-        searchDate.value = "";
+        searchDate.value =
+            "";
 
-        searchName.value = "";
+        searchName.value =
+            "";
 
-        searchProduct.value = "";
+        searchProduct.value =
+            "";
 
         displayOrders();
 
@@ -3235,7 +3539,7 @@ document
 
 
 /* =====================================================
-   入力時検索
+   自動検索
 ===================================================== */
 
 searchName.addEventListener(
