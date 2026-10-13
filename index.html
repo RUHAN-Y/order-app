@@ -80,6 +80,16 @@ button{border:0;border-radius:11px;padding:12px 16px;font-weight:700}
 </style>
 </head>
 <body>
+<div id="passwordResetPanel" class="card wrap hidden">
+  <h1>新しいパスワードの設定</h1>
+  <p>店舗ログイン用の新しいパスワードを入力してください。</p>
+  <label for="newPassword">新しいパスワード</label>
+  <input id="newPassword" type="password" autocomplete="new-password" placeholder="新しいパスワード（8文字以上推奨）">
+  <label for="confirmPassword">新しいパスワード（確認）</label>
+  <input id="confirmPassword" type="password" autocomplete="new-password" placeholder="同じパスワードをもう一度入力">
+  <button id="savePasswordBtn" class="btn-primary" style="width:100%">新しいパスワードを保存</button>
+  <p id="passwordResetMessage" class="small" role="status"></p>
+</div>
 <div id="loginPanel" class="card wrap">
   <h1>注文受付アプリ ログイン</h1>
   <p>店舗ごとのメールアドレスとパスワードでログインしてください。</p>
@@ -229,6 +239,7 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 let currentUser=null;
 let currentStoreName="";
 let ordersCache=[];
+let isPasswordRecovery=false;
 
 const PRODUCTS=[
 "① 名刺","② 印鑑","③ スタンプ・ゴム印","④ 封筒","⑤ チラシ・パンフレット",
@@ -326,8 +337,15 @@ async function loadOrders(){
  ordersCache=(data||[]).map(mapDbOrder);
 }
 function showLogin(message=""){
+ $("passwordResetPanel").classList.add("hidden");
  $("loginPanel").classList.remove("hidden");$("app").classList.add("hidden");$("sessionBar").classList.add("hidden");
  $("loginMessage").textContent=message;
+}
+function showPasswordReset(message="") {
+ isPasswordRecovery=true;
+ $("loginPanel").classList.add("hidden");$("app").classList.add("hidden");$("sessionBar").classList.add("hidden");
+ $("passwordResetPanel").classList.remove("hidden");
+ $("passwordResetMessage").textContent=message;
 }
 function showApp(){
  $("loginPanel").classList.add("hidden");$("app").classList.remove("hidden");$("sessionBar").classList.remove("hidden");
@@ -558,6 +576,24 @@ $("editPhotoInput").onchange=e=>addFiles(e.target.files,editPhotos);
 $("editSaveBtn").onclick=saveEdit;
 $("editCancelBtn").onclick=()=>{$("editModal").classList.add("hidden");editingOrder=null};
 
+async function saveNewPassword(){
+ const password=$("newPassword").value,confirm=$("confirmPassword").value;
+ const msg=$("passwordResetMessage");
+ if(password.length<8){msg.textContent="パスワードは8文字以上で入力してください。";return;}
+ if(password!==confirm){msg.textContent="2つのパスワードが一致しません。もう一度確認してください。";return;}
+ $("savePasswordBtn").disabled=true;msg.textContent="パスワードを保存しています…";
+ try{
+  const {data,error}=await db.auth.updateUser({password});
+  if(error)throw error;
+  isPasswordRecovery=false;
+  $("newPassword").value="";$("confirmPassword").value="";
+  await db.auth.signOut();
+  showLogin("パスワードを変更しました。本町店のメールアドレスと新しいパスワードでログインしてください。");
+ }catch(e){
+  msg.textContent="変更できませんでした。再設定メールのリンクが期限切れの可能性があります。もう一度メールを送ってください。\n"+(e.message||e);
+ }finally{$("savePasswordBtn").disabled=false;}
+}
+$("savePasswordBtn").onclick=saveNewPassword;
 $("loginBtn").onclick=login;
 $("loginPassword").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
 $("loginEmail").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
@@ -565,8 +601,12 @@ $("logoutBtn").onclick=logout;
 $("delivery").value=today();
 renderProducts();renderSearchProducts();renderNotices();setupSignature();
 showLogin();
+db.auth.onAuthStateChange((event, session)=>{
+ if(event==="PASSWORD_RECOVERY"){showPasswordReset("本町店の新しいパスワードを設定してください。");}
+});
 db.auth.getSession().then(async ({data,error})=>{
  if(error||!data.session)return;
+ if(isPasswordRecovery || new URLSearchParams(window.location.hash.replace(/^#/,"")).get("type")==="recovery") {showPasswordReset("新しいパスワードを設定してください。");return;}
  currentUser=data.session.user;
  const {data:profile,error:profileError}=await db.from("store_profiles").select("store_name").eq("user_id",currentUser.id).single();
  if(profileError){showLogin("店舗設定を取得できません。\n"+profileError.message);return;}
